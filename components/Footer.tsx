@@ -1,3 +1,4 @@
+
 const Footer = () => {
     return (
       <footer className="page-footer">
@@ -24,7 +25,7 @@ const Footer = () => {
             <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
           </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="./../app/script.js"></script>
       </footer>
     );
   }

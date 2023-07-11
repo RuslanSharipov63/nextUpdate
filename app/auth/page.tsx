@@ -1,78 +1,73 @@
 "use client";
 import { useState } from "react";
 import TextField from "@/components/TextField";
+import ButtonForForm from "@/components/ButtonForForm";
 import validationAuth from "@/helper/validationAuth";
-import styles from './auth.module.css';
+import styles from "./auth.module.css";
 
 const AuthPage = () => {
-  const [authInut, setAuthInput] = useState({
+  const [authInput, setAuthInput] = useState({
     email: "Email",
     password: "",
   });
 
-  const [error, setError] = useState({
-    email: '',
-    password: ''
-  })
+  const [error, setError] = useState("");
 
   const handleChange = (etv: string, etn: string) => {
     setAuthInput({
-      ...authInut,
+      ...authInput,
       [etn]: etv,
     });
+    setError("");
   };
   const handleFocus = (etn: string) => {
     setAuthInput({
-      ...authInut,
+      ...authInput,
       [etn]: "",
     });
   };
 
-  const validationResult = validationAuth(authInut.email, authInut.password)
+  const validationResult = validationAuth(authInput.email);
 
   const handleBlur = (): void => {
-  
-    if (validationResult === 1) {
-      setError({ ...error, email: "Не валидный email" })
+    if (validationResult === false) {
+      setError("Не валидный email");
     }
-    if (validationResult === 2) {
-      setError({ ...error, password: "Длина пароля от 5 до 8 символов" })
-    }
-    console.log(validationResult)
-  }
-
-  
+  };
 
   return (
-    <div className={styles.container} style={{ marginBottom: '200px' }}>
+    <div className={styles.container} style={{ marginBottom: "200px" }}>
       <div></div>
       <form>
         <div>
           <label htmlFor="email">Электронная почта</label>
-          <span className="helper-text">{error.email === "" ? null : error.email}</span>
           <TextField
             typeText={"text"}
-            valueText={authInut.email}
+            valueText={authInput.email}
             funcChange={handleChange}
             funcFocus={handleFocus}
             nameText="email"
-            idText={'email'}
+            idText={"email"}
             funcBlur={handleBlur}
           />
+          <span className="helper-text">{error === "" ? null : error}</span>
         </div>
         <div>
-          <label htmlFor="password">Пароль</label>
-          <span className="helper-text">{error.password === "" ? null : error.password}</span>
+          <p>
+            <label htmlFor="password">Пароль</label>
+          </p>
           <TextField
             typeText={"password"}
-            valueText={authInut.password}
+            valueText={authInput.password}
             funcChange={handleChange}
             funcFocus={handleFocus}
             nameText="password"
-            idText={'pass'}
+            idText={"pass"}
             funcBlur={handleBlur}
           />
+          <span className="helper-text"></span>
         </div>
+        <ButtonForForm text={'войти'}/>
       </form>
       <div></div>
     </div>
