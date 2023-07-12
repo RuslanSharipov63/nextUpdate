@@ -8,7 +8,7 @@ type TextFieldProps = {
   funcChange: (itemValue: string, itemName: string) => void;
   funcFocus: (itemName: string) => void;
   idText: string;
-  funcBlur: () => void;
+  funcBlur?: (e: any) => void
 };
 
 const TextField: FC<TextFieldProps> = ({
@@ -30,7 +30,7 @@ const TextField: FC<TextFieldProps> = ({
         onFocus={(e) => funcFocus(e.target.name)}
         name={nameText}
         id={idText}
-        onBlur={funcBlur}
+        onBlur={funcBlur && ((e)=>funcBlur(e))}
       />
     </>
   );

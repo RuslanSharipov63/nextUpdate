@@ -12,7 +12,7 @@ const AuthPage = () => {
   });
 
   const [error, setError] = useState("");
-  const [checkEmailPass, setCheckEmailPass] = useState(true)
+  const [checkEmailPass, setCheckEmailPass] = useState(true);
 
   const handleChange = (etv: string, etn: string) => {
     setAuthInput({
@@ -20,6 +20,7 @@ const AuthPage = () => {
       [etn]: etv,
     });
     setError("");
+    setCheckEmailPass(true);
   };
   const handleFocus = (etn: string) => {
     setAuthInput({
@@ -28,29 +29,35 @@ const AuthPage = () => {
     });
   };
 
-  const handleBlur = (): void => {
-    let validationEmailResult = validationEmail(authInput.email);
-    if (validationEmailResult === false) {
+/*   const handleBlur = (): void => {
+    if (validationEmail(authInput.email) === false) {
       setError("Не валидный email");
+      return true;
     }
-
-  };
+  }; */
 
   const checkAuth = (e: any) => {
     e.preventDefault();
-    let validationPasswordResult = validationPassword(authInput.password);
-    let validationEmailResult = validationEmail(authInput.email);
-    if (validationPasswordResult === false || validationEmailResult === false) {
-      setCheckEmailPass(false)
+    if (
+      validationPassword(authInput.password) === false ||
+      validationEmail(authInput.email) === false
+    ) {
+      setCheckEmailPass(false);
+    } else {
+      alert("Вход разрешен");
     }
-  }
+  };
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
       <div></div>
       <form>
         <div>
-          <p><span className="helper-text">{checkEmailPass ? null : "Некорректно заполнены поля"}</span></p>
+          <p>
+            <span className="helper-text">
+              {checkEmailPass ? null : "Некорректно заполнены поля"}
+            </span>
+          </p>
           <label htmlFor="email">Электронная почта</label>
           <TextField
             typeText={"text"}
@@ -59,7 +66,7 @@ const AuthPage = () => {
             funcFocus={handleFocus}
             nameText="email"
             idText={"email"}
-            funcBlur={handleBlur}
+          /*   funcBlur={handleBlur} */
           />
           <span className="helper-text">{error === "" ? null : error}</span>
         </div>
@@ -74,10 +81,10 @@ const AuthPage = () => {
             funcFocus={handleFocus}
             nameText="password"
             idText={"pass"}
-            funcBlur={handleBlur}
+           /*  funcBlur={handleBlur} */
           />
         </div>
-        <Button text={'войти'} funcClick={checkAuth} />
+        <Button text={"войти"} funcClick={checkAuth} />
       </form>
       <div></div>
     </div>
