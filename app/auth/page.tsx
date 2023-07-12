@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextField from "@/components/TextField";
-import ButtonForForm from "@/components/ButtonForForm";
-import validationAuth from "@/helper/validationAuth";
+import Button from "@/components/Button";
+import { validationEmail, validationPassword } from "@/helper/validation";
 import styles from "./auth.module.css";
 
 const AuthPage = () => {
@@ -12,6 +12,7 @@ const AuthPage = () => {
   });
 
   const [error, setError] = useState("");
+  const [checkEmailPass, setCheckEmailPass] = useState(true)
 
   const handleChange = (etv: string, etn: string) => {
     setAuthInput({
@@ -27,19 +28,29 @@ const AuthPage = () => {
     });
   };
 
-  const validationResult = validationAuth(authInput.email);
-
   const handleBlur = (): void => {
-    if (validationResult === false) {
+    let validationEmailResult = validationEmail(authInput.email);
+    if (validationEmailResult === false) {
       setError("Не валидный email");
     }
+
   };
+
+  const checkAuth = (e: any) => {
+    e.preventDefault();
+    let validationPasswordResult = validationPassword(authInput.password);
+    let validationEmailResult = validationEmail(authInput.email);
+    if (validationPasswordResult === false || validationEmailResult === false) {
+      setCheckEmailPass(false)
+    }
+  }
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
       <div></div>
       <form>
         <div>
+          <p><span className="helper-text">{checkEmailPass ? null : "Некорректно заполнены поля"}</span></p>
           <label htmlFor="email">Электронная почта</label>
           <TextField
             typeText={"text"}
@@ -65,9 +76,8 @@ const AuthPage = () => {
             idText={"pass"}
             funcBlur={handleBlur}
           />
-          <span className="helper-text"></span>
         </div>
-        <ButtonForForm text={'войти'}/>
+        <Button text={'войти'} funcClick={checkAuth} />
       </form>
       <div></div>
     </div>

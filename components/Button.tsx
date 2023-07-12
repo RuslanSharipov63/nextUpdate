@@ -1,20 +1,22 @@
 import { FC } from "react";
-type ButtonForFormProps = {
+
+type ButtonProps = {
   text: string;
+  funcClick: (e: any) => void;
 };
 
-const ButtonForForm: FC<ButtonForFormProps> = ({ text }) => {
+const Button: FC<ButtonProps> = ({ text, funcClick }) => {
+
   return (
     <button
       className="btn waves-effect waves-light"
       value="ANY_VALUE_HERE"
       type="submit"
-     /*  disabled={!props.isvalid}
-      onClick={props.handleUpload} */
+      onClick={(e) => funcClick(e)}
     >
       {text}
     </button>
   );
 };
 
-export default ButtonForForm;
+export default Button;

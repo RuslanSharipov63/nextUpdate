@@ -1,4 +1,4 @@
-import Button from "./ButtonForForm";
+import Button from "./Button";
 import Link from "next/link";
 
 const Header = () => {
@@ -26,8 +26,12 @@ const Header = () => {
             <li>
               <Link href="collapsible.html">Контакты</Link>
             </li>
-            <Button text={"войти"} linktext={"auth"} />
-            <Button text={"регистрация"} linktext={"registration"} />
+            <li>
+              <Link href="/auth">войти</Link>
+            </li>
+            <li>
+              <Link href="/registration">регистрация</Link>
+            </li>
           </ul>
         </div>
         <div className="nav-wrapper"></div>
