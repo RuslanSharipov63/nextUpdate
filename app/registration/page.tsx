@@ -1,10 +1,16 @@
 "use client"
 import { useState } from "react";
-import { validationEmail, validationPassword } from "@/helper/validation";
+import { validationEmail, validationPassword, validationFirstName } from "@/helper/validation";
 import TextField from "@/components/TextField";
 
+
+type stateProps = {
+  [x: string]: string;
+}
+
+
 const RegistrationPage = () => {
-  const [registerInput, setRegisterInput] = useState({
+  const [registerInput, setRegisterInput] = useState<stateProps>({
     email: "Email",
     password: "",
     firstName: "имя",
@@ -31,10 +37,25 @@ const RegistrationPage = () => {
     });
   };
 
-  const handleBlur = (e: any): void => {
-    if (validationEmail(registerInput.email) === false) {
-      setError({ ...error, email: "Не валидный email" });
+  const handleBlur = (etn: string): void => {
+    if (etn === 'email') {
+      if (validationEmail(registerInput.etn) === false) {
+        setError({ ...error, [etn]: "Не валидный email" });
+      }
     }
+
+    if (etn === 'password') {
+      if (validationPassword(registerInput.etn) === false) {
+        setError({ ...error, [etn]: "Пароль от 5 до 8 символов" });
+      }
+    }
+
+    if (etn === 'firstName') {
+      if (validationFirstName(registerInput.etn) === false) {
+        setError({ ...error, [etn]: "Имя от 3 до 10 символов" });
+      }
+    }
+
   };
   return (
     <>
@@ -50,6 +71,7 @@ const RegistrationPage = () => {
         idText={"firstname"}
         funcBlur={handleBlur}
       />
+      <span className="helper-text">{error.firstName === "" ? null : error.firstName}</span>
       <label htmlFor="email">Электронная почта</label>
       <TextField
         typeText={"text"}
@@ -60,6 +82,7 @@ const RegistrationPage = () => {
         idText={"email"}
         funcBlur={handleBlur}
       />
+      <span className="helper-text">{error.email === "" ? null : error.email}</span>
       <p>
         <label htmlFor="password">Пароль</label>
       </p>
@@ -72,6 +95,7 @@ const RegistrationPage = () => {
         idText={"pass"}
         funcBlur={handleBlur}
       />
+      <span className="helper-text">{error.password === "" ? null : error.password}</span>
     </>
   );
 };

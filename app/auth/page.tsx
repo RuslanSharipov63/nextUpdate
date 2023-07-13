@@ -29,12 +29,6 @@ const AuthPage = () => {
     });
   };
 
-/*   const handleBlur = (): void => {
-    if (validationEmail(authInput.email) === false) {
-      setError("Не валидный email");
-      return true;
-    }
-  }; */
 
   const checkAuth = (e: any) => {
     e.preventDefault();
@@ -66,7 +60,6 @@ const AuthPage = () => {
             funcFocus={handleFocus}
             nameText="email"
             idText={"email"}
-          /*   funcBlur={handleBlur} */
           />
           <span className="helper-text">{error === "" ? null : error}</span>
         </div>
@@ -81,7 +74,6 @@ const AuthPage = () => {
             funcFocus={handleFocus}
             nameText="password"
             idText={"pass"}
-           /*  funcBlur={handleBlur} */
           />
         </div>
         <Button text={"войти"} funcClick={checkAuth} />

@@ -9,4 +9,10 @@ const validationPassword = (password: string): boolean | undefined => {
   }
 }
 
-export { validationEmail, validationPassword };
+const validationFirstName = (firstName: string): boolean | undefined => {
+  if (firstName.length < 3 || firstName.length > 20) {
+    return false;
+  }
+}
+
+export { validationEmail, validationPassword, validationFirstName };
