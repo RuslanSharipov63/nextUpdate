@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.imgProfile {
+    display: flex;
+}
+
+.infoProfile {
+    display: flex;
+    flex-direction: column;
+}

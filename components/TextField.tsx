@@ -6,7 +6,7 @@ type TextFieldProps = {
   valueText: string;
   nameText: string;
   funcChange: (itemValue: string, itemName: string) => void;
-  funcFocus: (itemName: string) => void;
+  funcFocus: (e: React.ChangeEvent<HTMLInputElement>) => void;
   idText: string;
   funcBlur?: (itemName: string) => void
 };
@@ -27,7 +27,7 @@ const TextField: FC<TextFieldProps> = ({
         type={typeText}
         value={valueText}
         onChange={(e) => funcChange(e.target.value, e.target.name)}
-        onFocus={(e) => funcFocus(e.target.name)}
+        onFocus={(e) => funcFocus(e)}
         name={nameText}
         id={idText}
         onBlur={funcBlur && ((e) => funcBlur(e.target.name))}

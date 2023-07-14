@@ -34,10 +34,11 @@ const RegistrationPage = () => {
     setError({ ...error, firstName: "", email: "", password: "" });
     setCheckEmailPass(true);
   };
-  const handleFocus = (etn: string) => {
+  const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let key = e.target.name;
     setRegisterInput({
       ...registerInput,
-      [etn]: "",
+      [key]: "",
     });
   };
 

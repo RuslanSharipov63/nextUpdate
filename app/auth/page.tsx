@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { validationEmail, validationPassword } from "@/helper/validation";
 import styles from "./auth.module.css";
 
+
 const AuthPage = () => {
   const [authInput, setAuthInput] = useState({
     email: "Email",
@@ -22,10 +23,11 @@ const AuthPage = () => {
     setError("");
     setCheckEmailPass(true);
   };
-  const handleFocus = (etn: string) => {
+  const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let key = e.target.name;
     setAuthInput({
       ...authInput,
-      [etn]: "",
+      [key]: "",
     });
   };
 
