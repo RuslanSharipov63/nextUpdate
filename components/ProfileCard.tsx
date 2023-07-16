@@ -11,6 +11,7 @@ const ProfileCard = () => {
                         height={100}
                         alt="аватар тигр"
                         style={{ borderRadius: '50%' }}
+                        priority={true}
                     />
                 </div>
                 <div className={styles.infoProfile}>

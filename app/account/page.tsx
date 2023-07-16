@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import Button from "@/components/Button";
 /* import Image from "next/image";
@@ -6,45 +6,69 @@ import styles from "./Account.module.css"; */
 import ProfileCard from "@/components/ProfileCard";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import TextField from "@/components/TextField";
+import InfoImage from "@/components/InfoImage";
+
+const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 
 const AccountPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [tags, setTags] = useState('теги');
+  const [tags, setTags] = useState("");
+  const [error, setError] = useState({
+    fileUpload: "",
+    tags: "",
+  });
 
   const handleChange = (e: any) => {
-    console.log(selectedFile);
     setSelectedFile(e.target.files[0]);
+    setError({ ...error, fileUpload: "", tags: "" });
   };
 
   const tagsChange = (e: string) => {
     setTags(e);
-    console.log(e);
+    setError({ ...error, fileUpload: "", tags: "" });
   };
 
   const handleFocus = () => {
-    setTags('');
+    setTags("");
   };
 
-  const handleUpload = async (e) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!selectedFile) {
-      M.toast({ html: "Пожалуйста выберите файл", classes: "rounded" });
+      setError({ ...error, fileUpload: "Выберите файл" });
       return;
     }
-  }
+    let tagsArr = tags.split(" ");
+    let newTagsArr = tagsArr.filter((el) => el.search(regValue) != -1);
+
+    if (newTagsArr.length === 0) {
+      setError({
+        ...error,
+        tags: "Введите теги через пробел. Тег больше одного символа",
+      });
+      return;
+    }
+
+    alert("ok");
+    console.log(selectedFile);
+  };
+
   return (
     <>
       <ProfileCard />
       <div className="z-depth-2">
-        <p
-          className="flow-text teal-text lighten-2"
-        >
-          Загрузите файл
+        <p>
+          <label htmlFor="tags">Загрузите файл</label>
         </p>
-        <TextFieldUploads
-          typeText={"file"}
-          funcChange={handleChange}
-        />
+        <TextFieldUploads typeText={"file"} funcChange={handleChange} />
+        <p>
+          <span className="helper-text">
+            {error.fileUpload === "" ? null : error.fileUpload}
+          </span>
+        </p>
+        <p>
+          <label htmlFor="tags">Введите теги через пробел</label>
+        </p>
         <TextField
           typeText={"text"}
           valueText={tags}
@@ -53,10 +77,14 @@ const AccountPage = () => {
           nameText="теги"
           idText={"теги"}
         />
-        <Button
-          text="загрузить"
-          funcClick={handleUpload}
-        />
+        <p>
+          <span className="helper-text">
+            {error.tags === "" ? null : error.tags}
+          </span>
+        </p>
+
+        <Button text="загрузить" funcClick={handleUpload} />
+        {selectedFile && <InfoImage info={selectedFile} />}
       </div>
     </>
   );

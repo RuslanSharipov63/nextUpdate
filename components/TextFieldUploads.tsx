@@ -3,7 +3,7 @@ import { FC } from "react";
 
 type TextFieldUploadsProps = {
     typeText: string;
-    funcChange: (e: any) => void
+    funcChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 };
 
 const TextFieldUploads: FC<TextFieldUploadsProps> = ({
@@ -16,7 +16,7 @@ const TextFieldUploads: FC<TextFieldUploadsProps> = ({
             <input
                 type={typeText}
                 accept="image/*, .png,.jpg,.gif,.web,"
-                onChange={(e) => funcChange(e.target.files)}
+                onChange={(e) => funcChange(e)}
             />
         </>
     );
