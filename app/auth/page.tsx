@@ -2,9 +2,10 @@
 import { useState, useEffect } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
+import LabelText from "@/components/LabelText";
+import HelperText from "@/components/HelperText";
 import { validationEmail, validationPassword } from "@/helper/validation";
 import styles from "./auth.module.css";
-
 
 const AuthPage = () => {
   const [authInput, setAuthInput] = useState({
@@ -31,7 +32,6 @@ const AuthPage = () => {
     });
   };
 
-
   const checkAuth = (e: any) => {
     e.preventDefault();
     if (
@@ -49,12 +49,10 @@ const AuthPage = () => {
       <div></div>
       <form>
         <div>
-          <p>
-            <span className="helper-text">
-              {checkEmailPass ? null : "Некорректно заполнены поля"}
-            </span>
-          </p>
-          <label htmlFor="email">Электронная почта</label>
+          <HelperText
+            text={checkEmailPass ? null : "Некорректно заполнены поля"}
+          />
+          <LabelText text={"Электронная почта"} />
           <TextField
             typeText={"text"}
             valueText={authInput.email}
@@ -63,12 +61,10 @@ const AuthPage = () => {
             nameText="email"
             idText={"email"}
           />
-          <span className="helper-text">{error === "" ? null : error}</span>
+          <HelperText text={error === "" ? null : error} />
         </div>
         <div>
-          <p>
-            <label htmlFor="password">Пароль</label>
-          </p>
+          <LabelText text={"Пароль"} />
           <TextField
             typeText={"password"}
             valueText={authInput.password}

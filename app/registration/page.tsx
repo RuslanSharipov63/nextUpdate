@@ -7,6 +7,7 @@ import {
 } from "@/helper/validation";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
+import HelperText from "@/components/HelperText";
 import styles from "./registration.module.css";
 
 type stateProps = {
@@ -15,9 +16,9 @@ type stateProps = {
 
 const RegistrationPage = () => {
   const [registerInput, setRegisterInput] = useState<stateProps>({
-    email: "Email",
+    email: "",
     password: "",
-    firstName: "имя",
+    firstName: "",
   });
   const [error, setError] = useState({
     firstName: "",
@@ -65,12 +66,13 @@ const RegistrationPage = () => {
     e.preventDefault();
     if (
       validationPassword(registerInput.password) === false ||
-      validationEmail(registerInput.email) === false
+      validationEmail(registerInput.email) === false ||
+      validationFirstName(registerInput.firstName) === false
     ) {
       setCheckEmailPass(false);
-    } else {
-      alert("Вход разрешен");
+      return;
     }
+    alert("Вход разрешен");
   };
 
   return (
@@ -78,6 +80,7 @@ const RegistrationPage = () => {
       <div></div>
       <form>
         <div>
+          <HelperText text={checkEmailPass ? "" : "Данные некорректны"} />
           <p>
             <label htmlFor="firstname">Имя</label>
           </p>

@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
 import Button from "@/components/Button";
-/* import Image from "next/image";
-import styles from "./Account.module.css"; */
+/* import Image from "next/image";*/
+import styles from "./Account.module.css";
 import ProfileCard from "@/components/ProfileCard";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import TextField from "@/components/TextField";
 import InfoImage from "@/components/InfoImage";
+import HelperText from "@/components/HelperText";
+import LabelText from "@/components/LabelText";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 
@@ -27,11 +29,9 @@ const AccountPage = () => {
     setTags(e);
     setError({ ...error, fileUpload: "", tags: "" });
   };
-
   const handleFocus = () => {
     setTags("");
   };
-
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!selectedFile) {
@@ -48,27 +48,17 @@ const AccountPage = () => {
       });
       return;
     }
-
     alert("ok");
-    console.log(selectedFile);
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <ProfileCard />
-      <div className="z-depth-2">
-        <p>
-          <label htmlFor="tags">Загрузите файл</label>
-        </p>
+      <div className={`${styles.formContainer} z-depth-2`}>
+        <LabelText text={"Загрузите файл"} />
         <TextFieldUploads typeText={"file"} funcChange={handleChange} />
-        <p>
-          <span className="helper-text">
-            {error.fileUpload === "" ? null : error.fileUpload}
-          </span>
-        </p>
-        <p>
-          <label htmlFor="tags">Введите теги через пробел</label>
-        </p>
+        <HelperText text={error.fileUpload} />
+        <LabelText text={"Введите теги через пробел"} />
         <TextField
           typeText={"text"}
           valueText={tags}
@@ -77,16 +67,11 @@ const AccountPage = () => {
           nameText="теги"
           idText={"теги"}
         />
-        <p>
-          <span className="helper-text">
-            {error.tags === "" ? null : error.tags}
-          </span>
-        </p>
-
+        <HelperText text={error.tags} />
         <Button text="загрузить" funcClick={handleUpload} />
         {selectedFile && <InfoImage info={selectedFile} />}
       </div>
-    </>
+    </div>
   );
 };
 

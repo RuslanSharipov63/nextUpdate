@@ -15,7 +15,7 @@ const ProfileCard = () => {
                     />
                 </div>
                 <div className={styles.infoProfile}>
-                    <p className="black-text">Иван Иванов</p>
+                    <p className="black-text">Алина Шарипова</p>
                     <p className="black-text">Электронная почта: ivanov@mail.ru</p>
                     <p className="black-text">Кол-во фотографий: 544</p>
 
