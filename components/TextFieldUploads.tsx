@@ -13,11 +13,17 @@ const TextFieldUploads: FC<TextFieldUploadsProps> = ({
 
     return (
         <>
-            <input
-                type={typeText}
-                accept="image/*, .png,.jpg,.gif,.web,"
-                onChange={(e) => funcChange(e)}
-            />
+            <div className="file-field input-field">
+            <div className="btn">
+                <span>File</span>
+                <input
+                    type={typeText}
+                    accept="image/*, .png,.jpg,.gif,.web,"
+                    onChange={(e) => funcChange(e)}
+
+                />
+            </div>
+        </div>
         </>
     );
 };

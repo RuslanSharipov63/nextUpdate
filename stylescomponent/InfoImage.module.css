@@ -1,0 +1,14 @@
+.container {
+    margin-bottom: 10px;
+    
+}
+
+.collectionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 250px;
+    margin-top: 0rem !important;
+    margin-bottom: 0rem !important;
+    border-radius: 5px;
+}

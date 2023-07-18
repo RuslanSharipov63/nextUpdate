@@ -9,6 +9,8 @@ import TextField from "@/components/TextField";
 import InfoImage from "@/components/InfoImage";
 import HelperText from "@/components/HelperText";
 import LabelText from "@/components/LabelText";
+import Title from "@/components/Title";
+import PhotoList from "@/components/PhotoList";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 
@@ -52,26 +54,32 @@ const AccountPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <ProfileCard />
-      <div className={`${styles.formContainer} z-depth-2`}>
-        <LabelText text={"Загрузите файл"} />
-        <TextFieldUploads typeText={"file"} funcChange={handleChange} />
-        <HelperText text={error.fileUpload} />
-        <LabelText text={"Введите теги через пробел"} />
-        <TextField
-          typeText={"text"}
-          valueText={tags}
-          funcChange={tagsChange}
-          funcFocus={handleFocus}
-          nameText="теги"
-          idText={"теги"}
-        />
-        <HelperText text={error.tags} />
-        <Button text="загрузить" funcClick={handleUpload} />
+    <>
+      <div className={styles.container}>
+        <ProfileCard />
+        <div className={`${styles.formContainer} z-depth-2`}>
+          <LabelText text={"Загрузите файл"} />
+          <TextFieldUploads typeText={"file"} funcChange={handleChange} />
+          <HelperText text={error.fileUpload} />
+          <LabelText text={"Введите теги через пробел"} />
+          <TextField
+            typeText={"text"}
+            valueText={tags}
+            funcChange={tagsChange}
+            funcFocus={handleFocus}
+            nameText="теги"
+            idText={"теги"}
+          />
+          <HelperText text={error.tags} />
+          <Button text="загрузить" funcClick={handleUpload} />
+        </div>
         {selectedFile && <InfoImage info={selectedFile} />}
+
       </div>
-    </div>
+      <Title text={"Мои фотографии"} />
+      <PhotoList />
+
+    </>
   );
 };
 

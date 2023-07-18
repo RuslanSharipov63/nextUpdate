@@ -1,4 +1,5 @@
 import { FC } from "react";
+import styles from './../stylescomponent/InfoImage.module.css'
 
 type info = {
   [x: string]: any;
@@ -6,8 +7,8 @@ type info = {
 
 const InfoImage: FC<info> = (props) => {
   return (
-    <div className="col s3 offset-s2">
-      <ul className="collection">
+    <div className={`${styles.container} col s3 offset-s2`}>
+      <ul className={`${styles.collectionContainer} collection`}>
         <li className="collection-item">имя: {props.info.name}</li>
         <li className="collection-item">тип: {props.info.type}</li>
         <li className="collection-item">

@@ -8,6 +8,7 @@ import {
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import HelperText from "@/components/HelperText";
+import LabelText from "@/components/LabelText";
 import styles from "./registration.module.css";
 
 type stateProps = {
@@ -81,9 +82,7 @@ const RegistrationPage = () => {
       <form>
         <div>
           <HelperText text={checkEmailPass ? "" : "Данные некорректны"} />
-          <p>
-            <label htmlFor="firstname">Имя</label>
-          </p>
+          <LabelText text={'имя'} />
           <TextField
             typeText={"text"}
             valueText={registerInput.firstName}
@@ -93,12 +92,8 @@ const RegistrationPage = () => {
             idText={"firstname"}
             funcBlur={handleBlur}
           />
-          <p>
-            <span className="helper-text">
-              {error.firstName === "" ? null : error.firstName}
-            </span>
-          </p>
-          <label htmlFor="email">Электронная почта</label>
+          <HelperText text={error.firstName === "" ? null : error.firstName} />
+          <LabelText text={'Электронная почта'} />
           <TextField
             typeText={"text"}
             valueText={registerInput.email}
@@ -108,14 +103,8 @@ const RegistrationPage = () => {
             idText={"email"}
             funcBlur={handleBlur}
           />
-          <p>
-            <span className="helper-text">
-              {error.email === "" ? null : error.email}
-            </span>
-          </p>
-          <p>
-            <label htmlFor="password">Пароль</label>
-          </p>
+          <HelperText text={error.email === "" ? null : error.email} />
+          <LabelText text={'Пароль'} />
           <TextField
             typeText={"password"}
             valueText={registerInput.password}
@@ -125,11 +114,7 @@ const RegistrationPage = () => {
             idText={"pass"}
             funcBlur={handleBlur}
           />
-          <p>
-            <span className="helper-text">
-              {error.password === "" ? null : error.password}
-            </span>
-          </p>
+          <HelperText text={error.password === "" ? null : error.password} />
         </div>
         <Button text={"войти"} funcClick={checkAuth} />
       </form>
