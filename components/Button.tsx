@@ -1,4 +1,5 @@
 import { FC } from "react";
+import style from "./../stylescomponent/Button.module.css";
 
 type ButtonProps = {
   text: string;
@@ -6,10 +7,9 @@ type ButtonProps = {
 };
 
 const Button: FC<ButtonProps> = ({ text, funcClick }) => {
-
   return (
     <button
-      className="btn waves-effect waves-light"
+      className={`${style.button} btn waves-effect waves-light`}
       value="ANY_VALUE_HERE"
       type="submit"
       onClick={(e) => funcClick(e)}

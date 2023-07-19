@@ -1,4 +1,5 @@
 .container {
+<<<<<<< HEAD
     display: grid;
     grid-row-gap: 1%;
     padding: 2%;
@@ -22,3 +23,19 @@
         justify-content: center;
     }
 }
+=======
+  display: grid;
+  grid-row-gap: 1%;
+  padding: 2%;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 700px) {
+  .container {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-column-gap: 2%;
+    justify-content: center;
+  }
+}
+>>>>>>> 726d07ee7bfba54079cc46bf8213621780d47766
