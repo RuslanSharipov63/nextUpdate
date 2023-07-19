@@ -2,12 +2,22 @@
     display: grid;
     grid-row-gap: 1%;
     padding: 2%;
+    margin-bottom: 40px;
 }
 
 @media screen and (min-width: 600px) {
     .container {
         display: grid;
-        grid-template-columns: 30% 30% 30%;
+        grid-template-columns: 45% 45%;
+        grid-column-gap: 2%;
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 850px) {
+    .container {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
         grid-column-gap: 2%;
         justify-content: center;
     }

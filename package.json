@@ -6,7 +6,8 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions"
   },
   "dependencies": {
     "@types/node": "20.4.1",
@@ -14,10 +15,15 @@
     "@types/react-dom": "18.2.6",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
+    "mongoose": "^7.4.0",
     "next": "13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.1",
     "typescript": "5.1.6"
+  },
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
   }
 }

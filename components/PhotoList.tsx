@@ -6,6 +6,7 @@ import style from './../stylescomponent/PhotoList.module.css'
 const PhotoList = () => {
     return (
         <>
+
             <div className={style.container}>
                 <div className="card">
                     <div className="card-image">
