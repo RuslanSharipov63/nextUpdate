@@ -77,7 +77,7 @@ const AccountPage = () => {
 
       </div>
       <Title text={"Мои фотографии"} />
-      <PhotoList />
+  {/*     <PhotoList /> */}
 
     </>
   );

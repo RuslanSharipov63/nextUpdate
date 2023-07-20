@@ -1,22 +1,28 @@
+"use client"
 import styles from './page.module.css'
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
+import { useEffect } from 'react';
+import { PhotoListAsyncThunk } from '@/store/PhotoListSlice';
+import PhotoList from '@/components/PhotoList';
 
-async function getData() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users',
-    { next: { revalidate: 60 } })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
 
-  return res.json()
-}
 
-export default async function Home() {
-  const data = await getData()
+export default function Home() {
+  const dispatch = useAppDispatch();
+  const { list, loading } = useAppSelector(state => state.PhotoListSlice)
 
+  useEffect(() => {
+    dispatch(PhotoListAsyncThunk())
+  }, [])
+
+
+
+  console.log(list)
   return (
     <main className={styles.main}>
-      <h1 className="blue-text text-darken-2">Hello new project</h1>
-      {data.map((item: any) => <div key={item.id}>{item.name}</div>)}
+      {loading === 'pending' && <p>Идет загрузка...</p>}
+      {loading === 'failed' && <p>Произошла ошибка</p>}
+      {loading === 'succeeded' && <PhotoList list={list} />}
     </main>
   );
 }

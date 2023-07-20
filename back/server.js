@@ -15,12 +15,15 @@ const {
     updateTags,
 } = require("./controllers/PhotoController");
 const handleValidationErrors = require("./utils/handleValidationsErrors");
+const cors = require('cors');
+
+
 
 const PORT = 4000;
 const URL = "mongodb://localhost:27017/photobox";
 
 const app = express();
-
+app.use(cors());
 /* мы должны сказать express, что ты должен проверить если тебе придет любой запрос на uploads то тогда из библиотеки express возьми функцию static и проверяем есть ли в этой папке uploads то что тебе дают. это нужно если например мы откроем http::/localhost:4000/и имя нашего файла - чтобы отображалась картинка, а то ее не будет, будет ошибка - что такого роута нет*/
 app.use(express.json());
 
