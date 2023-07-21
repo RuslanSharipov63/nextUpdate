@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const BASE_URL = 'http://localhost:4000'
+
 export const PhotoListAsyncThunk = createAsyncThunk(
     "photo/getAllPhoto",
     async function (_, thunkAPI) {
-        const response = await fetch("http://localhost:4000/photos", {
+        const response = await fetch(`${BASE_URL}/photos`, {
             next: { revalidate: 60 }
         });
         const data = await response.json();
@@ -46,6 +48,7 @@ export const PhotoListSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(PhotoListAsyncThunk.pending, (state) => {
+                state.list = []
                 state.loading = "pending";
             })
             .addCase(PhotoListAsyncThunk.fulfilled, (state, action) => {
@@ -53,6 +56,7 @@ export const PhotoListSlice = createSlice({
                 state.loading = "succeeded";
             })
             .addCase(PhotoListAsyncThunk.rejected, (state) => {
+                state.list = []
                 state.loading = "failed";
             })
 

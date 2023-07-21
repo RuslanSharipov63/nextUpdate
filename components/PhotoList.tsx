@@ -2,9 +2,6 @@ import Image from "next/image";
 import { FC } from "react";
 import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
-
-import err from './../back/uploads'
-
 import { IinitialStateList } from "@/store/PhotoListSlice";
 
 type PhotoListProps = {
@@ -23,7 +20,7 @@ const PhotoList: FC<PhotoListProps> = ({ list }) => {
         <div className="card" key={item._id}>
           <div className="card-image">
             <Image
-              src={`/../back/uploads/${item.imageURL}`}
+              src={`/../public/image/photo/s1200.jpg`}
               width={200}
               height={300}
               alt="картинка"
@@ -34,10 +31,10 @@ const PhotoList: FC<PhotoListProps> = ({ list }) => {
           </div>
           <div className="card-content">
             <p>
-              {item.tags.join(' ')}
+              теги: {item.tags.join(' ')}
             </p>
             <p>
-              {item.size} мб
+              размер: {item.size} мб
             </p>
           </div>
           <div className="card-action">

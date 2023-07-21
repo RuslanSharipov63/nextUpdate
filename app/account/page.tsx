@@ -21,10 +21,12 @@ const AccountPage = () => {
     fileUpload: "",
     tags: "",
   });
+  const [preView, setPreView] = useState('')
 
   const handleChange = (e: any) => {
     setSelectedFile(e.target.files[0]);
     setError({ ...error, fileUpload: "", tags: "" });
+    setPreView(URL.createObjectURL(e.target.files[0]))
   };
 
   const tagsChange = (e: string) => {
@@ -73,11 +75,11 @@ const AccountPage = () => {
           <HelperText text={error.tags} />
           <Button text="загрузить" funcClick={handleUpload} />
         </div>
-        {selectedFile && <InfoImage info={selectedFile} />}
+        {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
 
       </div>
       <Title text={"Мои фотографии"} />
-  {/*     <PhotoList /> */}
+      {/*     <PhotoList /> */}
 
     </>
   );

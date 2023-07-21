@@ -1,8 +1,10 @@
 import { FC } from "react";
+import Image from "next/image";
 import styles from './../stylescomponent/InfoImage.module.css'
 
 type info = {
   [x: string]: any;
+  preView: string;
 };
 
 const InfoImage: FC<info> = (props) => {
@@ -17,6 +19,16 @@ const InfoImage: FC<info> = (props) => {
         <li className="collection-item">
           дата последнего изменения:{" "}
           {props.info.lastModifiedDate.toLocaleDateString()}
+        </li>
+        <li>
+          <Image
+            src={props.preView}
+            width={100}
+            height={100}
+            alt="картинка"
+            priority={true}
+            style={{ objectFit: "cover" }}
+          /> 
         </li>
       </ul>
     </div>
