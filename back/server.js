@@ -10,7 +10,7 @@ const { register, login, getMe } = require("./controllers/UserController");
 const {
     create,
     getAll,
-    getOne,
+    getOne, 
     remove,
     updateTags,
 } = require("./controllers/PhotoController");
