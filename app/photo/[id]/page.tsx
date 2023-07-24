@@ -6,6 +6,8 @@ import PhotoList from "@/components/PhotoList";
 import Title from "@/components/Title";
 import { fetchPhoto } from "@/store/PhotoSlice";
 import Loader from "@/components/Loader";
+import { IinitialStateList } from "@/types/type";
+
 
 type PhotoProp = {
   id: string;
@@ -14,16 +16,26 @@ type PhotoProp = {
 const Photo: FC<PhotoProp> = ({ id }) => {
   const dispath = useAppDispatch();
   const paramsId = useParams();
-
-  useEffect(() => {
-    dispath(fetchPhoto(paramsId.id));
-  }, []);
-
+  const [a, setA] = useState<IinitialStateList[]>()
   const { list, loading } = useAppSelector((state) => state.PhotoSlice);
+
+  const funcD = () => {
+    setA(list)
+  }
+  useEffect(() => {
+    if (list.length > 0) {
+      dispath(fetchPhoto(paramsId.id));
+      funcD()
+      return
+    }
+
+  }, [a]);
+
+console.log(a)
 
   return (
     <>
-      {loading === "pending" && <Loader /> }
+     {/*  {loading === "pending" && <Loader />}
       {loading === "rejected" && 'Ошибка сервера'}
       {loading === "fulfilled" && (
         <PhotoList
@@ -36,7 +48,7 @@ const Photo: FC<PhotoProp> = ({ id }) => {
           createdAt={list[0].createdAt}
         />
       )}
-      <Title text={"Другие фото автора"} />
+      <Title text={"Другие фото автора"} /> */}
     </>
   );
 };

@@ -14,6 +14,7 @@ export default function Home() {
     dispatch(PhotoListAsyncThunk());
   }, []);
 
+
   return (
     <main className={styles.main}>
       {loading === "pending" && <Loader />}
