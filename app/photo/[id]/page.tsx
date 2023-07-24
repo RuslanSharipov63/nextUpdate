@@ -1,42 +1,28 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import PhotoList from "@/components/PhotoList";
 import Title from "@/components/Title";
 import { fetchPhoto } from "@/store/PhotoSlice";
 import Loader from "@/components/Loader";
-import { IinitialStateList } from "@/types/type";
+import StatusTextForServer from "@/components/StatusTextFoServer";
 
-
-type PhotoProp = {
-  id: string;
-};
-
-const Photo: FC<PhotoProp> = ({ id }) => {
+const Photo = () => {
   const dispath = useAppDispatch();
-  const paramsId = useParams();
-  const [a, setA] = useState<IinitialStateList[]>()
+  const params = useParams();
+
   const { list, loading } = useAppSelector((state) => state.PhotoSlice);
-
-  const funcD = () => {
-    setA(list)
-  }
   useEffect(() => {
-    if (list.length > 0) {
-      dispath(fetchPhoto(paramsId.id));
-      funcD()
-      return
-    }
-
-  }, [a]);
-
-console.log(a)
+    dispath(fetchPhoto(params.id));
+  }, []);
 
   return (
     <>
-     {/*  {loading === "pending" && <Loader />}
-      {loading === "rejected" && 'Ошибка сервера'}
+      {loading === "pending" && <Loader />}
+      {loading === "rejected" && (
+        <StatusTextForServer text={"Ошибка сервера"} />
+      )}
       {loading === "fulfilled" && (
         <PhotoList
           key={list[0]._id}
@@ -48,7 +34,7 @@ console.log(a)
           createdAt={list[0].createdAt}
         />
       )}
-      <Title text={"Другие фото автора"} /> */}
+      <Title text={"Другие фото автора"} />
     </>
   );
 };

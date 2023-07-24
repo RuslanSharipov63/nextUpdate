@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { PhotoListAsyncThunk } from "@/store/PhotoListSlice";
 import PhotoList from "@/components/PhotoList";
 import Loader from "@/components/Loader";
+import StatusTextForServer from "@/components/StatusTextFoServer";
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -14,11 +15,12 @@ export default function Home() {
     dispatch(PhotoListAsyncThunk());
   }, []);
 
-
   return (
     <main className={styles.main}>
       {loading === "pending" && <Loader />}
-      {loading === "rejected" && <p>Произошла ошибка</p>}
+      {loading === "rejected" && (
+        <StatusTextForServer text={"Ошибка сервера"} />
+      )}
       {loading === "fulfilled" &&
         list.map((item) => (
           <PhotoList

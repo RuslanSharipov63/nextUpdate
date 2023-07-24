@@ -4,5 +4,5 @@ export const foBuilderRedux = (
   stateParam: initialStateType,
   statusLoader: string
 ): string => {
-  return (stateParam.loading = "statusLoader");
+  return (stateParam.loading = statusLoader);
 };
