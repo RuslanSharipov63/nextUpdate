@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IinitialStateList,initialStateType } from "@/types/type";
+import { initialStateType } from "@/types/type";
 import { BASE_URL } from "@/baseValue";
 
 export const PhotoListAsyncThunk = createAsyncThunk(
@@ -12,6 +12,8 @@ export const PhotoListAsyncThunk = createAsyncThunk(
     return data;
   }
 );
+
+
 
 
 const initialState: initialStateType = {
@@ -52,7 +54,7 @@ export const PhotoListSlice = createSlice({
       .addCase(PhotoListAsyncThunk.rejected, (state) => {
         state.list = [];
         state.loading = "rejected";
-      });
+      })
   },
 });
 

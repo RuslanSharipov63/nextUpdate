@@ -1,6 +1,7 @@
 
 
 export type User = {
+  [x: string]: any;
   _id: string;
   fullName: string;
   email: string;
@@ -19,6 +20,7 @@ export interface IinitialStateList {
 }
 
 export type initialStateType = {
+  [x: string]: any;
   list: IinitialStateList[];
   loading: string;
 };

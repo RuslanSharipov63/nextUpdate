@@ -2,7 +2,7 @@ import { FC } from "react";
 import style from "./../stylescomponent/Button.module.css";
 
 type ButtonProps = {
-  text: string;
+  text?: string;
   funcClick: (e: any) => void;
 };
 

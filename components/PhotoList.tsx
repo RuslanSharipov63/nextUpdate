@@ -12,6 +12,7 @@ type PhotoListProps = {
   size: number;
   user: string;
   createdAt: string;
+  textForButton?: string
 };
 
 const PhotoList: FC<PhotoListProps> = ({
@@ -21,11 +22,12 @@ const PhotoList: FC<PhotoListProps> = ({
   size,
   user,
   createdAt,
+  textForButton
 }) => {
-  const funcDeletePhoto = () => {
-    alert("Фото удалено");
-  };
 
+  const funcDeletePhoto = () => {
+    alert('Фото удалено')
+  }
   const t = createdAt.indexOf("T");
   const dateCreatePhoto = createdAt.slice(0, t);
 
@@ -50,9 +52,11 @@ const PhotoList: FC<PhotoListProps> = ({
           <p>размер: {size} мб</p>
           <p>дата создания: {dateCreatePhoto}</p>
         </div>
-        <div className="card-action">
-          <Button text={"удалить"} funcClick={funcDeletePhoto} />
-        </div>
+        {textForButton &&
+          <div className="card-action">
+            <Button text={textForButton && textForButton} funcClick={funcDeletePhoto} />
+          </div>}
+
       </div>
     </div>
   );

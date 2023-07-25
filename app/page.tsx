@@ -31,6 +31,7 @@ export default function Home() {
             size={item.size}
             user={item.user.fullName}
             createdAt={item.createdAt}
+           
           />
         ))}
     </main>

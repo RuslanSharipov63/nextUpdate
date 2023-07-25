@@ -20,7 +20,7 @@ const getOne = async (req, res) => {
   try {
     const photoId = req.params.id;
     /* у  mongodb есть метод findOneById - чтобы получить что-то по id. но нам надо вместе с открытием фото еще и обновлять кол-во просмотров. поэтому сделаем по-другому. это он сделает, а нам число просмотров не надо */
-    const photo = await PhotoModel.findById(photoId);
+    const photo = await PhotoModel.findById(photoId).populate("user").exec();
     if (!photo) {
       return res.json({
         mesage: "Фотография не найдена",
@@ -34,6 +34,20 @@ const getOne = async (req, res) => {
     });
   }
 };
+
+/* получаем все фото автора по id автора*/
+const getAllPhotoForUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const allPhotoAuthor = await PhotoModel.find({ user: userId });
+    return res.json(allPhotoAuthor);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Ошибка сервера",
+    });
+  }
+}
 
 const create = async (req, res) => {
   try {
@@ -88,4 +102,4 @@ const updateTags = async (req, res) => {
   }
 }
 
-module.exports = { create, getAll, getOne, remove, updateTags };
+module.exports = { create, getAll, getOne, remove, updateTags, getAllPhotoForUserId };

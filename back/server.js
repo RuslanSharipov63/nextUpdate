@@ -10,9 +10,10 @@ const { register, login, getMe } = require("./controllers/UserController");
 const {
     create,
     getAll,
-    getOne, 
+    getOne,
     remove,
     updateTags,
+    getAllPhotoForUserId
 } = require("./controllers/PhotoController");
 const handleValidationErrors = require("./utils/handleValidationsErrors");
 const cors = require('cors');
@@ -84,3 +85,5 @@ app.post("/photo", checkAuth, photoValidation, handleValidationErrors, create);
 app.delete("/photo/:id", checkAuth, remove);
 /* обновляем фото */
 app.patch("/photo/:id", checkAuth, photoValidation, handleValidationErrors, updateTags);
+/* получаем фото по id автора */
+app.get('/photos/:id', getAllPhotoForUserId)
