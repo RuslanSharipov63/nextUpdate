@@ -1,13 +1,16 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useAppDispatch } from "@/hooks/hooks";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import LabelText from "@/components/LabelText";
 import HelperText from "@/components/HelperText";
 import { validationEmail, validationPassword } from "@/helper/validation";
+import { fetchAuth } from "@/store/AuthSlice";
 import styles from "./auth.module.css";
 
 const AuthPage = () => {
+  const dispatch = useAppDispatch();
   const [authInput, setAuthInput] = useState({
     email: "Email",
     password: "",
@@ -39,8 +42,9 @@ const AuthPage = () => {
       validationEmail(authInput.email) === false
     ) {
       setCheckEmailPass(false);
+      return;
     } else {
-      alert("Вход разрешен");
+      dispatch(fetchAuth(authInput));
     }
   };
 

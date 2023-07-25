@@ -1,5 +1,3 @@
-
-
 export type User = {
   [x: string]: any;
   _id: string;
@@ -25,4 +23,14 @@ export type initialStateType = {
   loading: string;
 };
 
+type userDataType = {
+  fullName:  string;
+  email: string;
+  avatarUrl: string;
+  token: string 
+}
 
+export type InitialStateAuthType = {
+  userData: userDataType;
+  loading: boolean
+};

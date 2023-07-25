@@ -1,29 +1,52 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { BASE_URL } from "@/baseValue";
+import { InitialStateAuthType, IinitialStateList } from "@/types/type";
 
-type InitialState = {
-    value: AuthState;
-}
+export const fetchAuth = createAsyncThunk(
+  "name/fetchauth",
+  async function (value: { email: string; password: string }, thunkAPI) {
+    const formData = await new FormData();
+    formData.append("email", value.email);
+    formData.append("password", value.password);
+    console.log(formData);
+    const response = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    return data;
+  }
+);
 
-type AuthState = {
-    isAuth: boolean;
-    username: string;
-    uid: string,
+const initialState: InitialStateAuthType = {
+  userData: {
+    fullName: "",
+    email: "",
+    avatarUrl: "",
+    token: "",
+  },
+  loading: false,
+};
 
-}
+const AuthSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAuth.pending, (state, action) => {
+        state.userData && action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchAuth.fulfilled, (state, action) => {
+        state.userData = action.payload;
+        state.loading = true;
+      })
+      .addCase(fetchAuth.rejected, (state, action) => {
+        state.userData && action.payload;
+        state.loading = false;
+      });
+  },
+});
 
-const initialState = {
-    value: {
-        isAuth: false,
-        username: '',
-        uid: "",
-
-    } as AuthState,
-} as InitialState;
-
-export const Auth = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        
-    }
-}) 
+export default AuthSlice.reducer;
