@@ -58,7 +58,7 @@ const AuthPage = () => {
           />
           <LabelText text={"Электронная почта"} />
           <TextField
-            typeText={"text"}
+            typeText={"email"}
             valueText={authInput.email}
             funcChange={handleChange}
             funcFocus={handleFocus}

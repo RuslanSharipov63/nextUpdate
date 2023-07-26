@@ -5,14 +5,20 @@ import { InitialStateAuthType, IinitialStateList } from "@/types/type";
 export const fetchAuth = createAsyncThunk(
   "name/fetchauth",
   async function (value: { email: string; password: string }, thunkAPI) {
-    const formData = await new FormData();
-    formData.append("email", value.email);
-    formData.append("password", value.password);
-    console.log(formData);
+
+    const userData = {
+      email: value.email,
+      password: value.password,
+    }
+    const JSONdata = JSON.stringify(userData)
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
-      body: formData,
-    });
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSONdata,
+    }
+    );
     const data = await response.json();
     return data;
   }
