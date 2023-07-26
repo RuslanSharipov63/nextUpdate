@@ -48,6 +48,8 @@ const AuthPage = () => {
     }
   };
 
+
+  
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
       <div></div>

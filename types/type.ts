@@ -24,13 +24,16 @@ export type initialStateType = {
 };
 
 type userDataType = {
+  _id: string;
   fullName:  string;
   email: string;
+  createdAt: string;
+  updatedAt: string
   avatarUrl: string;
   token: string 
 }
 
 export type InitialStateAuthType = {
   userData: userDataType;
-  loading: boolean
+  loading: boolean | string
 };

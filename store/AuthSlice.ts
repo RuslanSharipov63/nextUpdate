@@ -5,20 +5,18 @@ import { InitialStateAuthType, IinitialStateList } from "@/types/type";
 export const fetchAuth = createAsyncThunk(
   "name/fetchauth",
   async function (value: { email: string; password: string }, thunkAPI) {
-
     const userData = {
       email: value.email,
       password: value.password,
-    }
-    const JSONdata = JSON.stringify(userData)
+    };
+    const JSONdata = JSON.stringify(userData);
     const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSONdata,
-    }
-    );
+    });
     const data = await response.json();
     return data;
   }
@@ -26,8 +24,11 @@ export const fetchAuth = createAsyncThunk(
 
 const initialState: InitialStateAuthType = {
   userData: {
+    _id: "",
     fullName: "",
     email: "",
+    createdAt: "",
+    updatedAt: "",
     avatarUrl: "",
     token: "",
   },
@@ -42,7 +43,7 @@ const AuthSlice = createSlice({
     builder
       .addCase(fetchAuth.pending, (state, action) => {
         state.userData && action.payload;
-        state.loading = false;
+        state.loading = "loading";
       })
       .addCase(fetchAuth.fulfilled, (state, action) => {
         state.userData = action.payload;
