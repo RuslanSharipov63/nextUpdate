@@ -1,6 +1,7 @@
 "use client";
+import { redirect } from 'next/navigation'
 import { useState } from "react";
-import { useAppDispatch } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import LabelText from "@/components/LabelText";
@@ -10,6 +11,7 @@ import { fetchAuth } from "@/store/AuthSlice";
 import styles from "./auth.module.css";
 
 const AuthPage = () => {
+  const { userData, loading } = useAppSelector(state => state.AuthSlice)
   const dispatch = useAppDispatch();
   const [authInput, setAuthInput] = useState({
     email: "Email",
@@ -35,21 +37,40 @@ const AuthPage = () => {
     });
   };
 
-  const checkAuth = (e: any) => {
+  const checkAuth = async (e: any) => {
     e.preventDefault();
     if (
       validationPassword(authInput.password) === false ||
       validationEmail(authInput.email) === false
     ) {
-      setCheckEmailPass(false);
+      await setCheckEmailPass(false);
       return;
     } else {
-      dispatch(fetchAuth(authInput));
+      const userdata = await dispatch(fetchAuth(authInput));
+      if ('message' in userdata.payload) {
+        await setCheckEmailPass(false);
+        return
+      }
+      if (!('message' in userdata.payload)) {
+        await window.localStorage.setItem('token', userdata.payload.token)
+        redirect('/account');
+     
+      }
     }
   };
 
+  /* const redirectAfterAuth = () => {
+    if (userData != undefined && 'token' in userData) {
+      window.localStorage.setItem('token', userData.token)
+      return;
+    } else {
+     setCheckEmailPass(false);
+    }
 
-  
+  } */
+
+
+
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
       <div></div>
