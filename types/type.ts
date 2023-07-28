@@ -23,17 +23,19 @@ export type initialStateType = {
   loading: string;
 };
 
-type userDataType = {
+export type userDataType = {
   _id: string;
   fullName:  string;
   email: string;
   createdAt: string;
   updatedAt: string
   avatarUrl: string;
-  token: string 
+  token?: string 
 }
 
 export type InitialStateAuthType = {
   userData: userDataType;
   loading: boolean | string
 };
+
+

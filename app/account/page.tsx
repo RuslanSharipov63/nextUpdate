@@ -1,5 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
+import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
+import { fetchAuthMe } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
 /* import Image from "next/image";*/
 import styles from "./Account.module.css";
@@ -12,9 +16,14 @@ import LabelText from "@/components/LabelText";
 import Title from "@/components/Title";
 import PhotoList from "@/components/PhotoList";
 
+
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 
 const AccountPage = () => {
+  const { push } = useRouter();
+  const dispatch = useAppDispatch();
+  const { userData, loading } = useAppSelector(state => state.AuthMeSlice)
+  const photolistuathor = useAppSelector(state => state.PhotosAuthorSlice)
   const [selectedFile, setSelectedFile] = useState(null);
   const [tags, setTags] = useState("");
   const [error, setError] = useState({
@@ -22,6 +31,11 @@ const AccountPage = () => {
     tags: "",
   });
   const [preView, setPreView] = useState('')
+
+  useEffect(() => {
+    dispatch(fetchPhotosAuthor(userData._id))
+    dispatch(fetchAuthMe())
+  }, [])
 
   const handleChange = (e: any) => {
     setSelectedFile(e.target.files[0]);
@@ -55,10 +69,17 @@ const AccountPage = () => {
     alert("ok");
   };
 
+  const checkUserDataMessage = () => {
+    if ('message' in userData)
+      push('/auth');
+    return;
+  }
+
   return (
     <>
+      {checkUserDataMessage()}
       <div className={styles.container}>
-        <ProfileCard />
+        <ProfileCard userData={userData} loading={loading} photolistuathorcount={photolistuathor.list.length} />
         <div className={`${styles.formContainer} z-depth-2`}>
           <LabelText text={"Загрузите файл"} />
           <TextFieldUploads typeText={"file"} funcChange={handleChange} />
@@ -79,7 +100,7 @@ const AccountPage = () => {
 
       </div>
       <Title text={"Мои фотографии"} />
-      {/*     <PhotoList /> */}
+      {/*     <PhotoList photolistuathor={photolistuathor}/> */}
 
     </>
   );

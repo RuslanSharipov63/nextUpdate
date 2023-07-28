@@ -66,7 +66,7 @@ app.post("/auth/register", registerValidation, handleValidationErrors, register)
 /* нам нужно проверить можем ли мы получить информацию о себе */
 /* может ли пользователь получить информацию о себе */
 
-app.get("auth/me", checkAuth, getMe);
+app.get("/auth/me", checkAuth, getMe);
 
 app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
     /* если все нормально (а за  это отвечает второй параметр функции), то мы возвращаем путь к файлу, то есть ссылку */

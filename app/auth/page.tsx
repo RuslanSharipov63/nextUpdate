@@ -1,5 +1,5 @@
 "use client";
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import TextField from "@/components/TextField";
@@ -11,7 +11,7 @@ import { fetchAuth } from "@/store/AuthSlice";
 import styles from "./auth.module.css";
 
 const AuthPage = () => {
-  const { userData, loading } = useAppSelector(state => state.AuthSlice)
+  const { push } = useRouter();
   const dispatch = useAppDispatch();
   const [authInput, setAuthInput] = useState({
     email: "Email",
@@ -43,18 +43,18 @@ const AuthPage = () => {
       validationPassword(authInput.password) === false ||
       validationEmail(authInput.email) === false
     ) {
-      await setCheckEmailPass(false);
+      setCheckEmailPass(false);
       return;
     } else {
       const userdata = await dispatch(fetchAuth(authInput));
       if ('message' in userdata.payload) {
-        await setCheckEmailPass(false);
+        setCheckEmailPass(false);
         return
       }
       if (!('message' in userdata.payload)) {
-        await window.localStorage.setItem('token', userdata.payload.token)
-        redirect('/account');
-     
+        window.localStorage.setItem('token', userdata.payload.token)
+        push('/account');
+
       }
     }
   };
