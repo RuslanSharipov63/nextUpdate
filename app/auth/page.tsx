@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import TextField from "@/components/TextField";
@@ -47,29 +47,16 @@ const AuthPage = () => {
       return;
     } else {
       const userdata = await dispatch(fetchAuth(authInput));
-      if ('message' in userdata.payload) {
+      if ("message" in userdata.payload) {
         setCheckEmailPass(false);
-        return
+        return;
       }
-      if (!('message' in userdata.payload)) {
-        window.localStorage.setItem('token', userdata.payload.token)
-        push('/account');
-
+      if (!("message" in userdata.payload)) {
+        window.localStorage.setItem("token", userdata.payload.token);
+        push(`/account/${userdata.payload._id}`);
       }
     }
   };
-
-  /* const redirectAfterAuth = () => {
-    if (userData != undefined && 'token' in userData) {
-      window.localStorage.setItem('token', userData.token)
-      return;
-    } else {
-     setCheckEmailPass(false);
-    }
-
-  } */
-
-
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>

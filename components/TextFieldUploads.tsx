@@ -20,6 +20,7 @@ const TextFieldUploads: FC<TextFieldUploadsProps> = ({
                     type={typeText}
                     accept="image/*, .png,.jpg,.gif,.web,"
                     onChange={(e) => funcChange(e)}
+                    name="image"
                 />
             </div>
         </div>

@@ -12,24 +12,17 @@ export const metadata: Metadata = {
   description: "Больше крутых фотографий",
 };
 
-
-
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
-
   return (
     <html lang="ru">
       <body className={inter.className}>
         <Header />
-        <ReduxProvider>
-          {children}
-          </ReduxProvider>
-          <Footer />
+        <ReduxProvider>{children}</ReduxProvider>
+        <Footer />
       </body>
     </html>
   );

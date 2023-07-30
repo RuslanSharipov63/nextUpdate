@@ -5,6 +5,8 @@ import Link from "next/link";
 import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
 
+/* import s from './../back/uploads/' */
+
 type PhotoListProps = {
   id: string;
   imageURL: string;

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
@@ -16,31 +16,31 @@ import LabelText from "@/components/LabelText";
 import Title from "@/components/Title";
 import PhotoList from "@/components/PhotoList";
 
-
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 
 const AccountPage = () => {
+  const params = useParams();
   const { push } = useRouter();
   const dispatch = useAppDispatch();
-  const { userData, loading } = useAppSelector(state => state.AuthMeSlice)
-  const photolistuathor = useAppSelector(state => state.PhotosAuthorSlice)
+  const { userData, loading } = useAppSelector((state) => state.AuthMeSlice);
+  const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
   const [selectedFile, setSelectedFile] = useState(null);
   const [tags, setTags] = useState("");
   const [error, setError] = useState({
     fileUpload: "",
     tags: "",
   });
-  const [preView, setPreView] = useState('')
+  const [preView, setPreView] = useState("");
 
   useEffect(() => {
-    dispatch(fetchPhotosAuthor(userData._id))
-    dispatch(fetchAuthMe())
-  }, [])
+    dispatch(fetchPhotosAuthor(params.id));
+    dispatch(fetchAuthMe());
+  }, []);
 
   const handleChange = (e: any) => {
     setSelectedFile(e.target.files[0]);
     setError({ ...error, fileUpload: "", tags: "" });
-    setPreView(URL.createObjectURL(e.target.files[0]))
+    setPreView(URL.createObjectURL(e.target.files[0]));
   };
 
   const tagsChange = (e: string) => {
@@ -70,16 +70,19 @@ const AccountPage = () => {
   };
 
   const checkUserDataMessage = () => {
-    if ('message' in userData)
-      push('/auth');
+    if ("message" in userData) push("/auth");
     return;
-  }
+  };
 
   return (
     <>
       {checkUserDataMessage()}
       <div className={styles.container}>
-        <ProfileCard userData={userData} loading={loading} photolistuathorcount={photolistuathor.list.length} />
+        <ProfileCard
+          userData={userData}
+          loading={loading}
+          photolistuathorcount={list.length}
+        />
         <div className={`${styles.formContainer} z-depth-2`}>
           <LabelText text={"Загрузите файл"} />
           <TextFieldUploads typeText={"file"} funcChange={handleChange} />
@@ -97,11 +100,33 @@ const AccountPage = () => {
           <Button text="загрузить" funcClick={handleUpload} />
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
-
       </div>
       <Title text={"Мои фотографии"} />
-      {/*     <PhotoList photolistuathor={photolistuathor}/> */}
-
+      {list.length === 0 ? (
+        <Title text={"Вы пока не загружали фотографии"} />
+      ) : (
+        list.map(
+          (item: {
+            _id: string;
+            imageURL: string;
+            tags: string[];
+            size: number;
+            user: { fullName: string };
+            createdAt: string;
+          }) => (
+            <PhotoList
+              key={item._id}
+              id={item._id}
+              imageURL={item.imageURL}
+              tags={item.tags}
+              size={item.size}
+              user={item.user.fullName}
+              createdAt={item.createdAt}
+              textForButton={"удалить"}
+            />
+          )
+        )
+      )}
     </>
   );
 };

@@ -9,6 +9,9 @@ export const fetchAuthMe = createAsyncThunk(
         const response = await fetch(`${BASE_URL}/auth/me`, {
             headers: {
                 "Authorization": `Bearer ${token}`
+            },
+            next: {
+                revalidate: 10
             }
         })
         const data = await response.json();

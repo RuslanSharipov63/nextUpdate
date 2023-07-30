@@ -7,10 +7,10 @@ import PhotoList from "@/components/PhotoList";
 import Loader from "@/components/Loader";
 import StatusTextForServer from "@/components/StatusTextFoServer";
 
+
 export default function Home() {
   const dispatch = useAppDispatch();
   const { list, loading } = useAppSelector((state) => state.PhotoListSlice);
-
   useEffect(() => {
     dispatch(PhotoListAsyncThunk());
   }, []);
@@ -31,7 +31,6 @@ export default function Home() {
             size={item.size}
             user={item.user.fullName}
             createdAt={item.createdAt}
-           
           />
         ))}
     </main>

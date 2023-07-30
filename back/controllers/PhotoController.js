@@ -52,7 +52,7 @@ const getAllPhotoForUserId = async (req, res) => {
 const create = async (req, res) => {
   try {
     const doc = new PhotoModel({
-      imageURL: req.body.imageURL,
+      imageURL: /* req.body.imageURL, */req.files.file.name,
       tags: req.body.tags,
       size: req.body.size,
       user: req.userId,
@@ -97,7 +97,7 @@ const updateTags = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({
-      message: "Не удалось обновить статью",
+      message: "Не удалось обновить теги",
     });
   }
 }
