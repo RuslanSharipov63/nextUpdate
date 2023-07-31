@@ -50,21 +50,23 @@ const getAllPhotoForUserId = async (req, res) => {
 }
 
 const create = async (req, res) => {
-  try {
+  console.log(req.files)
+   /* console.log(req.body) */
+  /*  try {
     const doc = new PhotoModel({
-      imageURL: /* req.body.imageURL, */req.files.file.name,
-      tags: req.body.tags,
+      imageURL: req.body.imageURL,req.files.file.name,
+    tags: req.body.tags,
       size: req.body.size,
-      user: req.userId,
+        user: req.userId,
     });
-    const post = await doc.save();
-    res.json(post);
+const post = await doc.save();
+res.json(post);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      message: "Не удалось добавить фото",
-    });
-  }
+  console.log(err);
+  res.status(500).json({
+    message: "Не удалось добавить фото",
+  });
+}  */
 };
 
 /* удаляем фото */

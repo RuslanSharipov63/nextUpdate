@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
+import { fetchAddPhoto } from "@/store/AddPhotoSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
 /* import Image from "next/image";*/
@@ -17,7 +18,15 @@ import Title from "@/components/Title";
 import PhotoList from "@/components/PhotoList";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
-
+type newArrPhotoType = {
+  /* fileObg: {
+    name: string
+  } */
+  imageURL: string;
+  tags: string[];
+  user: string;
+  size: number
+}
 const AccountPage = () => {
   const params = useParams();
   const { push } = useRouter();
@@ -66,7 +75,17 @@ const AccountPage = () => {
       });
       return;
     }
-    alert("ok");
+   
+    const { name, size } = selectedFile
+    
+    /* let newArrPhoto: newArrPhotoType = {
+      fileObg: 
+      imageURL: name,
+      tags: tagsArr,
+      user: params.id,
+      size: size,
+    } */
+    dispatch(fetchAddPhoto(selectedFile))
   };
 
   const checkUserDataMessage = () => {

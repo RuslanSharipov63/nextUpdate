@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require('express-fileupload');
 /* multer  - библиотека для загрузки изображений */
 const multer = require("multer");
 const registerValidation = require("./validations/auth");
@@ -45,6 +46,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 app.use("/uploads", express.static("/uploads"));
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 mongoose
   .connect(URL)
@@ -71,7 +73,6 @@ app.post(
 app.get("/auth/me", checkAuth, getMe);
 app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
   /* если все нормально (а за  это отвечает второй параметр функции), то мы возвращаем путь к файлу, то есть ссылку */
-  console.log(req.file.originalname);
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
@@ -82,7 +83,7 @@ app.get("/photos", getAll);
 //получаем одно фото
 app.get("/photo/:id", getOne);
 //создаем одно фото
-app.post("/photo", checkAuth, photoValidation, handleValidationErrors, create);
+app.post("/photo",  /* checkAuth, photoValidation, handleValidationErrors,  */create);
 /* удаляем фото */
 app.delete("/photo/:id", checkAuth, remove);
 /* обновляем фото */

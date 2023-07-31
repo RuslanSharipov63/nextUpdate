@@ -25,12 +25,12 @@ export type initialStateType = {
 
 export type userDataType = {
   _id: string;
-  fullName:  string;
+  fullName: string;
   email: string;
   createdAt: string;
   updatedAt: string
   avatarUrl: string;
-  token?: string 
+  token?: string
 }
 
 export type InitialStateAuthType = {
@@ -38,4 +38,14 @@ export type InitialStateAuthType = {
   loading: boolean | string
 };
 
+export type PhotoType = {
+  _id: string;
+  imageURL: string;
+  tags: string[];
+  user: string;
+  size: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
+export type loadingType = string
