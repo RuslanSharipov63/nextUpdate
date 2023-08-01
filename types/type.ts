@@ -39,13 +39,13 @@ export type InitialStateAuthType = {
 };
 
 export type PhotoType = {
-  _id: string;
+  _id?: string;
   imageURL: string;
-  tags: string[];
+  tags: string;
   user: string;
-  size: number;
-  createdAt: string;
-  updatedAt: string;
+  size: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export type loadingType = string
