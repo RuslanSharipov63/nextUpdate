@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
-import { fetchAddPhoto } from "@/store/AddPhotoSlice";
+import { fetchUploadPhoto } from "@/store/UploadPhotoSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
 /* import Image from "next/image";*/
@@ -19,13 +19,11 @@ import PhotoList from "@/components/PhotoList";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 type newArrPhotoType = {
-  /* fileObg: {
-    name: string
-  } */
+  fileObg: any;
   imageURL: string;
-  tags: string[];
+  tags: string;
   user: string;
-  size: number
+  size: string
 }
 const AccountPage = () => {
   const params = useParams();
@@ -65,8 +63,8 @@ const AccountPage = () => {
       setError({ ...error, fileUpload: "Выберите файл" });
       return;
     }
-    let tagsArr = tags.split(" ");
-    let newTagsArr = tagsArr.filter((el) => el.search(regValue) != -1);
+    let tagsArr = await tags.split(" ");
+    let newTagsArr = await tagsArr.filter((el) => el.search(regValue) != -1);
 
     if (newTagsArr.length === 0) {
       setError({
@@ -75,17 +73,18 @@ const AccountPage = () => {
       });
       return;
     }
-   
+
     const { name, size } = selectedFile
-    
-    /* let newArrPhoto: newArrPhotoType = {
-      fileObg: 
+
+    let newArrPhoto: newArrPhotoType = {
+      fileObg: selectedFile,
       imageURL: name,
-      tags: tagsArr,
+      tags: tagsArr.join(' '),
       user: params.id,
       size: size,
-    } */
-    dispatch(fetchAddPhoto(selectedFile))
+    }
+    dispatch(fetchUploadPhoto(newArrPhoto))
+
   };
 
   const checkUserDataMessage = () => {

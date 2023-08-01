@@ -50,7 +50,7 @@ const PhotoList: FC<PhotoListProps> = ({
           <span className="card-title">фото: {user}</span>
         </div>
         <div className="card-content">
-          <p>теги: {tags.join(" ")}</p>
+          <p>теги: {tags}</p>
           <p>размер: {size} мб</p>
           <p>дата создания: {dateCreatePhoto}</p>
         </div>

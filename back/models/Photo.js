@@ -6,7 +6,7 @@ const PhotoSchema = new mongoose.Schema(
       required: true,
     },
     tags: {
-      type: Array,
+      type: String,
       required: true,
     },
     user: {
