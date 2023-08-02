@@ -15,7 +15,7 @@ const PhotoSchema = new mongoose.Schema(
       required: true,
     },
     size: {
-      type: String,
+      type: Number,
       required: true,
     },
   },

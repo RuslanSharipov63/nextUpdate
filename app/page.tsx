@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(PhotoListAsyncThunk());
   }, []);
-
+console.log(list)
   return (
     <main className={styles.main}>
       {loading === "pending" && <Loader />}

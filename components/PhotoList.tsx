@@ -39,7 +39,7 @@ const PhotoList: FC<PhotoListProps> = ({
         <div className="card-image">
           <Link href={`/photo/${id}`}>
             <Image
-              src="/../public/image/photo/s1200.jpg"
+              src={`${imageURL}`}
               width={200}
               height={300}
               alt="картинка"

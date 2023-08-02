@@ -23,7 +23,6 @@ const Photo = () => {
   useEffect(() => {
     dispatch(fetchPhotosAuthor(list[0].user._id));
   }, []);
-
   return (
     <>
       {loading === "pending" && <Loader />}

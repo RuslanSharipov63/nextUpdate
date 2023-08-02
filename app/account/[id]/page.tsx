@@ -17,22 +17,23 @@ import LabelText from "@/components/LabelText";
 import Title from "@/components/Title";
 import PhotoList from "@/components/PhotoList";
 import { fetchAddPhoto } from "@/store/AddPhotoSlice";
-
+import Loader from "@/components/Loader";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 type newArrPhotoType = {
   imageURL: string;
   tags: string;
   user: string;
-  size: string
-}
+  size: number;
+};
 const AccountPage = () => {
   const params = useParams();
   const { push } = useRouter();
   const dispatch = useAppDispatch();
   const { userData, loading } = useAppSelector((state) => state.AuthMeSlice);
   const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
-  const { fileURL } = useAppSelector(state => state.UploadPhotoSlice)
+  const { fileURL } = useAppSelector((state) => state.UploadPhotoSlice);
+  const photo = useAppSelector((state) => state.AddPhotoSlice);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [tags, setTags] = useState("");
   const [error, setError] = useState({
@@ -76,34 +77,35 @@ const AccountPage = () => {
       return;
     }
 
-    dispatch(fetchUploadPhoto(selectedFile))
+    dispatch(fetchUploadPhoto(selectedFile));
   };
 
   useEffect(() => {
-    const fileUrl = fileURL.fileUrl
-    if (fileURL.fileURL != '' && selectedFile.size) {
-
-      console.log(fileUrl)
-
-      /* const { size } = selectedFile;
+    const fileUrl = fileURL.fileUrl;
+    if (fileURL.fileURL != "") {
+      const { size } = selectedFile;
       let newArrPhoto: newArrPhotoType = {
-        imageURL: imageURL.fileURL,
+        imageURL: fileUrl,
         tags: tags,
         user: params.id,
         size: size,
-      }
-      dispatch(fetchAddPhoto(newArrPhoto)) */
+      };
+      dispatch(fetchAddPhoto(newArrPhoto));
+      setSelectedFile(null);
+      setTags("");
+      alert("Фото успешно добавлено");
       return;
     }
-  }, [fileURL, selectedFile])
+  }, [fileURL]);
 
   const checkUserDataMessage = () => {
     if ("message" in userData) push("/auth");
     return;
   };
-
+  console.log(list);
   return (
     <>
+      {photo.loading === "pending" ? <Loader /> : null}
       {checkUserDataMessage()}
       <div className={styles.container}>
         <ProfileCard

@@ -8,7 +8,7 @@ export const fetchAddPhoto = createAsyncThunk(
     imageURL: string;
     tags: string;
     user: string;
-    size: string;
+    size: number;
   }) {
     const photoData = {
       imageURL: photo.imageURL,
@@ -38,7 +38,7 @@ const initialState = {
     imageURL: "",
     tags: "",
     user: "",
-    size: "",
+    size: 0,
     createdAt: "",
     updatedAt: "",
   },

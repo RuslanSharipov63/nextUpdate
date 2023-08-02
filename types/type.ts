@@ -43,7 +43,7 @@ export type PhotoType = {
   imageURL: string;
   tags: string;
   user: string;
-  size: string;
+  size: number;
   createdAt?: string;
   updatedAt?: string;
 }

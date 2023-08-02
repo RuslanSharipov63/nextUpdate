@@ -39,7 +39,7 @@ const getOne = async (req, res) => {
 const getAllPhotoForUserId = async (req, res) => {
   try {
     const userId = req.params.id;
-    const allPhotoAuthor = await PhotoModel.find({ user: userId });
+    const allPhotoAuthor = await PhotoModel.find({ user: userId }).populate("user").exec();
     return res.json(allPhotoAuthor);
   } catch (err) {
     console.log(err);
