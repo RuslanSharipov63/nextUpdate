@@ -16,10 +16,11 @@ import HelperText from "@/components/HelperText";
 import LabelText from "@/components/LabelText";
 import Title from "@/components/Title";
 import PhotoList from "@/components/PhotoList";
+import { fetchAddPhoto } from "@/store/AddPhotoSlice";
+
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 type newArrPhotoType = {
-  fileObg: any;
   imageURL: string;
   tags: string;
   user: string;
@@ -31,7 +32,8 @@ const AccountPage = () => {
   const dispatch = useAppDispatch();
   const { userData, loading } = useAppSelector((state) => state.AuthMeSlice);
   const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const { fileURL } = useAppSelector(state => state.UploadPhotoSlice)
+  const [selectedFile, setSelectedFile] = useState<any>(null);
   const [tags, setTags] = useState("");
   const [error, setError] = useState({
     fileUpload: "",
@@ -74,18 +76,26 @@ const AccountPage = () => {
       return;
     }
 
-    const { name, size } = selectedFile
-
-    let newArrPhoto: newArrPhotoType = {
-      fileObg: selectedFile,
-      imageURL: name,
-      tags: tagsArr.join(' '),
-      user: params.id,
-      size: size,
-    }
-    dispatch(fetchUploadPhoto(newArrPhoto))
-
+    dispatch(fetchUploadPhoto(selectedFile))
   };
+
+  useEffect(() => {
+    const fileUrl = fileURL.fileUrl
+    if (fileURL.fileURL != '' && selectedFile.size) {
+
+      console.log(fileUrl)
+
+      /* const { size } = selectedFile;
+      let newArrPhoto: newArrPhotoType = {
+        imageURL: imageURL.fileURL,
+        tags: tags,
+        user: params.id,
+        size: size,
+      }
+      dispatch(fetchAddPhoto(newArrPhoto)) */
+      return;
+    }
+  }, [fileURL, selectedFile])
 
   const checkUserDataMessage = () => {
     if ("message" in userData) push("/auth");

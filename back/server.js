@@ -83,7 +83,7 @@ app.get("/photos", getAll);
 //получаем одно фото
 app.get("/photo/:id", getOne);
 //создаем одно фото
-app.post("/photo", checkAuth, photoValidation, handleValidationErrors,  create);
+app.post("/photo", checkAuth, /* photoValidation, handleValidationErrors,   */create);
 /* удаляем фото */
 app.delete("/photo/:id", checkAuth, remove);
 /* обновляем фото */

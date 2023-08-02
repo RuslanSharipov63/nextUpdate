@@ -4,15 +4,28 @@ import { PhotoType, loadingType } from "@/types/type";
 
 export const fetchAddPhoto = createAsyncThunk(
   "name/fetchaddphoto",
-  async function (photo: string) {
+  async function (photo: {
+    imageURL: string;
+    tags: string;
+    user: string;
+    size: string;
+  }) {
+    const photoData = {
+      imageURL: photo.imageURL,
+      tags: photo.tags,
+      user: photo.user,
+      size: photo.size,
+    };
     let token = await window.localStorage.getItem("token");
-    const response = await fetch(`${BASE_URL}/create`, {
+    const JSONdata = JSON.stringify(photoData);
+console.log(photoData)
+    const response = await fetch(`${BASE_URL}/photo`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: photo,
+      body: JSONdata,
     });
     const data = await response.json();
     return data;
