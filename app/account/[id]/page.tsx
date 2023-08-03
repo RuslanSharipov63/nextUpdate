@@ -25,6 +25,7 @@ type newArrPhotoType = {
   tags: string;
   user: string;
   size: number;
+  price?: number
 };
 const AccountPage = () => {
   const params = useParams();
@@ -36,9 +37,11 @@ const AccountPage = () => {
   const photo = useAppSelector((state) => state.AddPhotoSlice);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [tags, setTags] = useState("");
+  const [price, setPrice] = useState('')
   const [error, setError] = useState({
     fileUpload: "",
     tags: "",
+    price: ''
   });
   const [preView, setPreView] = useState("");
 
@@ -57,9 +60,23 @@ const AccountPage = () => {
     setTags(e);
     setError({ ...error, fileUpload: "", tags: "" });
   };
+
+  const priceChange = async (e: string) => {
+    const regPrice = await /^\d+?$/
+    if (regPrice.test(e)) {
+      setError({ ...error, price: "" });
+      setPrice(e)
+      return
+    } else {
+      setError({ ...error, price: "Введите число" });
+      setPrice('')
+    }
+  }
+
   const handleFocus = () => {
     setTags("");
   };
+
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!selectedFile) {
@@ -76,7 +93,6 @@ const AccountPage = () => {
       });
       return;
     }
-
     dispatch(fetchUploadPhoto(selectedFile));
   };
 
@@ -88,12 +104,14 @@ const AccountPage = () => {
         imageURL: fileUrl,
         tags: tags,
         user: params.id,
-        size: size,
+        size,
+        price: Number(price),
       };
       dispatch(fetchAddPhoto(newArrPhoto));
       setSelectedFile(null);
       setTags("");
-      alert("Фото успешно добавлено");
+      setPrice('')
+      alert('Фото успешно добавлено')
       return;
     }
   }, [fileURL]);
@@ -102,7 +120,7 @@ const AccountPage = () => {
     if ("message" in userData) push("/auth");
     return;
   };
-  console.log(list);
+
   return (
     <>
       {photo.loading === "pending" ? <Loader /> : null}
@@ -127,6 +145,15 @@ const AccountPage = () => {
             idText={"теги"}
           />
           <HelperText text={error.tags} />
+          <LabelText text={"Цена"} />
+          <TextField
+            typeText={"text"}
+            valueText={price}
+            funcChange={priceChange}
+            nameText="цена"
+            idText={"цена"}
+          />
+          <HelperText text={error.price} />
           <Button text="загрузить" funcClick={handleUpload} />
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
@@ -141,6 +168,7 @@ const AccountPage = () => {
             imageURL: string;
             tags: string[];
             size: number;
+            price: number;
             user: { fullName: string };
             createdAt: string;
           }) => (
@@ -150,6 +178,7 @@ const AccountPage = () => {
               imageURL={item.imageURL}
               tags={item.tags}
               size={item.size}
+              price={item.price}
               user={item.user.fullName}
               createdAt={item.createdAt}
               textForButton={"удалить"}

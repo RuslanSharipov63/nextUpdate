@@ -9,12 +9,14 @@ export const fetchAddPhoto = createAsyncThunk(
     tags: string;
     user: string;
     size: number;
+    price?: number
   }) {
     const photoData = {
       imageURL: photo.imageURL,
       tags: photo.tags,
       user: photo.user,
       size: photo.size,
+      price: photo.price
     };
     let token = await window.localStorage.getItem("token");
     const JSONdata = JSON.stringify(photoData);
@@ -38,6 +40,7 @@ const initialState = {
     imageURL: "",
     tags: "",
     user: "",
+    price: 0,
     size: 0,
     createdAt: "",
     updatedAt: "",

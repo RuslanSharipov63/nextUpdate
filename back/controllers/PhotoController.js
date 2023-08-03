@@ -58,6 +58,7 @@ const create = async (req, res) => {
       tags: req.body.tags,
       size: req.body.size,
       user: req.userId,
+      price: req.body.price,
     });
     const post = await doc.save();
     res.json(post);
@@ -66,7 +67,7 @@ const create = async (req, res) => {
     res.status(500).json({
       message: "Не удалось добавить фото",
     });
-  } 
+  }
 };
 
 /* удаляем фото */

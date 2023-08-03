@@ -13,6 +13,7 @@ type PhotoListProps = {
   tags: string[];
   size: number;
   user: string;
+  price?: number;
   createdAt: string;
   textForButton?: string
 };
@@ -23,6 +24,7 @@ const PhotoList: FC<PhotoListProps> = ({
   tags,
   size,
   user,
+  price,
   createdAt,
   textForButton
 }) => {
@@ -47,11 +49,14 @@ const PhotoList: FC<PhotoListProps> = ({
               style={{ objectFit: "cover" }}
             />
           </Link>
-          <span className="card-title">фото: {user}</span>
+
         </div>
         <div className="card-content">
+          <span className="card-title">фото: {user}</span>
           <p>теги: {tags}</p>
-          <p>размер: {size} мб</p>
+          <p>размер: {(size / 1024 / 1024).toFixed(1)} мб</p>
+          <p>цена: {price ? price + ' руб' : 'бесплатно'}</p>
+          <p>дата создания: {dateCreatePhoto}</p>
           <p>дата создания: {dateCreatePhoto}</p>
         </div>
         {textForButton &&

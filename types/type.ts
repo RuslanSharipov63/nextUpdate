@@ -14,6 +14,7 @@ export interface IinitialStateList {
   tags: Array<string>;
   user: User;
   size: number;
+  price: number;
   createdAt: string;
 }
 
@@ -43,6 +44,7 @@ export type PhotoType = {
   imageURL: string;
   tags: string;
   user: string;
+  price?: number;
   size: number;
   createdAt?: string;
   updatedAt?: string;
