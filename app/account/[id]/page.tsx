@@ -6,7 +6,6 @@ import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
 import { fetchUploadPhoto } from "@/store/UploadPhotoSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
-/* import Image from "next/image";*/
 import styles from "./Account.module.css";
 import ProfileCard from "@/components/ProfileCard";
 import TextFieldUploads from "@/components/TextFieldUploads";
@@ -18,6 +17,8 @@ import Title from "@/components/Title";
 import PhotoList from "@/components/PhotoList";
 import { fetchAddPhoto } from "@/store/AddPhotoSlice";
 import Loader from "@/components/Loader";
+import PushComponent from "@/components/PushComponent";
+import { IinitialStateList } from "@/types/type";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 type newArrPhotoType = {
@@ -44,6 +45,8 @@ const AccountPage = () => {
     price: ''
   });
   const [preView, setPreView] = useState("");
+  const [statePush, setStatePush] = useState(false)
+  const [stateDisabled, setStateDisabled] = useState(false)
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
@@ -79,6 +82,7 @@ const AccountPage = () => {
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setStateDisabled(true)
     if (!selectedFile) {
       setError({ ...error, fileUpload: "Выберите файл" });
       return;
@@ -111,7 +115,7 @@ const AccountPage = () => {
       setSelectedFile(null);
       setTags("");
       setPrice('')
-      alert('Фото успешно добавлено')
+      setStatePush(true)
       return;
     }
   }, [fileURL]);
@@ -120,9 +124,17 @@ const AccountPage = () => {
     if ("message" in userData) push("/auth");
     return;
   };
-
+  const closePushComponent = () => {
+    setStatePush(false)
+    setStateDisabled(false)
+  }
   return (
     <>
+      <PushComponent
+        text={'фото успешно загружено'}
+        stateValue={statePush}
+        closePushComponent={closePushComponent}
+      />
       {photo.loading === "pending" ? <Loader /> : null}
       {checkUserDataMessage()}
       <div className={styles.container}>
@@ -154,7 +166,7 @@ const AccountPage = () => {
             idText={"цена"}
           />
           <HelperText text={error.price} />
-          <Button text="загрузить" funcClick={handleUpload} />
+          <Button text="загрузить" funcClick={handleUpload} disabled={stateDisabled} />
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
       </div>
@@ -166,7 +178,7 @@ const AccountPage = () => {
           (item: {
             _id: string;
             imageURL: string;
-            tags: string[];
+            tags: string;
             size: number;
             price: number;
             user: { fullName: string };

@@ -10,7 +10,7 @@ import Button from "./Button";
 type PhotoListProps = {
   id: string;
   imageURL: string;
-  tags: string[];
+  tags: string;
   size: number;
   user: string;
   price?: number;
@@ -57,8 +57,7 @@ const PhotoList: FC<PhotoListProps> = ({
           <p>размер: {(size / 1024 / 1024).toFixed(1)} мб</p>
           <p>цена: {price ? price + ' руб' : 'бесплатно'}</p>
           <p>дата создания: {dateCreatePhoto}</p>
-          <p>дата создания: {dateCreatePhoto}</p>
-        </div>
+          </div>
         {textForButton &&
           <div className="card-action">
             <Button text={textForButton && textForButton} funcClick={funcDeletePhoto} />

@@ -11,7 +11,7 @@ export type User = {
 export interface IinitialStateList {
   _id: string;
   imageURL: string;
-  tags: Array<string>;
+  tags: string;
   user: User;
   size: number;
   price: number;

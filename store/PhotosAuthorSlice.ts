@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initialStateType } from "@/types/type";
+import { initialStateType, IinitialStateList } from "@/types/type";
 import { BASE_URL } from "@/baseValue";
 
 
@@ -19,7 +19,7 @@ const initialState: initialStateType = {
         {
             _id: "",
             imageURL: "",
-            tags: [],
+            tags: '',
             user: {
                 _id: "",
                 fullName: "",
@@ -28,6 +28,7 @@ const initialState: initialStateType = {
                 createdAt: "",
                 updatedAt: "",
             },
+            price: 0,
             size: 0,
             createdAt: '',
         },
@@ -38,7 +39,11 @@ const initialState: initialStateType = {
 export const PhotoAuthorSlice = createSlice({
     name: "photolist",
     initialState,
-    reducers: {},
+    reducers: {
+        actionPhotoAuthor: (state, action: PayloadAction<IinitialStateList>) => {
+            state.list.push(action.payload)
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchPhotosAuthor.pending, (state) => {
@@ -55,5 +60,5 @@ export const PhotoAuthorSlice = createSlice({
             });
     },
 });
-
+export const { actionPhotoAuthor } = PhotoAuthorSlice.actions;
 export default PhotoAuthorSlice.reducer;
