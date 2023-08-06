@@ -26,7 +26,7 @@ type newArrPhotoType = {
   tags: string;
   user: string;
   size: number;
-  price?: number
+  price?: number;
 };
 const AccountPage = () => {
   const params = useParams();
@@ -38,19 +38,34 @@ const AccountPage = () => {
   const photo = useAppSelector((state) => state.AddPhotoSlice);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [tags, setTags] = useState("");
-  const [price, setPrice] = useState('')
+  const [price, setPrice] = useState("");
   const [error, setError] = useState({
     fileUpload: "",
     tags: "",
-    price: ''
+    price: "",
   });
   const [preView, setPreView] = useState("");
-  const [statePush, setStatePush] = useState(false)
-  const [stateDisabled, setStateDisabled] = useState(false)
+  const [statePush, setStatePush] = useState(false);
+  const [stateDisabled, setStateDisabled] = useState(false);
+  const [listState, setListState] = useState<IinitialStateList[]>([]);
+
+  const funcState = async () => {
+    setListState((list) => {
+      return list;
+    });
+  };
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
     dispatch(fetchAuthMe());
+    funcState();
+  }, []);
+
+  useEffect(() => {
+    if (list.length > 0) {
+      let a = [...list];
+      setListState(a);
+    }
   }, []);
 
   const handleChange = (e: any) => {
@@ -65,16 +80,16 @@ const AccountPage = () => {
   };
 
   const priceChange = async (e: string) => {
-    const regPrice = await /^\d+?$/
+    const regPrice = await /^\d+?$/;
     if (regPrice.test(e)) {
       setError({ ...error, price: "" });
-      setPrice(e)
-      return
+      setPrice(e);
+      return;
     } else {
       setError({ ...error, price: "Введите число" });
-      setPrice('')
+      setPrice("");
     }
-  }
+  };
 
   const handleFocus = () => {
     setTags("");
@@ -82,7 +97,7 @@ const AccountPage = () => {
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setStateDisabled(true)
+    setStateDisabled(true);
     if (!selectedFile) {
       setError({ ...error, fileUpload: "Выберите файл" });
       return;
@@ -114,8 +129,8 @@ const AccountPage = () => {
       dispatch(fetchAddPhoto(newArrPhoto));
       setSelectedFile(null);
       setTags("");
-      setPrice('')
-      setStatePush(true)
+      setPrice("");
+      setStatePush(true);
       return;
     }
   }, [fileURL]);
@@ -125,13 +140,13 @@ const AccountPage = () => {
     return;
   };
   const closePushComponent = () => {
-    setStatePush(false)
-    setStateDisabled(false)
-  }
+    setStatePush(false);
+    setStateDisabled(false);
+  };
   return (
     <>
       <PushComponent
-        text={'фото успешно загружено'}
+        text={"фото успешно загружено"}
         stateValue={statePush}
         closePushComponent={closePushComponent}
       />
@@ -166,15 +181,19 @@ const AccountPage = () => {
             idText={"цена"}
           />
           <HelperText text={error.price} />
-          <Button text="загрузить" funcClick={handleUpload} disabled={stateDisabled} />
+          <Button
+            text="загрузить"
+            funcClick={handleUpload}
+            disabled={stateDisabled}
+          />
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
       </div>
       <Title text={"Мои фотографии"} />
-      {list.length === 0 ? (
+      {listState.length === 0 ? (
         <Title text={"Вы пока не загружали фотографии"} />
       ) : (
-        list.map(
+        listState.map(
           (item: {
             _id: string;
             imageURL: string;
