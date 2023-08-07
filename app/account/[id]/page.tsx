@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
@@ -49,24 +49,25 @@ const AccountPage = () => {
   const [stateDisabled, setStateDisabled] = useState(false);
   const [listState, setListState] = useState<IinitialStateList[]>([]);
 
-  const funcState = async () => {
-    setListState((list) => {
-      return list;
-    });
-  };
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
     dispatch(fetchAuthMe());
-    funcState();
   }, []);
 
   useEffect(() => {
     if (list.length > 0) {
-      let a = [...list];
-      setListState(a);
+      setListState(list)
+      return;
     }
-  }, []);
+  }, [list])
+
+  useEffect(() => {
+    if (statePush) {
+      dispatch(fetchPhotosAuthor(params.id));
+      return;
+    }
+  }, [statePush])
 
   const handleChange = (e: any) => {
     setSelectedFile(e.target.files[0]);
@@ -135,6 +136,7 @@ const AccountPage = () => {
     }
   }, [fileURL]);
 
+
   const checkUserDataMessage = () => {
     if ("message" in userData) push("/auth");
     return;
@@ -150,8 +152,8 @@ const AccountPage = () => {
         stateValue={statePush}
         closePushComponent={closePushComponent}
       />
-      {photo.loading === "pending" ? <Loader /> : null}
       {checkUserDataMessage()}
+
       <div className={styles.container}>
         <ProfileCard
           userData={userData}
@@ -186,9 +188,11 @@ const AccountPage = () => {
             funcClick={handleUpload}
             disabled={stateDisabled}
           />
+          {statePush && <Loader />}
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
       </div>
+
       <Title text={"Мои фотографии"} />
       {listState.length === 0 ? (
         <Title text={"Вы пока не загружали фотографии"} />
