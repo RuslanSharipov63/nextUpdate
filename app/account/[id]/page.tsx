@@ -19,6 +19,7 @@ import { fetchAddPhoto } from "@/store/AddPhotoSlice";
 import Loader from "@/components/Loader";
 import PushComponent from "@/components/PushComponent";
 import { IinitialStateList } from "@/types/type";
+import { valueForButton } from "@/valueForButton";
 
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 type newArrPhotoType = {
@@ -216,7 +217,7 @@ const AccountPage = () => {
               price={item.price}
               user={item.user.fullName}
               createdAt={item.createdAt}
-              textForButton={"удалить"}
+              valueForButton={valueForButton}
             />
           )
         )

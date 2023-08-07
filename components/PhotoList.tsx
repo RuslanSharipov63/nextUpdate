@@ -5,8 +5,6 @@ import Link from "next/link";
 import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
 
-/* import s from './../back/uploads/' */
-
 type PhotoListProps = {
   id: string;
   imageURL: string;
@@ -15,7 +13,7 @@ type PhotoListProps = {
   user: string;
   price?: number;
   createdAt: string;
-  textForButton?: string
+  valueForButton?: string[];
 };
 
 const PhotoList: FC<PhotoListProps> = ({
@@ -26,11 +24,13 @@ const PhotoList: FC<PhotoListProps> = ({
   user,
   price,
   createdAt,
-  textForButton
+  valueForButton,
 }) => {
-
   const funcDeletePhoto = () => {
-    alert('Фото удалено')
+    alert("Фото удалено");
+  };
+  const funcEditPhoto = () => {
+    alert("Фото отредактировано");
   }
   const t = createdAt.indexOf("T");
   const dateCreatePhoto = createdAt.slice(0, t);
@@ -49,19 +49,26 @@ const PhotoList: FC<PhotoListProps> = ({
               style={{ objectFit: "cover" }}
             />
           </Link>
-
         </div>
         <div className="card-content">
           <span className="card-title">фото: {user}</span>
           <p>теги: {tags}</p>
           <p>размер: {(size / 1024 / 1024).toFixed(2)} мб</p>
-          <p>цена: {price ? price + ' руб' : 'бесплатно'}</p>
+          <p>цена: {price ? price + " руб" : "бесплатно"}</p>
           <p>дата создания: {dateCreatePhoto}</p>
-          </div>
-        {textForButton &&
+        </div>
+        {valueForButton && (
           <div className="card-action">
-            <Button text={textForButton && textForButton} funcClick={funcDeletePhoto} />
-          </div>}
+            <Button
+              text={valueForButton[0] && valueForButton[0]}
+              funcClick={funcDeletePhoto}
+            />
+            <Button
+              text={valueForButton[3] && valueForButton[3]}
+              funcClick={funcEditPhoto}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
