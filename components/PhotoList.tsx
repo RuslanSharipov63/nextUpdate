@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FC } from "react";
 import Link from "next/link";
 import { fetchDeletePhoto } from "@/store/DeletePhotoSlice";
+import { fetchDeletePhotoFromDir } from "@/store/DeletePhotoSliceFromDir";
 import { useAppDispatch } from "@/hooks/hooks";
 import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
@@ -15,7 +16,7 @@ type PhotoListProps = {
   price?: number;
   createdAt: string;
   valueForButton?: string[];
-  funcForStatePushAfterDelete: () => void
+  funcForStatePushAfterDelete: () => void;
 };
 
 const PhotoList: FC<PhotoListProps> = ({
@@ -27,16 +28,18 @@ const PhotoList: FC<PhotoListProps> = ({
   price,
   createdAt,
   valueForButton,
-  funcForStatePushAfterDelete
+  funcForStatePushAfterDelete,
 }) => {
   const dispatch = useAppDispatch();
+
   const funcDeletePhoto = async () => {
-    dispatch(fetchDeletePhoto(id))
-    funcForStatePushAfterDelete();
+    await dispatch(fetchDeletePhoto(id));
+    await funcForStatePushAfterDelete();
+    dispatch(fetchDeletePhotoFromDir(imageURL));
   };
   const funcEditPhoto = () => {
     alert("Фото отредактировано");
-  }
+  };
   const t = createdAt.indexOf("T");
   const dateCreatePhoto = createdAt.slice(0, t);
 

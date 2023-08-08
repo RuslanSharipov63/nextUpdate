@@ -20,7 +20,6 @@ export const fetchAddPhoto = createAsyncThunk(
     };
     let token = await window.localStorage.getItem("token");
     const JSONdata = JSON.stringify(photoData);
-console.log(photoData)
     const response = await fetch(`${BASE_URL}/photo`, {
       method: "POST",
       headers: {
