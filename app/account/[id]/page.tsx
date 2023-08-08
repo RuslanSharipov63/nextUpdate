@@ -35,6 +35,7 @@ const AccountPage = () => {
   const dispatch = useAppDispatch();
   const { userData, loading } = useAppSelector((state) => state.AuthMeSlice);
   const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
+  const { succes } = useAppSelector((state) => state.DeletePhotoSlice)
   const { fileURL } = useAppSelector((state) => state.UploadPhotoSlice);
   const photo = useAppSelector((state) => state.AddPhotoSlice);
   const [selectedFile, setSelectedFile] = useState<any>(null);
@@ -46,7 +47,10 @@ const AccountPage = () => {
     price: "",
   });
   const [preView, setPreView] = useState("");
-  const [statePush, setStatePush] = useState(false);
+  const [statePush, setStatePush] = useState({
+    pushBol: false,
+    message: ''
+  });
   const [stateDisabled, setStateDisabled] = useState(false);
   const [listState, setListState] = useState<IinitialStateList[]>([]);
 
@@ -64,11 +68,11 @@ const AccountPage = () => {
   }, [list])
 
   useEffect(() => {
-    if (statePush) {
+    if (statePush.pushBol) {
       dispatch(fetchPhotosAuthor(params.id));
       return;
     }
-  }, [statePush])
+  }, [statePush.pushBol])
 
   const handleChange = (e: any) => {
     setSelectedFile(e.target.files[0]);
@@ -132,7 +136,7 @@ const AccountPage = () => {
       setSelectedFile(null);
       setTags("");
       setPrice("");
-      setStatePush(true);
+      setStatePush({ ...statePush, pushBol: true, message: 'фото добавлено' });
       return;
     }
   }, [fileURL]);
@@ -143,14 +147,18 @@ const AccountPage = () => {
     return;
   };
   const closePushComponent = () => {
-    setStatePush(false);
+    setStatePush({ ...statePush, pushBol: false, message: '' });
     setStateDisabled(false);
   };
+
+  const funcForStatePushAfterDelete = () => {
+    setStatePush({ ...statePush, pushBol: true, message: 'фото удалено' })
+  }
   return (
     <>
       <PushComponent
-        text={"фото успешно загружено"}
-        stateValue={statePush}
+        text={statePush.message}
+        stateValue={statePush.pushBol}
         closePushComponent={closePushComponent}
       />
       {checkUserDataMessage()}
@@ -189,7 +197,7 @@ const AccountPage = () => {
             funcClick={handleUpload}
             disabled={stateDisabled}
           />
-          {statePush && <Loader />}
+          {stateDisabled && <Loader />}
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
       </div>
@@ -218,6 +226,7 @@ const AccountPage = () => {
               user={item.user.fullName}
               createdAt={item.createdAt}
               valueForButton={valueForButton}
+              funcForStatePushAfterDelete={funcForStatePushAfterDelete}
             />
           )
         )

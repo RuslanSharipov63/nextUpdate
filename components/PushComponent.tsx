@@ -1,8 +1,7 @@
-"use client"
 import { FC } from 'react';
-import { useState, useEffect } from 'react';
 import styles from './../stylescomponent/PushComponent.module.css';
 import Button from './Button';
+
 
 type PushComponentProp = {
     text: string;

@@ -50,4 +50,10 @@ export type PhotoType = {
   updatedAt?: string;
 }
 
-export type loadingType = string
+export type loadingType = string;
+
+export type textForPushComponentType = {
+  addPhoto: string;
+  deletePhoto: string;
+  editPhoto: string;
+}

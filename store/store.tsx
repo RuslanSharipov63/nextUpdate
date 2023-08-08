@@ -6,6 +6,7 @@ import AuthSlice from "./AuthSlice";
 import AuthMeSlice from "./AuthMeSlice";
 import UploadPhotoSlice from "./UploadPhotoSlice";
 import AddPhotoSlice from "./AddPhotoSlice";
+import DeletePhotoSlice from "./DeletePhotoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     AuthSlice,
     AuthMeSlice,
     UploadPhotoSlice,
-    AddPhotoSlice
+    AddPhotoSlice,
+    DeletePhotoSlice
   },
 });
 
