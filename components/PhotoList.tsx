@@ -33,9 +33,9 @@ const PhotoList: FC<PhotoListProps> = ({
   const dispatch = useAppDispatch();
 
   const funcDeletePhoto = async () => {
+    await dispatch(fetchDeletePhotoFromDir(imageURL));
     await dispatch(fetchDeletePhoto(id));
     await funcForStatePushAfterDelete();
-    dispatch(fetchDeletePhotoFromDir(imageURL));
   };
   const funcEditPhoto = () => {
     alert("Фото отредактировано");

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { loadingType } from "@/types/type";
 
 export const fetchDeletePhotoFromDir = createAsyncThunk(
   "name/fetchdeletephotofromdir",
@@ -8,9 +9,6 @@ export const fetchDeletePhotoFromDir = createAsyncThunk(
     formData.append("fileName", name);
     const response = await fetch("/api/delete", {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
       body: formData,
     });
     const data = await response.json();
@@ -19,13 +17,14 @@ export const fetchDeletePhotoFromDir = createAsyncThunk(
 );
 
 type initialStateType = {
-  succes?: boolean;
-  loading: string;
+  scces?: boolean;
 };
 
-const initialState: initialStateType = {
-  succes: false,
-  loading: "",
+const initialState = {
+  succes: <initialStateType>{
+    succes: false
+  },
+  loading: <loadingType>"",
 };
 
 const deletePhotoSliceFromDir = createSlice({

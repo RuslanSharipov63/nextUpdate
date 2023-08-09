@@ -12,7 +12,7 @@ export const fetchDeletePhoto = createAsyncThunk(
                 "Authorization": `Bearer ${token}`
             },
         })
-        const data = response.json();
+        const data = await response.json();
         return data;
     }
 )

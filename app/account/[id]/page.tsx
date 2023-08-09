@@ -20,7 +20,7 @@ import Loader from "@/components/Loader";
 import PushComponent from "@/components/PushComponent";
 import { IinitialStateList } from "@/types/type";
 import { valueForButton } from "@/valueForButton";
-
+import { checkTags } from "@/helper/checkTags";
 const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
 type newArrPhotoType = {
   imageURL: string;
@@ -67,6 +67,10 @@ const AccountPage = () => {
     }
   }, [list])
 
+  const funcForStatePushAfterDelete = () => {
+    setStatePush({ ...statePush, pushBol: true, message: 'фото удалено' })
+  }
+
   useEffect(() => {
     if (statePush.pushBol) {
       dispatch(fetchPhotosAuthor(params.id));
@@ -75,6 +79,7 @@ const AccountPage = () => {
   }, [statePush.pushBol])
 
   const handleChange = (e: any) => {
+    setSelectedFile(null);
     setSelectedFile(e.target.files[0]);
     setError({ ...error, fileUpload: "", tags: "" });
     setPreView(URL.createObjectURL(e.target.files[0]));
@@ -103,21 +108,20 @@ const AccountPage = () => {
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setStateDisabled(true);
+
     if (!selectedFile) {
       setError({ ...error, fileUpload: "Выберите файл" });
       return;
     }
-    let tagsArr = await tags.split(" ");
-    let newTagsArr = await tagsArr.filter((el) => el.search(regValue) != -1);
 
-    if (newTagsArr.length === 0) {
+    if (!checkTags(tags)) {
       setError({
         ...error,
         tags: "Введите теги через пробел. Тег больше одного символа",
       });
       return;
     }
+    setStateDisabled(true);
     dispatch(fetchUploadPhoto(selectedFile));
   };
 
@@ -151,9 +155,7 @@ const AccountPage = () => {
     setStateDisabled(false);
   };
 
-  const funcForStatePushAfterDelete = () => {
-    setStatePush({ ...statePush, pushBol: true, message: 'фото удалено' })
-  }
+
   return (
     <>
       <PushComponent
