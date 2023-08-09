@@ -20,8 +20,9 @@ import Loader from "@/components/Loader";
 import PushComponent from "@/components/PushComponent";
 import { IinitialStateList } from "@/types/type";
 import { valueForButton } from "@/valueForButton";
-import { checkTags } from "@/helper/checkTags";
-const regValue = /^[0-9A-ZА-ЯЁ]+$/i;
+import { checkTags } from "@/helper/CheckTags";
+import ModalWindow from "@/components/ModalWindow";
+
 type newArrPhotoType = {
   imageURL: string;
   tags: string;
@@ -35,7 +36,7 @@ const AccountPage = () => {
   const dispatch = useAppDispatch();
   const { userData, loading } = useAppSelector((state) => state.AuthMeSlice);
   const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
-  const { succes } = useAppSelector((state) => state.DeletePhotoSlice)
+  const { succes } = useAppSelector((state) => state.DeletePhotoSlice);
   const { fileURL } = useAppSelector((state) => state.UploadPhotoSlice);
   const photo = useAppSelector((state) => state.AddPhotoSlice);
   const [selectedFile, setSelectedFile] = useState<any>(null);
@@ -49,11 +50,10 @@ const AccountPage = () => {
   const [preView, setPreView] = useState("");
   const [statePush, setStatePush] = useState({
     pushBol: false,
-    message: ''
+    message: "",
   });
   const [stateDisabled, setStateDisabled] = useState(false);
   const [listState, setListState] = useState<IinitialStateList[]>([]);
-
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
@@ -62,21 +62,21 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (list.length > 0) {
-      setListState(list)
+      setListState(list);
       return;
     }
-  }, [list])
+  }, [list]);
 
   const funcForStatePushAfterDelete = () => {
-    setStatePush({ ...statePush, pushBol: true, message: 'фото удалено' })
-  }
+    setStatePush({ ...statePush, pushBol: true, message: "фото удалено" });
+  };
 
   useEffect(() => {
     if (statePush.pushBol) {
       dispatch(fetchPhotosAuthor(params.id));
       return;
     }
-  }, [statePush.pushBol])
+  }, [statePush.pushBol]);
 
   const handleChange = (e: any) => {
     setSelectedFile(null);
@@ -140,21 +140,19 @@ const AccountPage = () => {
       setSelectedFile(null);
       setTags("");
       setPrice("");
-      setStatePush({ ...statePush, pushBol: true, message: 'фото добавлено' });
+      setStatePush({ ...statePush, pushBol: true, message: "фото добавлено" });
       return;
     }
   }, [fileURL]);
-
 
   const checkUserDataMessage = () => {
     if ("message" in userData) push("/auth");
     return;
   };
   const closePushComponent = () => {
-    setStatePush({ ...statePush, pushBol: false, message: '' });
+    setStatePush({ ...statePush, pushBol: false, message: "" });
     setStateDisabled(false);
   };
-
 
   return (
     <>
@@ -164,7 +162,7 @@ const AccountPage = () => {
         closePushComponent={closePushComponent}
       />
       {checkUserDataMessage()}
-
+      <ModalWindow />
       <div className={styles.container}>
         <ProfileCard
           userData={userData}
