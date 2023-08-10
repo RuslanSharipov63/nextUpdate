@@ -26,17 +26,17 @@ const ModalWindow: FC<ModalWindowProps> = ({ id, closeModalWindow }) => {
       dispatch(priceStoreChange(value))
       dispatch(setPriceError(''))
     }
-    if (!checkPrice(value) + ' ' + "1") {
+    if (checkPrice(value) === false) {
       dispatch(setPriceError('введите число'))
     }
-
   }
-
   const handleFocus = () => {
     dispatch(handleStoreFocus())
   }
 
+const updatePhoto = () => {
 
+}
 
   return (
     <div className={styles.container}>
@@ -68,7 +68,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ id, closeModalWindow }) => {
                 <HelperText text={errorPriceStore} />
               </div>
               <div className="card-action">
-                <a >отправить</a>
+                <a onClick={updatePhoto}>отправить</a>
                 <a onClick={() => closeModalWindow()}>закрыть</a>
               </div>
             </div>
