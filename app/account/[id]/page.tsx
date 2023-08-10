@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, SetStateAction } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
@@ -22,6 +22,10 @@ import { IinitialStateList } from "@/types/type";
 import { valueForButton } from "@/valueForButton";
 import { checkTags } from "@/helper/CheckTags";
 import ModalWindow from "@/components/ModalWindow";
+import { tagsStoreChange, priceStoreChange } from "@/store/ChangeInputSlice";
+import { arrForEditPhotoType } from "@/types/type";
+
+
 
 type newArrPhotoType = {
   imageURL: string;
@@ -54,6 +58,7 @@ const AccountPage = () => {
   });
   const [stateDisabled, setStateDisabled] = useState(false);
   const [listState, setListState] = useState<IinitialStateList[]>([]);
+  const [stateModalWindow, setModalWindow] = useState(false)
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
@@ -154,6 +159,15 @@ const AccountPage = () => {
     setStateDisabled(false);
   };
 
+
+  const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
+    dispatch(tagsStoreChange(arrForEditPhoto.tags))
+    dispatch(priceStoreChange(arrForEditPhoto.price))
+    setModalWindow(true)
+  }
+  const closeModalWindow = () => {
+    setModalWindow(false)
+  }
   return (
     <>
       <PushComponent
@@ -162,7 +176,9 @@ const AccountPage = () => {
         closePushComponent={closePushComponent}
       />
       {checkUserDataMessage()}
-      <ModalWindow />
+      {stateModalWindow && <ModalWindow
+        closeModalWindow={closeModalWindow}
+      />}
       <div className={styles.container}>
         <ProfileCard
           userData={userData}
@@ -227,6 +243,7 @@ const AccountPage = () => {
               createdAt={item.createdAt}
               valueForButton={valueForButton}
               funcForStatePushAfterDelete={funcForStatePushAfterDelete}
+              editPhoto={editPhoto}
             />
           )
         )

@@ -3,7 +3,7 @@ import { FC } from "react";
 
 type TextFieldProps = {
   typeText: string;
-  valueText: string;
+  valueText?: string;
   nameText: string;
   funcChange: (itemValue: string, itemName: string) => void;
   funcFocus?: (e: React.ChangeEvent<HTMLInputElement>) => void;

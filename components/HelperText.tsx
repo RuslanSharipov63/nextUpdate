@@ -5,7 +5,7 @@ type HelperTextProps = {
 const HelperText: FC<HelperTextProps> = ({ text }) => {
   return (
     <div>
-      <span className="helper-text">{text && text}</span>
+      <span className="helper-text">{text != '' ? text : null}</span>
     </div>
   );
 };

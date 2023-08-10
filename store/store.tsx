@@ -8,6 +8,7 @@ import UploadPhotoSlice from "./UploadPhotoSlice";
 import AddPhotoSlice from "./AddPhotoSlice";
 import DeletePhotoSlice from "./DeletePhotoSlice";
 import DeletePhotoSliceFromDir from "./DeletePhotoSliceFromDir";
+import ChangeInputSlice from "./ChangeInputSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     AddPhotoSlice,
     DeletePhotoSlice,
     DeletePhotoSliceFromDir,
+    ChangeInputSlice,
   },
 });
 

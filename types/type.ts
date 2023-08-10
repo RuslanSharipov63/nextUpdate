@@ -57,3 +57,9 @@ export type textForPushComponentType = {
   deletePhoto: string;
   editPhoto: string;
 }
+
+export type arrForEditPhotoType = {
+  id?: string;
+  tags: string;
+  price: number;
+}

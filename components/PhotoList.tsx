@@ -6,6 +6,7 @@ import { fetchDeletePhotoFromDir } from "@/store/DeletePhotoSliceFromDir";
 import { useAppDispatch } from "@/hooks/hooks";
 import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
+import { arrForEditPhotoType } from "@/types/type";
 
 type PhotoListProps = {
   id: string;
@@ -13,10 +14,11 @@ type PhotoListProps = {
   tags: string;
   size: number;
   user: string;
-  price?: number;
+  price: number;
   createdAt: string;
   valueForButton?: string[];
   funcForStatePushAfterDelete: () => void;
+  editPhoto?: (arrForEditPhoto: arrForEditPhotoType) => void;
 };
 
 const PhotoList: FC<PhotoListProps> = ({
@@ -29,6 +31,7 @@ const PhotoList: FC<PhotoListProps> = ({
   createdAt,
   valueForButton,
   funcForStatePushAfterDelete,
+  editPhoto
 }) => {
   const dispatch = useAppDispatch();
 
@@ -38,7 +41,12 @@ const PhotoList: FC<PhotoListProps> = ({
     await funcForStatePushAfterDelete();
   };
   const funcEditPhoto = () => {
-    alert("Фото отредактировано");
+    const arrForEditPhoto: arrForEditPhotoType = {
+      id,
+      tags,
+      price,
+    }
+    editPhoto?.(arrForEditPhoto)
   };
   const t = createdAt.indexOf("T");
   const dateCreatePhoto = createdAt.slice(0, t);
