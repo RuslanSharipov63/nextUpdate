@@ -24,6 +24,7 @@ import { checkTags } from "@/helper/CheckTags";
 import ModalWindow from "@/components/ModalWindow";
 import { tagsStoreChange, priceStoreChange, idStore } from "@/store/ChangeInputSlice";
 import { arrForEditPhotoType } from "@/types/type";
+import ProfileCardContainer from "@/components/ProfileCardContainer";
 
 
 
@@ -182,7 +183,7 @@ const AccountPage = () => {
         closeModalWindow={closeModalWindow}
       />}
       <div className={styles.container}>
-        <ProfileCard
+        <ProfileCardContainer
           userData={userData}
           loading={loading}
           photolistuathorcount={list.length}

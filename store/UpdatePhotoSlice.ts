@@ -8,7 +8,6 @@ export const fetchUpdatePhoto = createAsyncThunk(
     async function (updatePhoto: arrForEditPhotoType) {
         let token = await window.localStorage.getItem('token');
         const JSONdata = JSON.stringify(updatePhoto);
-        console.log(JSONdata)
         const response = await fetch(`${BASE_URL}/photo`, {
             method: "PATCH",
             headers: {

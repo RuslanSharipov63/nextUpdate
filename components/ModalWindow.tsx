@@ -21,12 +21,12 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
     dispatch(tagsStoreChange(value))
   }
 
-  const priceChange = (value: string) => {
-    if (checkPrice(value)) {
-      dispatch(priceStoreChange(value))
+  const priceChange = (item: string) => {
+    if (checkPrice(item) === true || item === '') {
+      dispatch(priceStoreChange(item))
       dispatch(setPriceError(''))
     }
-    if (checkPrice(value) === false) {
+    if (checkPrice(item) === false) {
       dispatch(setPriceError('введите число'))
     }
   }
@@ -35,6 +35,14 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
   }
 
   const updatePhoto = () => {
+    if (errorTagsStore != '') {
+      dispatch(setTagsError('теги заполнены некорректно'))
+      return;
+    }
+    if (errorPriceStore != '') {
+      dispatch(setPriceError('цена заполнена некорректно'))
+      return;
+    }
     const updatePhoto = {
       id,
       tags: tagsStore,
@@ -42,7 +50,6 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
     }
     dispatch(fetchUpdatePhoto(updatePhoto));
     closeModalWindow();
-
   }
 
   return (
