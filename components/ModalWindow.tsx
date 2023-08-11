@@ -2,55 +2,63 @@ import styles from "./../stylescomponent/ModalWindow.module.css";
 import TextField from "./TextField";
 import LabelText from "./LabelText";
 import HelperText from "./HelperText";
-import { tagsStoreChange, priceStoreChange, handleStoreFocus, setTagsError, setPriceError } from "@/store/ChangeInputSlice";
+import {
+  tagsStoreChange,
+  priceStoreChange,
+  handleStoreFocus,
+  setTagsError,
+  setPriceError,
+} from "@/store/ChangeInputSlice";
 import { checkPrice } from "@/helper/CheckPrice";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { FC } from "react";
 import { fetchUpdatePhoto } from "@/store/UpdatePhotoSlice";
-
+import { checkTags } from "@/helper/CheckTags";
 type ModalWindowProps = {
   closeModalWindow: () => void;
-}
-
+};
 const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
   const dispatch = useAppDispatch();
-
-  const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } = useAppSelector(state => state.ChangeInputSlice)
-
+  const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } =
+    useAppSelector((state) => state.ChangeInputSlice);
   const tagsChange = (value: string) => {
-    dispatch(tagsStoreChange(value))
-  }
-
+    dispatch(tagsStoreChange(value));
+  };
   const priceChange = (item: string) => {
-    if (checkPrice(item) === true || item === '') {
-      dispatch(priceStoreChange(item))
-      dispatch(setPriceError(''))
-    }
-    if (checkPrice(item) === false) {
-      dispatch(setPriceError('введите число'))
-    }
-  }
-  const handleFocus = () => {
-    dispatch(handleStoreFocus())
-  }
-
-  const updatePhoto = () => {
-    if (errorTagsStore != '') {
-      dispatch(setTagsError('теги заполнены некорректно'))
+    if (!checkTags(tagsStore)) {
+      dispatch(
+        setTagsError("Введите теги через пробел. Тег больше одного символа")
+      );
       return;
     }
-    if (errorPriceStore != '') {
-      dispatch(setPriceError('цена заполнена некорректно'))
+    if (checkPrice(item) === true || item === "") {
+      dispatch(priceStoreChange(item));
+      dispatch(setPriceError(""));
+    }
+    if (checkPrice(item) === false) {
+      dispatch(setPriceError("введите число"));
+    }
+  };
+  const handleFocus = () => {
+    dispatch(handleStoreFocus());
+  };
+  const updatePhoto = () => {
+    if (errorTagsStore != "") {
+      dispatch(setTagsError("теги заполнены некорректно"));
+      return;
+    }
+    if (errorPriceStore != "") {
+      dispatch(setPriceError("цена заполнена некорректно"));
       return;
     }
     const updatePhoto = {
       id,
       tags: tagsStore,
       price: Number(priceStore),
-    }
+    };
     dispatch(fetchUpdatePhoto(updatePhoto));
     closeModalWindow();
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -94,4 +102,3 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
 };
 
 export default ModalWindow;
-
