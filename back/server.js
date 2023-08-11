@@ -88,10 +88,8 @@ app.post("/photo", checkAuth, photoValidation, handleValidationErrors, create);
 app.delete("/photo/:id", checkAuth, remove);
 /* обновляем фото */
 app.patch(
-  "/photo/:id",
+  "/photo",
   checkAuth,
-  photoValidation,
-  handleValidationErrors,
   updateTags
 );
 /* получаем фото по id автора */

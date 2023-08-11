@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 type initialStateChangeInputType = {
+    id: string;
     tagsStore: string;
     priceStore: string;
     errorTagsStore: string;
@@ -9,6 +10,7 @@ type initialStateChangeInputType = {
 }
 
 const initialState: initialStateChangeInputType = {
+    id: '',
     tagsStore: '',
     priceStore: '',
     errorTagsStore: '',
@@ -19,6 +21,10 @@ const changeInputSlice = createSlice({
     name: 'changeInputSlice',
     initialState,
     reducers: {
+        idStore: (state, action: PayloadAction<string>) => {
+            state.id = action.payload;
+            state.errorTagsStore = '';
+        },
         tagsStoreChange: (state, action: PayloadAction<string>) => {
             state.tagsStore = action.payload;
             state.errorTagsStore = '';
@@ -43,6 +49,7 @@ export const { tagsStoreChange,
     priceStoreChange,
     handleStoreFocus,
     setTagsError,
-    setPriceError
+    setPriceError,
+    idStore
 } = changeInputSlice.actions;
 export default changeInputSlice.reducer;

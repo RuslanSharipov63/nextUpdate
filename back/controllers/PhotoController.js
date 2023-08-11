@@ -56,7 +56,6 @@ const getAllPhotoForUserId = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  console.log(req.body);
   try {
     const doc = new PhotoModel({
       imageURL: req.body.imageURL,
@@ -93,17 +92,13 @@ const remove = async (req, res) => {
 
 const updateTags = async (req, res) => {
   try {
-/*     const photoId = await req.params.id; */
     await PhotoModel.updateOne(
       {
         _id: req.body.id,
       },
       {
-        tags: req.body.tags,
+        $set: { tags: req.body.tags, price: req.body.price },
       },
-      {
-        price: req.body.price,
-      }
     );
     return res.json({
       success: true,
@@ -111,7 +106,7 @@ const updateTags = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({
-      message: "Не удалось обновить теги и цену",
+      success: false,
     });
   }
 };

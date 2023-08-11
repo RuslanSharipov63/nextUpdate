@@ -6,16 +6,16 @@ import { tagsStoreChange, priceStoreChange, handleStoreFocus, setTagsError, setP
 import { checkPrice } from "@/helper/CheckPrice";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { FC } from "react";
+import { fetchUpdatePhoto } from "@/store/UpdatePhotoSlice";
 
 type ModalWindowProps = {
-  id?: string;
   closeModalWindow: () => void;
 }
 
-const ModalWindow: FC<ModalWindowProps> = ({ id, closeModalWindow }) => {
+const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
   const dispatch = useAppDispatch();
 
-  const { tagsStore, priceStore, errorPriceStore, errorTagsStore } = useAppSelector(state => state.ChangeInputSlice)
+  const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } = useAppSelector(state => state.ChangeInputSlice)
 
   const tagsChange = (value: string) => {
     dispatch(tagsStoreChange(value))
@@ -34,9 +34,16 @@ const ModalWindow: FC<ModalWindowProps> = ({ id, closeModalWindow }) => {
     dispatch(handleStoreFocus())
   }
 
-const updatePhoto = () => {
+  const updatePhoto = () => {
+    const updatePhoto = {
+      id,
+      tags: tagsStore,
+      price: Number(priceStore),
+    }
+    dispatch(fetchUpdatePhoto(updatePhoto));
+    closeModalWindow();
 
-}
+  }
 
   return (
     <div className={styles.container}>

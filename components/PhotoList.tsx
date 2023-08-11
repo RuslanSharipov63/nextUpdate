@@ -44,7 +44,7 @@ const PhotoList: FC<PhotoListProps> = ({
     const arrForEditPhoto: arrForEditPhotoType = {
       id,
       tags,
-      price: price.toString(),
+      price: price,
     }
     editPhoto?.(arrForEditPhoto)
   };

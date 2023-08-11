@@ -22,7 +22,7 @@ import { IinitialStateList } from "@/types/type";
 import { valueForButton } from "@/valueForButton";
 import { checkTags } from "@/helper/CheckTags";
 import ModalWindow from "@/components/ModalWindow";
-import { tagsStoreChange, priceStoreChange } from "@/store/ChangeInputSlice";
+import { tagsStoreChange, priceStoreChange, idStore } from "@/store/ChangeInputSlice";
 import { arrForEditPhotoType } from "@/types/type";
 
 
@@ -162,11 +162,13 @@ const AccountPage = () => {
 
   const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
     dispatch(tagsStoreChange(arrForEditPhoto.tags))
-    dispatch(priceStoreChange(arrForEditPhoto.price))
+    dispatch(priceStoreChange(arrForEditPhoto.price.toString()))
+    dispatch(idStore(arrForEditPhoto.id))
     setModalWindow(true)
   }
   const closeModalWindow = () => {
     setModalWindow(false)
+    setStatePush({ ...statePush, pushBol: true, message: 'информация обновлена' })
   }
   return (
     <>
