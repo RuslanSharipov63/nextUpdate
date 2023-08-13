@@ -21,9 +21,11 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
   const dispatch = useAppDispatch();
   const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } =
     useAppSelector((state) => state.ChangeInputSlice);
+
   const tagsChange = (value: string) => {
     dispatch(tagsStoreChange(value));
   };
+
   const priceChange = (item: string) => {
     if (!checkTags(tagsStore)) {
       dispatch(
@@ -39,6 +41,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
       dispatch(setPriceError("введите число"));
     }
   };
+  
   const handleFocus = () => {
     dispatch(handleStoreFocus());
   };

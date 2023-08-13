@@ -22,10 +22,15 @@ import { IinitialStateList } from "@/types/type";
 import { valueForButton } from "@/valueForButton";
 import { checkTags } from "@/helper/CheckTags";
 import ModalWindow from "@/components/ModalWindow";
-import { tagsStoreChange, priceStoreChange, idStore } from "@/store/ChangeInputSlice";
 import { arrForEditPhotoType } from "@/types/type";
 import ProfileCardContainer from "@/components/ProfileCardContainer";
-
+import {
+  tagsStoreChange,
+  priceStoreChange,
+  handleStoreFocus,
+  setTagsError,
+  setPriceError,
+} from "@/store/ChangeInputSlice";
 
 
 type newArrPhotoType = {
@@ -43,6 +48,8 @@ const AccountPage = () => {
   const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
   const { succes } = useAppSelector((state) => state.DeletePhotoSlice);
   const { fileURL } = useAppSelector((state) => state.UploadPhotoSlice);
+  const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } =
+  useAppSelector((state) => state.ChangeInputSlice);
   const photo = useAppSelector((state) => state.AddPhotoSlice);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [tags, setTags] = useState("");
@@ -96,7 +103,17 @@ const AccountPage = () => {
     setError({ ...error, fileUpload: "", tags: "" });
   };
 
-  const priceChange = async (e: string) => {
+
+  const priceChange = (item: string) => {
+    if (!checkTags(tagsStore)) {
+      dispatch(
+        setTagsError("Введите теги через пробел. Тег больше одного символа")
+      );
+      return;
+    }
+
+
+ /*  const priceChange = async (e: string) => {
     const regPrice = await /^\d+?$/;
     if (regPrice.test(e)) {
       setError({ ...error, price: "" });
@@ -106,7 +123,7 @@ const AccountPage = () => {
       setError({ ...error, price: "Введите число" });
       setPrice("");
     }
-  };
+  }; */
 
   const handleFocus = () => {
     setTags("");
