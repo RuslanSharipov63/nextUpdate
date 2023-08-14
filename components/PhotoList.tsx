@@ -3,10 +3,11 @@ import { FC } from "react";
 import Link from "next/link";
 import { fetchDeletePhoto } from "@/store/DeletePhotoSlice";
 import { fetchDeletePhotoFromDir } from "@/store/DeletePhotoSliceFromDir";
-import { useAppDispatch } from "@/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
 import { arrForEditPhotoType } from "@/types/type";
+import { changeDisabledButton } from "@/store/ButtonSlice";
 
 type PhotoListProps = {
   id: string;
@@ -34,12 +35,16 @@ const PhotoList: FC<PhotoListProps> = ({
   editPhoto
 }) => {
   const dispatch = useAppDispatch();
-
+  const { disabledValueDelete } = useAppSelector(state => state.ButtonSlice)
+ 
   const funcDeletePhoto = async () => {
+    await dispatch(changeDisabledButton('disabledValueDelete'));
     await dispatch(fetchDeletePhotoFromDir(imageURL));
     await dispatch(fetchDeletePhoto(id));
     await funcForStatePushAfterDelete();
+    await dispatch(changeDisabledButton('disabledValueDelete'));
   };
+
   const funcEditPhoto = () => {
     const arrForEditPhoto: arrForEditPhotoType = {
       id,
@@ -78,6 +83,7 @@ const PhotoList: FC<PhotoListProps> = ({
             <Button
               text={valueForButton[0] && valueForButton[0]}
               funcClick={funcDeletePhoto}
+              disabled={disabledValueDelete}
             />
             <Button
               text={valueForButton[3] && valueForButton[3]}

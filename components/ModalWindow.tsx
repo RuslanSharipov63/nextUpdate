@@ -41,11 +41,19 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
       dispatch(setPriceError("введите число"));
     }
   };
-  
+
   const handleFocus = () => {
     dispatch(handleStoreFocus());
   };
-  const updatePhoto = () => {
+  const updatePhoto = async () => {
+
+    if (!checkTags(tagsStore)) {
+      dispatch(
+        setTagsError("Введите теги через пробел. Тег больше одного символа")
+      );
+      return;
+    }
+
     if (errorTagsStore != "") {
       dispatch(setTagsError("теги заполнены некорректно"));
       return;
@@ -59,8 +67,10 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
       tags: tagsStore,
       price: Number(priceStore),
     };
-    dispatch(fetchUpdatePhoto(updatePhoto));
-    closeModalWindow();
+    await dispatch(fetchUpdatePhoto(updatePhoto));
+    await dispatch(tagsStoreChange(''));
+    await dispatch(priceStoreChange(''));
+    await closeModalWindow();
   };
 
   return (

@@ -7,7 +7,6 @@ import { fetchUploadPhoto } from "@/store/UploadPhotoSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
 import styles from "./Account.module.css";
-import ProfileCard from "@/components/ProfileCard";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import TextField from "@/components/TextField";
 import InfoImage from "@/components/InfoImage";
@@ -30,8 +29,10 @@ import {
   handleStoreFocus,
   setTagsError,
   setPriceError,
+  idStore,
 } from "@/store/ChangeInputSlice";
-
+import { checkPrice } from "@/helper/CheckPrice";
+import { changeDisabledButton } from "@/store/ButtonSlice";
 
 type newArrPhotoType = {
   imageURL: string;
@@ -46,25 +47,20 @@ const AccountPage = () => {
   const dispatch = useAppDispatch();
   const { userData, loading } = useAppSelector((state) => state.AuthMeSlice);
   const { list } = useAppSelector((state) => state.PhotosAuthorSlice);
-  const { succes } = useAppSelector((state) => state.DeletePhotoSlice);
   const { fileURL } = useAppSelector((state) => state.UploadPhotoSlice);
   const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } =
-  useAppSelector((state) => state.ChangeInputSlice);
-  const photo = useAppSelector((state) => state.AddPhotoSlice);
+    useAppSelector((state) => state.ChangeInputSlice);
+  const { disabledValueUpload } = useAppSelector(state => state.ButtonSlice)
   const [selectedFile, setSelectedFile] = useState<any>(null);
-  const [tags, setTags] = useState("");
-  const [price, setPrice] = useState("");
+
   const [error, setError] = useState({
     fileUpload: "",
-    tags: "",
-    price: "",
   });
   const [preView, setPreView] = useState("");
   const [statePush, setStatePush] = useState({
     pushBol: false,
     message: "",
   });
-  const [stateDisabled, setStateDisabled] = useState(false);
   const [listState, setListState] = useState<IinitialStateList[]>([]);
   const [stateModalWindow, setModalWindow] = useState(false)
 
@@ -91,16 +87,17 @@ const AccountPage = () => {
     }
   }, [statePush.pushBol]);
 
+
+  const tagsChange = (value: string) => {
+    dispatch(tagsStoreChange(value));
+  };
+
   const handleChange = (e: any) => {
     setSelectedFile(null);
     setSelectedFile(e.target.files[0]);
-    setError({ ...error, fileUpload: "", tags: "" });
+    setError({ ...error, fileUpload: "" });
+    dispatch(setPriceError(""));
     setPreView(URL.createObjectURL(e.target.files[0]));
-  };
-
-  const tagsChange = (e: string) => {
-    setTags(e);
-    setError({ ...error, fileUpload: "", tags: "" });
   };
 
 
@@ -111,22 +108,17 @@ const AccountPage = () => {
       );
       return;
     }
-
-
- /*  const priceChange = async (e: string) => {
-    const regPrice = await /^\d+?$/;
-    if (regPrice.test(e)) {
-      setError({ ...error, price: "" });
-      setPrice(e);
-      return;
-    } else {
-      setError({ ...error, price: "Введите число" });
-      setPrice("");
+    if (checkPrice(item) === true || item === "") {
+      dispatch(priceStoreChange(item));
+      dispatch(setPriceError(""));
     }
-  }; */
+    if (checkPrice(item) === false) {
+      dispatch(setPriceError("введите число"));
+    }
+  };
 
   const handleFocus = () => {
-    setTags("");
+    dispatch(handleStoreFocus());
   };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,14 +129,11 @@ const AccountPage = () => {
       return;
     }
 
-    if (!checkTags(tags)) {
-      setError({
-        ...error,
-        tags: "Введите теги через пробел. Тег больше одного символа",
-      });
+    if (!checkTags(tagsStore)) {
+      dispatch(setTagsError("Введите теги через пробел. Тег больше одного символа"))
       return;
     }
-    setStateDisabled(true);
+    dispatch(changeDisabledButton('disabledValueUpload'))
     dispatch(fetchUploadPhoto(selectedFile));
   };
 
@@ -154,15 +143,15 @@ const AccountPage = () => {
       const { size } = selectedFile;
       let newArrPhoto: newArrPhotoType = {
         imageURL: fileUrl,
-        tags: tags,
+        tags: tagsStore,
         user: params.id,
         size,
-        price: Number(price),
+        price: Number(priceStore),
       };
       dispatch(fetchAddPhoto(newArrPhoto));
       setSelectedFile(null);
-      setTags("");
-      setPrice("");
+      dispatch(tagsStoreChange(''));
+      dispatch(priceStoreChange(''));
       setStatePush({ ...statePush, pushBol: true, message: "фото добавлено" });
       return;
     }
@@ -174,9 +163,8 @@ const AccountPage = () => {
   };
   const closePushComponent = () => {
     setStatePush({ ...statePush, pushBol: false, message: "" });
-    setStateDisabled(false);
+    dispatch(changeDisabledButton(null))
   };
-
 
   const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
     dispatch(tagsStoreChange(arrForEditPhoto.tags))
@@ -184,6 +172,7 @@ const AccountPage = () => {
     dispatch(idStore(arrForEditPhoto.id))
     setModalWindow(true)
   }
+
   const closeModalWindow = () => {
     setModalWindow(false)
     setStatePush({ ...statePush, pushBol: true, message: 'информация обновлена' })
@@ -212,28 +201,28 @@ const AccountPage = () => {
           <LabelText text={"Введите теги через пробел"} />
           <TextField
             typeText={"text"}
-            valueText={tags}
+            valueText={tagsStore}
             funcChange={tagsChange}
             funcFocus={handleFocus}
             nameText="теги"
             idText={"теги"}
           />
-          <HelperText text={error.tags} />
+          <HelperText text={errorTagsStore} />
           <LabelText text={"Цена"} />
           <TextField
             typeText={"text"}
-            valueText={price}
+            valueText={priceStore}
             funcChange={priceChange}
             nameText="цена"
             idText={"цена"}
           />
-          <HelperText text={error.price} />
+          <HelperText text={errorPriceStore} />
           <Button
             text="загрузить"
             funcClick={handleUpload}
-            disabled={stateDisabled}
+            disabled={disabledValueUpload}
           />
-          {stateDisabled && <Loader />}
+          {disabledValueUpload && <Loader />}
         </div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
       </div>
