@@ -33,6 +33,7 @@ import {
 } from "@/store/ChangeInputSlice";
 import { checkPrice } from "@/helper/CheckPrice";
 import { changeDisabledButton } from "@/store/ButtonSlice";
+import { changePush } from "@/store/PushSlice";
 
 type newArrPhotoType = {
   imageURL: string;
@@ -50,19 +51,17 @@ const AccountPage = () => {
   const { fileURL } = useAppSelector((state) => state.UploadPhotoSlice);
   const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } =
     useAppSelector((state) => state.ChangeInputSlice);
-  const { disabledValueUpload } = useAppSelector(state => state.ButtonSlice)
+  const { disabledValueUpload } = useAppSelector((state) => state.ButtonSlice);
+  const { pushBol, message } = useAppSelector((state) => state.PushSlice);
+
   const [selectedFile, setSelectedFile] = useState<any>(null);
 
   const [error, setError] = useState({
     fileUpload: "",
   });
   const [preView, setPreView] = useState("");
-  const [statePush, setStatePush] = useState({
-    pushBol: false,
-    message: "",
-  });
   const [listState, setListState] = useState<IinitialStateList[]>([]);
-  const [stateModalWindow, setModalWindow] = useState(false)
+  const [stateModalWindow, setModalWindow] = useState(false);
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
@@ -77,16 +76,15 @@ const AccountPage = () => {
   }, [list]);
 
   const funcForStatePushAfterDelete = () => {
-    setStatePush({ ...statePush, pushBol: true, message: "фото удалено" });
+    dispatch(changePush("delete"));
   };
 
   useEffect(() => {
-    if (statePush.pushBol) {
+    if (pushBol) {
       dispatch(fetchPhotosAuthor(params.id));
       return;
     }
-  }, [statePush.pushBol]);
-
+  }, [pushBol]);
 
   const tagsChange = (value: string) => {
     dispatch(tagsStoreChange(value));
@@ -99,7 +97,6 @@ const AccountPage = () => {
     dispatch(setPriceError(""));
     setPreView(URL.createObjectURL(e.target.files[0]));
   };
-
 
   const priceChange = (item: string) => {
     if (!checkTags(tagsStore)) {
@@ -130,10 +127,12 @@ const AccountPage = () => {
     }
 
     if (!checkTags(tagsStore)) {
-      dispatch(setTagsError("Введите теги через пробел. Тег больше одного символа"))
+      dispatch(
+        setTagsError("Введите теги через пробел. Тег больше одного символа")
+      );
       return;
     }
-    dispatch(changeDisabledButton('disabledValueUpload'))
+    dispatch(changeDisabledButton("disabledValueUpload"));
     dispatch(fetchUploadPhoto(selectedFile));
   };
 
@@ -148,11 +147,14 @@ const AccountPage = () => {
         size,
         price: Number(priceStore),
       };
-      dispatch(fetchAddPhoto(newArrPhoto));
-      setSelectedFile(null);
-      dispatch(tagsStoreChange(''));
-      dispatch(priceStoreChange(''));
-      setStatePush({ ...statePush, pushBol: true, message: "фото добавлено" });
+      const addPhoto = async () => {
+        await dispatch(fetchAddPhoto(newArrPhoto));
+        await setSelectedFile(null);
+        await dispatch(tagsStoreChange(""));
+        await dispatch(priceStoreChange(""));
+        await dispatch(changePush("add"));
+      };
+      addPhoto();
       return;
     }
   }, [fileURL]);
@@ -162,32 +164,30 @@ const AccountPage = () => {
     return;
   };
   const closePushComponent = () => {
-    setStatePush({ ...statePush, pushBol: false, message: "" });
-    dispatch(changeDisabledButton(null))
+    dispatch(changePush(null));
+    dispatch(changeDisabledButton(null));
   };
 
   const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
-    dispatch(tagsStoreChange(arrForEditPhoto.tags))
-    dispatch(priceStoreChange(arrForEditPhoto.price.toString()))
-    dispatch(idStore(arrForEditPhoto.id))
-    setModalWindow(true)
-  }
+    dispatch(tagsStoreChange(arrForEditPhoto.tags));
+    dispatch(priceStoreChange(arrForEditPhoto.price.toString()));
+    dispatch(idStore(arrForEditPhoto.id));
+    setModalWindow(true);
+  };
 
   const closeModalWindow = () => {
-    setModalWindow(false)
-    setStatePush({ ...statePush, pushBol: true, message: 'информация обновлена' })
-  }
+    setModalWindow(false);
+    dispatch(changePush("update"));
+  };
   return (
     <>
       <PushComponent
-        text={statePush.message}
-        stateValue={statePush.pushBol}
+        text={message}
+        stateValue={pushBol}
         closePushComponent={closePushComponent}
       />
       {checkUserDataMessage()}
-      {stateModalWindow && <ModalWindow
-        closeModalWindow={closeModalWindow}
-      />}
+      {stateModalWindow && <ModalWindow closeModalWindow={closeModalWindow} />}
       <div className={styles.container}>
         <ProfileCardContainer
           userData={userData}

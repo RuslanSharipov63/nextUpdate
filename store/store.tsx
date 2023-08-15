@@ -11,6 +11,7 @@ import DeletePhotoSliceFromDir from "./DeletePhotoSliceFromDir";
 import ChangeInputSlice from "./ChangeInputSlice";
 import UpdatePhotoSlice from "./UpdatePhotoSlice";
 import ButtonSlice from "./ButtonSlice";
+import PushSlice from "./PushSlice";
 
 export const store = configureStore({
   reducer: {
@@ -25,7 +26,8 @@ export const store = configureStore({
     DeletePhotoSliceFromDir,
     ChangeInputSlice,
     UpdatePhotoSlice,
-    ButtonSlice
+    ButtonSlice,
+    PushSlice,
   },
 });
 
