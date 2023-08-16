@@ -181,6 +181,7 @@ const AccountPage = () => {
   };
   return (
     <>
+
       <PushComponent
         text={message}
         stateValue={pushBol}
@@ -195,6 +196,7 @@ const AccountPage = () => {
           photolistuathorcount={list.length}
         />
         <div className={`${styles.formContainer} z-depth-2`}>
+          <i className="material-icons">add</i>
           <LabelText text={"Загрузите файл"} />
           <TextFieldUploads typeText={"file"} funcChange={handleChange} />
           <HelperText text={error.fileUpload} />

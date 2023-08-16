@@ -26,7 +26,6 @@ const ProfileCard: FC<ProfileCardProps> = ({ userData, loading, photolistuathorc
                 <div className="black-text">{userData.fullName}</div>
                 <div className="black-text">Электронная почта: {userData.email}</div>
                 <div className="black-text">Кол-во фотографий: {photolistuathorcount}</div>
-
             </div>
         </div>
 
