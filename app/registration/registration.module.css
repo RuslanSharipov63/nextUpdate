@@ -1,11 +1,42 @@
-.container {
+/* .container {
     display: grid;
     grid-template-columns: auto 90% auto;
+    align-items: start;
     margin: 4%;
 }
 
 @media screen and (min-width: 600px) {
     .container {
         grid-template-columns: auto 300px auto;
+    }
+} */
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left !important;
+    margin: 0 auto;
+    width: 95%;
+   }
+
+
+   @media screen and (min-width: 600px) {
+    .container {
+        width: 50%;
+    }
+} 
+
+@media screen and (min-width: 900px) {
+    .container {
+        width: 40%;
+    }
+} 
+
+@media screen and (min-width: 1100px) {
+    .container {
+        width: 30%;
     }
 }

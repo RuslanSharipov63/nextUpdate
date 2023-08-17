@@ -10,6 +10,9 @@ import Button from "@/components/Button";
 import HelperText from "@/components/HelperText";
 import LabelText from "@/components/LabelText";
 import styles from "./registration.module.css";
+import TextFieldUploads from "@/components/TextFieldUploads";
+import InfoImage from "@/components/InfoImage";
+
 
 type stateProps = {
   [x: string]: string;
@@ -25,15 +28,26 @@ const RegistrationPage = () => {
     firstName: "",
     email: "",
     password: "",
+    fileUpload: ""
   });
   const [checkEmailPass, setCheckEmailPass] = useState(true);
+  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [preView, setPreView] = useState("");
+
+  const handleUploadChange = (e: any) => {
+    setSelectedFile(null);
+    setSelectedFile(e.target.files[0]);
+    setError({ ...error, fileUpload: "" });
+    setPreView(URL.createObjectURL(e.target.files[0]));
+  };
+
 
   const handleChange = (etv: string, etn: string) => {
     setRegisterInput({
       ...registerInput,
       [etn]: etv,
     });
-    setError({ ...error, firstName: "", email: "", password: "" });
+    setError({ ...error, firstName: "", email: "", password: "", fileUpload: "" });
     setCheckEmailPass(true);
   };
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +77,7 @@ const RegistrationPage = () => {
     }
   };
 
-  const checkAuth = (e: any) => {
+  const checkRegistration = (e: any) => {
     e.preventDefault();
     if (
       validationPassword(registerInput.password) === false ||
@@ -73,12 +87,19 @@ const RegistrationPage = () => {
       setCheckEmailPass(false);
       return;
     }
+
+    /* let dataRegistration = {
+      fileName: 
+    } */
     alert("Вход разрешен");
   };
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
-      <div></div>
+      <TextFieldUploads
+          typeText={'file'}
+          funcChange={handleUploadChange}
+        />
       <form>
         <div>
           <HelperText text={checkEmailPass ? "" : "Данные некорректны"} />
@@ -116,9 +137,9 @@ const RegistrationPage = () => {
           />
           <HelperText text={error.password === "" ? null : error.password} />
         </div>
-        <Button text={"войти"} funcClick={checkAuth} />
+        <Button text={"войти"} funcClick={checkRegistration} />
       </form>
-      <div></div>
+      <div>{selectedFile && <InfoImage info={selectedFile} preView={preView} />}</div>
     </div>
   );
 };

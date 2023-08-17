@@ -23,6 +23,7 @@
     flex-direction: row;
     justify-content:first baseline;
     align-items: center;
+    cursor: pointer;
 }
 
 .iconText {
