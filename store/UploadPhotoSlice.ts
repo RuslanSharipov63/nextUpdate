@@ -16,7 +16,7 @@ export const fetchUploadPhoto = createAsyncThunk(
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            body: formData,
+            body: formData, 
         });
 
         const data = await response.json();

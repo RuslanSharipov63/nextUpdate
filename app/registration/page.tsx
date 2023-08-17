@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useAppDispatch } from "@/hooks/hooks";
 import {
   validationEmail,
   validationPassword,
@@ -12,13 +13,14 @@ import LabelText from "@/components/LabelText";
 import styles from "./registration.module.css";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import InfoImage from "@/components/InfoImage";
-
+import { fetchUploadUserForRegistration } from "@/store/RegistrationSlice";
 
 type stateProps = {
   [x: string]: string;
 };
 
 const RegistrationPage = () => {
+  const dispatch = useAppDispatch();
   const [registerInput, setRegisterInput] = useState<stateProps>({
     email: "",
     password: "",
@@ -28,7 +30,7 @@ const RegistrationPage = () => {
     firstName: "",
     email: "",
     password: "",
-    fileUpload: ""
+    fileUpload: "",
   });
   const [checkEmailPass, setCheckEmailPass] = useState(true);
   const [selectedFile, setSelectedFile] = useState<any>(null);
@@ -41,13 +43,18 @@ const RegistrationPage = () => {
     setPreView(URL.createObjectURL(e.target.files[0]));
   };
 
-
   const handleChange = (etv: string, etn: string) => {
     setRegisterInput({
       ...registerInput,
       [etn]: etv,
     });
-    setError({ ...error, firstName: "", email: "", password: "", fileUpload: "" });
+    setError({
+      ...error,
+      firstName: "",
+      email: "",
+      password: "",
+      fileUpload: "",
+    });
     setCheckEmailPass(true);
   };
   const handleFocus = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,22 +95,28 @@ const RegistrationPage = () => {
       return;
     }
 
-    /* let dataRegistration = {
-      fileName: 
-    } */
-    alert("Вход разрешен");
+    let dataRegistration = {
+      fileName: selectedFile,
+      email: registerInput.email,
+    };
+    dispatch(fetchUploadUserForRegistration(dataRegistration));
+    setSelectedFile(null);
+    setRegisterInput({
+      ...registerInput,
+      email: "",
+      password: "",
+      firstName: "",
+    });
+    setPreView("");
   };
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
-      <TextFieldUploads
-          typeText={'file'}
-          funcChange={handleUploadChange}
-        />
+      <TextFieldUploads typeText={"file"} funcChange={handleUploadChange} />
       <form>
         <div>
           <HelperText text={checkEmailPass ? "" : "Данные некорректны"} />
-          <LabelText text={'имя'} />
+          <LabelText text={"имя"} />
           <TextField
             typeText={"text"}
             valueText={registerInput.firstName}
@@ -114,7 +127,7 @@ const RegistrationPage = () => {
             funcBlur={handleBlur}
           />
           <HelperText text={error.firstName === "" ? null : error.firstName} />
-          <LabelText text={'Электронная почта'} />
+          <LabelText text={"Электронная почта"} />
           <TextField
             typeText={"text"}
             valueText={registerInput.email}
@@ -125,7 +138,7 @@ const RegistrationPage = () => {
             funcBlur={handleBlur}
           />
           <HelperText text={error.email === "" ? null : error.email} />
-          <LabelText text={'Пароль'} />
+          <LabelText text={"Пароль"} />
           <TextField
             typeText={"password"}
             valueText={registerInput.password}
@@ -139,7 +152,9 @@ const RegistrationPage = () => {
         </div>
         <Button text={"войти"} funcClick={checkRegistration} />
       </form>
-      <div>{selectedFile && <InfoImage info={selectedFile} preView={preView} />}</div>
+      <div>
+        {selectedFile && <InfoImage info={selectedFile} preView={preView} />}
+      </div>
     </div>
   );
 };
