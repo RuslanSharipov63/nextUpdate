@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
-import { useAppDispatch } from "@/hooks/hooks";
+import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import {
   validationEmail,
   validationPassword,
@@ -10,10 +10,11 @@ import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import HelperText from "@/components/HelperText";
 import LabelText from "@/components/LabelText";
+import Loader from "@/components/Loader";
 import styles from "./registration.module.css";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import InfoImage from "@/components/InfoImage";
-import { fetchUploadUserForRegistration } from "@/store/RegistrationSlice";
+import { fetchUploadUserForRegistration, fetchRegistration } from "@/store/RegistrationSlice";
 
 type stateProps = {
   [x: string]: string;
@@ -35,6 +36,7 @@ const RegistrationPage = () => {
   const [checkEmailPass, setCheckEmailPass] = useState(true);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [preView, setPreView] = useState("");
+  const { userData, dataResponse, loading, message } = useAppSelector(state => state.RegistrationSlice)
 
   const handleUploadChange = (e: any) => {
     setSelectedFile(null);
@@ -94,24 +96,53 @@ const RegistrationPage = () => {
       setCheckEmailPass(false);
       return;
     }
-
-    let dataRegistration = {
-      fileName: selectedFile,
+    let dataUser = {
+      fullName: registerInput.firstName,
       email: registerInput.email,
-    };
-    dispatch(fetchUploadUserForRegistration(dataRegistration));
-    setSelectedFile(null);
-    setRegisterInput({
-      ...registerInput,
-      email: "",
-      password: "",
-      firstName: "",
-    });
-    setPreView("");
+      avatarUrl: selectedFile ? selectedFile.name : 'bear.jpg',
+      password: registerInput.password,
+    }
+    dispatch(fetchRegistration(dataUser))
+
   };
+
+  const errorHandler = () => {
+    if (loading === 'pending') {
+      return <Loader />
+    }
+    if (message != '') {
+      return <p>Произошла ошибка</p>
+    }
+    if (dataResponse.error != '') {
+      return <p>{dataResponse.error}</p>
+    }
+    if (dataResponse.message != '') {
+      return <p>{dataResponse.message}</p>
+    }
+  }
+
+  useEffect(() => {
+    if (userData.avatarUrl != '') {
+      let dataUploadUser = {
+        file: selectedFile,
+        id: userData._id
+      }
+      dispatch(fetchUploadUserForRegistration(dataUploadUser));
+      setSelectedFile(null);
+      setRegisterInput({
+        ...registerInput,
+        email: "",
+        password: "",
+        firstName: "",
+      });
+      setPreView("");
+      return;
+    }
+  }, [userData.avatarUrl])
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>
+      {errorHandler()}
       <TextFieldUploads typeText={"file"} funcChange={handleUploadChange} />
       <form>
         <div>

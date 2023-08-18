@@ -1,18 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
+import bear from './../../../public/image/accounts/bear.jpg';
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get("file") as Blob | null;
-  const email = formData.get("email") as string | null;
-  if (!file || !email) {
-    return NextResponse.json({ error: "File blob and email is required." });
+  const userId = formData.get("id") as string;
+  const pathNewDir = join("public", "image", "accounts");
+  await mkdir(`${pathNewDir}/${userId}`)
+  const uploadDir = join(pathNewDir, userId)
+  if (!file) {
+    await writeFile(`${uploadDir}/bear.jpg`, `${bear}`);
+    return NextResponse.json({ fileUrl: "default" });
   }
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
-    const uploadDir = join("public", "image", "accounts");
     await writeFile(`${uploadDir}/${file.name}`, buffer);
     return NextResponse.json({ fileUrl: "ok" });
   } catch (error) {

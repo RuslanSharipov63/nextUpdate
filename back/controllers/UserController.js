@@ -4,9 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
+    console.log(req.body)
     try {
-       
-
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
@@ -14,7 +13,7 @@ const register = async (req, res) => {
         const doc = new UserModel({
             fullName: req.body.fullName,
             email: req.body.email,
-            avatarURL: req.body.avatarURL,
+            avatarUrl: req.body.avatarUrl,
             passwordHash: hash,
         });
 
@@ -83,7 +82,7 @@ const getMe = async (req, res) => {
         }
         const { passwordHash, ...userData } = user._doc;
 
-        res.json( userData );
+        res.json(userData);
     } catch (error) {
         console.log(err);
         res.status(500).json({
