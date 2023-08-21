@@ -15,8 +15,11 @@ import Loader from "@/components/Loader";
 import styles from "./registration.module.css";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import InfoImage from "@/components/InfoImage";
-import { fetchUploadUserForRegistration, fetchRegistration, cleanData } from "@/store/RegistrationSlice";
-
+import {
+  fetchUploadUserForRegistration,
+  fetchRegistration,
+  cleanData,
+} from "@/store/RegistrationSlice";
 
 type stateProps = {
   [x: string]: string;
@@ -40,8 +43,9 @@ const RegistrationPage = () => {
   const [checkEmailPass, setCheckEmailPass] = useState(true);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [preView, setPreView] = useState("");
-  const { userData, dataResponse, loading, message } = useAppSelector(state => state.RegistrationSlice)
-
+  const { userData, dataResponse, loading, message } = useAppSelector(
+    (state) => state.RegistrationSlice
+  );
 
   const handleUploadChange = (e: any) => {
     setSelectedFile(null);
@@ -104,34 +108,34 @@ const RegistrationPage = () => {
     let dataUser = {
       fullName: registerInput.firstName,
       email: registerInput.email,
-      avatarUrl: selectedFile ? selectedFile.name : 'bear.jpg',
+      avatarUrl: selectedFile ? selectedFile.name : "bear.jpg",
       password: registerInput.password,
-    }
-    dispatch(fetchRegistration(dataUser))
-
+    };
+    dispatch(fetchRegistration(dataUser));
   };
 
   const errorHandler = () => {
-    if (loading === 'pending') {
-      return <Loader />
+    if (loading === "pending") {
+      return <Loader />;
     }
-    if (message != '') {
-      return <p>Произошла ошибка</p>
+    if (message != "") {
+      return <p>Произошла ошибка</p>;
     }
-    if (dataResponse.error != '') {
-      return <p>{dataResponse.error}</p>
+    if (dataResponse.error != "") {
+      return <p>{dataResponse.error}</p>;
     }
-    if (dataResponse.message != '') {
-      return <p>{dataResponse.message}</p>
+    if (dataResponse.message != "") {
+      return <p>{dataResponse.message}</p>;
     }
-  }
+  };
 
   useEffect(() => {
-    if (userData.avatarUrl != '') {
+    if (userData.avatarUrl != "" && userData.token != undefined) {
+      window.localStorage.setItem("token", userData.token);
       let dataUploadUser = {
         file: selectedFile,
-        id: userData._id
-      }
+        id: userData._id,
+      };
       dispatch(fetchUploadUserForRegistration(dataUploadUser));
       setSelectedFile(null);
       setRegisterInput({
@@ -142,10 +146,10 @@ const RegistrationPage = () => {
       });
       setPreView("");
       push(`/account/${userData._id}`);
-      dispatch(cleanData())
+      dispatch(cleanData());
       return;
     }
-  }, [userData.avatarUrl])
+  }, [userData.avatarUrl]);
 
   return (
     <div className={styles.container} style={{ marginBottom: "200px" }}>

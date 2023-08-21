@@ -66,7 +66,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
-    dispatch(fetchAuthMe());
+    dispatch(fetchAuthMe());  
   }, []);
 
   useEffect(() => {

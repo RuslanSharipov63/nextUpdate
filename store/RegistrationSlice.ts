@@ -29,7 +29,6 @@ export const fetchRegistration = createAsyncThunk(
     password: string;
   }) {
     const JSONdata = JSON.stringify(userDataREgistration);
-    console.log(JSONdata, 'json slice')
     const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
