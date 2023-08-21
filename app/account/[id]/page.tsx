@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
@@ -197,7 +197,7 @@ const AccountPage = () => {
           photolistuathorcount={list.length}
         />
         <div className={`${styles.formContainer} z-depth-2`}>
-          
+
           <LabelText text={"Загрузите файл"} />
           <TextFieldUploads typeText={"file"} funcChange={handleChange} />
           <HelperText text={error.fileUpload} />

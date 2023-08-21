@@ -3,8 +3,6 @@ import { userDataType } from "@/types/type";
 import Image from "next/image";
 import styles from "./../stylescomponent/ProfileCard.module.css";
 
-
-
 type ProfileCardProps = {
   userData: userDataType;
   photolistuathorcount: string | number;
@@ -26,7 +24,7 @@ const ProfileCard: FC<ProfileCardProps> = ({
     <div className={styles.container}>
       <div className="styles.imgProfile">
         <Image
-          src={userData.avatarUrl}
+          src={`/image/accounts/${userData._id}/${userData.avatarUrl}`}
           width={100}
           height={100}
           alt="аватар тигр"

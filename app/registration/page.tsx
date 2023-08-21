@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import {
@@ -14,13 +15,15 @@ import Loader from "@/components/Loader";
 import styles from "./registration.module.css";
 import TextFieldUploads from "@/components/TextFieldUploads";
 import InfoImage from "@/components/InfoImage";
-import { fetchUploadUserForRegistration, fetchRegistration } from "@/store/RegistrationSlice";
+import { fetchUploadUserForRegistration, fetchRegistration, cleanData } from "@/store/RegistrationSlice";
+
 
 type stateProps = {
   [x: string]: string;
 };
 
 const RegistrationPage = () => {
+  const { push } = useRouter();
   const dispatch = useAppDispatch();
   const [registerInput, setRegisterInput] = useState<stateProps>({
     email: "",
@@ -33,10 +36,12 @@ const RegistrationPage = () => {
     password: "",
     fileUpload: "",
   });
+
   const [checkEmailPass, setCheckEmailPass] = useState(true);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [preView, setPreView] = useState("");
   const { userData, dataResponse, loading, message } = useAppSelector(state => state.RegistrationSlice)
+
 
   const handleUploadChange = (e: any) => {
     setSelectedFile(null);
@@ -136,6 +141,8 @@ const RegistrationPage = () => {
         firstName: "",
       });
       setPreView("");
+      push(`/account/${userData._id}`);
+      dispatch(cleanData())
       return;
     }
   }, [userData.avatarUrl])
@@ -181,7 +188,7 @@ const RegistrationPage = () => {
           />
           <HelperText text={error.password === "" ? null : error.password} />
         </div>
-        <Button text={"войти"} funcClick={checkRegistration} />
+        <Button text={"регистрация"} funcClick={checkRegistration} />
       </form>
       <div>
         {selectedFile && <InfoImage info={selectedFile} preView={preView} />}

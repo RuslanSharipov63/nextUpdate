@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
-import { stat, mkdir, writeFile } from "fs/promises";
+import { stat, mkdir, writeFile, copyFile } from "fs/promises";
 import bear from './../../../public/image/accounts/bear.jpg';
 
 export async function POST(request: NextRequest) {
@@ -11,10 +11,9 @@ export async function POST(request: NextRequest) {
   await mkdir(`${pathNewDir}/${userId}`)
   const uploadDir = join(pathNewDir, userId)
   if (!file) {
-    await writeFile(`${uploadDir}/bear.jpg`, `${bear}`);
-    return NextResponse.json({ fileUrl: "default" });
+    await copyFile(`${pathNewDir}/bear.jpg`, `${uploadDir}/bear.jpg`);
+    return NextResponse.json({ fileUrl: "ok" });
   }
-
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
     await writeFile(`${uploadDir}/${file.name}`, buffer);

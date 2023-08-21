@@ -75,7 +75,19 @@ const initialState: initialStateType = {
 const registrationSlice = createSlice({
   name: "name/registrationslice",
   initialState,
-  reducers: {},
+  reducers: {
+    cleanData: (state) => {
+      state.userData = {
+        _id: '',
+        fullName: '',
+        email: '',
+        createdAt: '',
+        updatedAt: '',
+        avatarUrl: '',
+        token: '',
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUploadUserForRegistration.pending, (state) => {
@@ -101,4 +113,5 @@ const registrationSlice = createSlice({
   },
 });
 
+export const { cleanData } = registrationSlice.actions;
 export default registrationSlice.reducer;

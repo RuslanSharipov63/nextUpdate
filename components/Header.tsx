@@ -26,6 +26,9 @@ const Header = () => {
               <Link href="collapsible.html">Контакты</Link>
             </li>
             <li>
+              <Link href="/profile">Профиль</Link>
+            </li>
+            <li>
               <Link href="/auth">войти</Link>
             </li>
             <li>
