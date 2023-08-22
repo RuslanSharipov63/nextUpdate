@@ -1,4 +1,3 @@
-import { initialStateType } from './../types/type';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "@/baseValue";
 

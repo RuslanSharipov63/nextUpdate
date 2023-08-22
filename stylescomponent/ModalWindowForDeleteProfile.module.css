@@ -1,0 +1,82 @@
+.modal {
+    z-index: 1003;
+    display: block;
+    opacity: 1;
+    top: 10%;
+    width: 35%;
+    transform: scaleX(1) scaleY(1);
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: #fafafa;
+    padding: 0;
+    max-height: 70%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+    -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+}
+
+.text {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-size: 1.5vw;
+
+}
+
+.modalContent {
+    padding: 24px;
+}
+
+.modalFooter {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    border-radius: 0 0 2px 2px;
+    background-color: #fafafa;
+    padding: 4px 6px;
+    height: 56px;
+    width: 100%;
+    text-align: right;
+}
+
+.modalClose {
+    margin-right: 20px;
+    cursor: pointer;
+    color: red;
+}
+
+
+
+@media (max-width: 992px) {
+    .modal {
+        width: 60%;
+    }
+    .text {
+        font-size: 2vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .text {
+        font-size: 3vw;
+    }
+    .modalClose {
+        font-size: 2.5vw;
+    }
+}
+
+
+@media (max-width: 450px) {
+    .text {
+        font-size: 4vw;
+    }
+    .modalClose {
+        font-size: 3.7vw;
+    }
+}

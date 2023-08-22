@@ -91,4 +91,22 @@ const getMe = async (req, res) => {
     }
 }
 
-module.exports = { register, login, getMe }
+
+const removeAuthor = async (req, res) => {
+    const authorId = await req.params.id;
+    try {
+        await UserModel.findByIdAndDelete({ _id: authorId });
+        return res.json({
+            success: true,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+        });
+    }
+};
+
+
+
+module.exports = { register, login, getMe, removeAuthor }

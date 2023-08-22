@@ -13,6 +13,7 @@ import UpdatePhotoSlice from "./UpdatePhotoSlice";
 import ButtonSlice from "./ButtonSlice";
 import PushSlice from "./PushSlice";
 import RegistrationSlice from "./RegistrationSlice";
+import DeleteProfileSlice from "./DeleteProfileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     ButtonSlice,
     PushSlice,
     RegistrationSlice,
+    DeleteProfileSlice
   },
 });
 
