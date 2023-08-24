@@ -25,7 +25,6 @@ const Footer = () => {
             <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
           </div>
         </div>
-        <script src="./../app/script.js"></script>
       </footer>
     );
   }

@@ -22,7 +22,7 @@ export const fetchDeletePhotoProfile = createAsyncThunk(
     const formData = new FormData();
     formData.append("id", id);
     const response = await fetch("/api/profiledelete", {
-      method: "DELETE",
+      method: "POST",
       body: formData,
     });
     const data = await response.json();
@@ -31,15 +31,15 @@ export const fetchDeletePhotoProfile = createAsyncThunk(
 );
 
 type initialStateType = {
-  succes: {
-    succes: boolean;
+  success: {
+    success: boolean;
   };
   loading: string;
 };
 
 const initialState: initialStateType = {
-  succes: {
-    succes: false,
+  success: {
+    success: false,
   },
   loading: "",
 };
@@ -54,7 +54,7 @@ const deleteProfileSlice = createSlice({
         state.loading = "pending";
       })
       .addCase(fetchDeleteProfile.fulfilled, (state, action) => {
-        state.succes = action.payload;
+        state.success = action.payload;
         state.loading = "fulfilled";
       })
       .addCase(fetchDeleteProfile.rejected, (state) => {
@@ -64,7 +64,7 @@ const deleteProfileSlice = createSlice({
         state.loading = "pending";
       })
       .addCase(fetchDeletePhotoProfile.fulfilled, (state, action) => {
-        state.succes = action.payload;
+        state.success = action.payload;
         state.loading = "fulfilled";
       })
       .addCase(fetchDeletePhotoProfile.rejected, (state) => {

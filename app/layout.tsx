@@ -20,9 +20,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      {/* <Head>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-      </Head>  */}
       <body className={inter.className}>
         <Header />
         <ReduxProvider>{children}</ReduxProvider>
