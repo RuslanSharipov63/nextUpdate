@@ -90,7 +90,7 @@ const getMe = async (req, res) => {
     }
 }
 
-
+/* удаляем автора */
 const removeAuthor = async (req, res) => {
     const authorId = await req.params.id;
     try {

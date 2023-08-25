@@ -90,6 +90,25 @@ const remove = async (req, res) => {
   }
 };
 
+
+/* удаляем все фото одного юзера */
+
+const removeAllPhotoUser = async (req, res) => {
+  const userId = await req.params.id;
+  try {
+    const listImageUrlPhotoUser = await PhotoModel.find({ user: userId }, { imageURL: 1 })
+    /* const deletedPhotoUser = await PhotoModel.deleteMany({ user: userId }); */
+    return res.json(listImageUrlPhotoUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Не удалось удалить фотографии",
+    });
+  }
+};
+
+/* обновляем теги */
+
 const updateTags = async (req, res) => {
   try {
     await PhotoModel.updateOne(
@@ -118,4 +137,5 @@ module.exports = {
   remove,
   updateTags,
   getAllPhotoForUserId,
+  removeAllPhotoUser,
 };

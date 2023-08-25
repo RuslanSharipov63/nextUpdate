@@ -15,6 +15,7 @@ const {
   remove,
   updateTags,
   getAllPhotoForUserId,
+  removeAllPhotoUser
 } = require("./controllers/PhotoController");
 const handleValidationErrors = require("./utils/handleValidationsErrors");
 const cors = require("cors");
@@ -96,3 +97,7 @@ app.patch(
 app.get("/photos/:id", getAllPhotoForUserId);
 /* удаляем автора*/
 app.delete("/author/:id", checkAuth, removeAuthor)
+
+/* удаляем все фото автора по id автора */
+app.post("/photoauthor/:id", removeAllPhotoUser)
+

@@ -30,14 +30,46 @@ export const fetchDeletePhotoProfile = createAsyncThunk(
   }
 );
 
+
+export const fetchImageUrlUser = createAsyncThunk(
+  'name/fetchimageurluser',
+  async function (id: string) {
+    const response = await fetch(`${BASE_URL}/photoauthor/${id}`, {
+      method: 'POST'
+    })
+    const data = await response.json();
+    return data;
+  })
+ 
+export const fetchDeleteImageUrlUser = createAsyncThunk(
+  'name/fetchdeleteimageurluser',
+  async function (imageURL:string[]) {
+    const formData = new FormData();
+    formData.append("imageURL", JSON.stringify(imageURL));
+    const response = await fetch('/api/deleteallphotouser', {
+      method: 'POST',
+      body: formData
+    })
+    const data = await response.json();
+    return data;
+  }) 
+
+
+
 type initialStateType = {
+  listImageUrlUser: {
+      [x: string]: string; id: string 
+}[];
   success: {
     success: boolean;
-  };
+  }
   loading: string;
-};
+}
 
 const initialState: initialStateType = {
+  listImageUrlUser: [{
+    id: '',
+  }],
   success: {
     success: false,
   },
@@ -69,6 +101,9 @@ const deleteProfileSlice = createSlice({
       })
       .addCase(fetchDeletePhotoProfile.rejected, (state) => {
         state.loading = "rejected";
+      })
+      .addCase(fetchImageUrlUser.fulfilled, (state, action) => {
+        state.listImageUrlUser = action.payload;
       })
   },
 });
