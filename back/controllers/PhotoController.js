@@ -90,14 +90,16 @@ const remove = async (req, res) => {
   }
 };
 
-
 /* удаляем все фото одного юзера */
 
 const removeAllPhotoUser = async (req, res) => {
   const userId = await req.params.id;
   try {
-    const listImageUrlPhotoUser = await PhotoModel.find({ user: userId }, { imageURL: 1 })
-    /* const deletedPhotoUser = await PhotoModel.deleteMany({ user: userId }); */
+    const listImageUrlPhotoUser = await PhotoModel.find(
+      { user: userId },
+      { imageURL: 1 }
+    );
+    await PhotoModel.deleteMany({ user: userId });
     return res.json(listImageUrlPhotoUser);
   } catch (err) {
     console.log(err);
@@ -117,7 +119,7 @@ const updateTags = async (req, res) => {
       },
       {
         $set: { tags: req.body.tags, price: req.body.price },
-      },
+      }
     );
     return res.json({
       success: true,

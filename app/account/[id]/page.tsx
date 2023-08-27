@@ -145,7 +145,7 @@ const AccountPage = () => {
         imageURL: fileUrl,
         tags: tagsStore,
         user: params.id,
-        size,
+        size: size,
         price: Number(priceStore),
       };
       const addPhoto = async () => {
