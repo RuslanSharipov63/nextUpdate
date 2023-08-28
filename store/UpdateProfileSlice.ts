@@ -27,12 +27,12 @@ export const fetchUpdateProfile = createAsyncThunk(
 )
 
 type initialStateType = {
-    succes: boolean;
+    succes: {succes: boolean};
     loading: loadingType
 }
 
 const initialState: initialStateType = {
-    succes: false,
+    succes: {succes: false},
     loading: '',
 }
 
@@ -46,7 +46,7 @@ const updateProfileSlice = createSlice({
                 state.loading = 'pending'
             })
             .addCase(fetchUpdateProfile.fulfilled, (state, action) => {
-                state.succes = action.payload.succes
+                state.succes = action.payload
                 state.loading = 'fulfilled'
             })
             .addCase(fetchUpdateProfile.rejected, (state) => {

@@ -65,7 +65,7 @@ const ModalWindowUpdateProfileContainer: FC<ModalWindowUpdateProfilePropsContain
     }
 
     useEffect(() => {
-        if (succes) {
+        if (succes.succes) {
             let dataUserUpdatePhoto = {
                 id: id,
                 file: selectedFile

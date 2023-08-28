@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
-import { stat, mkdir, writeFile, copyFile } from "fs/promises";
-import bear from './../../../public/image/accounts/bear.jpg';
+import { mkdir, writeFile, copyFile } from "fs/promises";
+
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
