@@ -107,5 +107,27 @@ const removeAuthor = async (req, res) => {
 };
 
 
+/* обновляем данные профиля */
 
-module.exports = { register, login, getMe, removeAuthor }
+const updateProfile = async (req, res) => {
+    try {
+        await UserModel.updateOne(
+            {
+                _id: req.body.id,
+            },
+            {
+                $set: { avatarUrl: req.body.avatarUrl, fullName: req.body.fullName, email: req.body.email },
+            }
+        );
+        return res.json({
+            success: true,
+        });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+        });
+    }
+};
+
+module.exports = { register, login, getMe, removeAuthor, updateProfile }

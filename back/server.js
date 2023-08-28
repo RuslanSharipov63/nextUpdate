@@ -7,7 +7,7 @@ const loginValidation = require("./validations/login");
 const photoValidation = require("./validations/photo");
 const mongoose = require("mongoose");
 const checkAuth = require("./utils/checkAuth");
-const { register, login, getMe, removeAuthor } = require("./controllers/UserController");
+const { register, login, getMe, removeAuthor, updateProfile } = require("./controllers/UserController");
 const {
   create,
   getAll,
@@ -101,3 +101,5 @@ app.delete("/author/:id", checkAuth, removeAuthor)
 /* удаляем все фото автора по id автора */
 app.post("/photoauthor/:id", removeAllPhotoUser)
 
+/* обновляем профиль */
+app.patch('/updateprofile', checkAuth, updateProfile)

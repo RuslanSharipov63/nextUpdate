@@ -14,6 +14,7 @@ import ButtonSlice from "./ButtonSlice";
 import PushSlice from "./PushSlice";
 import RegistrationSlice from "./RegistrationSlice";
 import DeleteProfileSlice from "./DeleteProfileSlice";
+import UpdateProfileSlice from "./UpdateProfileSlice";
 
 export const store = configureStore({
   reducer: {
@@ -31,7 +32,8 @@ export const store = configureStore({
     ButtonSlice,
     PushSlice,
     RegistrationSlice,
-    DeleteProfileSlice
+    DeleteProfileSlice,
+    UpdateProfileSlice
   },
 });
 

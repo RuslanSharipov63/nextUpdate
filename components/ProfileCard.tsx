@@ -8,6 +8,7 @@ type ProfileCardProps = {
   photolistuathorcount: string | number;
   loading: boolean | string;
   deleteAccount?: () => void;
+  updateAccount?: () => void;
 };
 
 
@@ -16,7 +17,8 @@ const ProfileCard: FC<ProfileCardProps> = ({
   userData,
   loading,
   photolistuathorcount,
-  deleteAccount
+  deleteAccount,
+  updateAccount
 }) => {
 
 
@@ -44,7 +46,7 @@ const ProfileCard: FC<ProfileCardProps> = ({
           <span className="material-icons">delete</span>
           <p className={styles.iconText}>удалить профиль</p>
         </div>
-        <div className={styles.iconItem}>
+        <div className={styles.iconItem} onClick={updateAccount}>
           <span className="material-icons">update</span>
           <p className={styles.iconText}>редактировать профиль</p>
         </div>
