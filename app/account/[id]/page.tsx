@@ -35,6 +35,7 @@ import {
 import { checkPrice } from "@/helper/CheckPrice";
 import { changeDisabledButton } from "@/store/ButtonSlice";
 import { changePush } from "@/store/PushSlice";
+import ModalWindowUpdateProfileContainer from "@/components/ModalWindowUpdateProfileContainer";
 
 type newArrPhotoType = {
   imageURL: string;
@@ -63,10 +64,12 @@ const AccountPage = () => {
   const [preView, setPreView] = useState("");
   const [listState, setListState] = useState<IinitialStateList[]>([]);
   const [stateModalWindow, setModalWindow] = useState(false);
+  const [modalWindowUpdateAccount, setModalWindowUpdateAccount] =
+    useState(false);
 
   useEffect(() => {
     dispatch(fetchPhotosAuthor(params.id));
-    dispatch(fetchAuthMe());  
+    dispatch(fetchAuthMe());
   }, []);
 
   useEffect(() => {
@@ -180,9 +183,24 @@ const AccountPage = () => {
     setModalWindow(false);
     dispatch(changePush("update"));
   };
+
+  const closeModalWindowUpdateProfile = () => {
+    setModalWindowUpdateAccount(false);
+  };
+  const updateAccount = () => {
+    setModalWindowUpdateAccount(true);
+  };
   return (
     <>
-
+      {modalWindowUpdateAccount ? (
+        <ModalWindowUpdateProfileContainer
+          id={userData._id}
+          avatarUrl={userData.avatarUrl}
+          email={userData.email}
+          fullName={userData.fullName}
+          closeModalWindowUpdateProfile={closeModalWindowUpdateProfile}
+        />
+      ) : null}
       <PushComponent
         text={message}
         stateValue={pushBol}
@@ -195,9 +213,9 @@ const AccountPage = () => {
           userData={userData}
           loading={loading}
           photolistuathorcount={list.length}
+          updateAccount={updateAccount}
         />
         <div className={`${styles.formContainer} z-depth-2`}>
-
           <LabelText text={"Загрузите файл"} />
           <TextFieldUploads typeText={"file"} funcChange={handleChange} />
           <HelperText text={error.fileUpload} />
