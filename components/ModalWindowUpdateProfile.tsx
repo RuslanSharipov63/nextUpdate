@@ -5,6 +5,7 @@ import LabelText from "./LabelText";
 import TextField from "./TextField";
 import Button from "./Button";
 import TextFieldUploads from "./TextFieldUploads";
+import Loader from "./Loader";
 import styles from "./../stylescomponent/ModalWindowUpdateProfile.module.css";
 
 type ModalWindowUpdateProfileProps = {
@@ -17,13 +18,15 @@ type ModalWindowUpdateProfileProps = {
     funcChange: (itemValue: string, itemName: string) => void;
     funcUploadChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     funcClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    checkEmailPass: boolean
+    checkEmailPass: boolean;
+    loader: boolean;
+    fileUrl: string
 }
 
-const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({ id, avatarUrl, email, fullName, closeModalWindowUpdateProfile, preView, funcChange, funcUploadChange, funcClick, checkEmailPass }) => {
+const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({ id, avatarUrl, email, fullName, closeModalWindowUpdateProfile, preView, funcChange, funcUploadChange, funcClick, checkEmailPass, loader, fileUrl }) => {
 
     return (
-        <div>
+        <div className={styles.сontainer}>
             {preView === '' ? <Image
                 src={`/image/accounts/${id}/${avatarUrl}`}
                 width={100}
@@ -40,12 +43,13 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({ id, avata
                 priority={true}
             />
             }
-            <div className={`${styles.formContainer} z-depth-2`}>
+            <div className="z-depth-2">
                 <LabelText text={"Загрузите файл"} />
                 <TextFieldUploads
                     typeText={"file"}
                     funcUploadChange={funcUploadChange} />
-                <form>
+             
+                    <HelperText text={fileUrl === 'ok' ? "профиль обновлен" : null} />
                     <HelperText text={checkEmailPass ? "" : "Данные некорректны"} />
                     <LabelText text={"имя"} />
                     <TextField
@@ -65,7 +69,8 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({ id, avata
                     />
                     <Button text={"обновить"} funcClick={funcClick} />
                     <Button text={"закрыть"} funcClick={closeModalWindowUpdateProfile} />
-                </form>
+                    {loader && <Loader />}
+        
             </div>
         </div>
     );

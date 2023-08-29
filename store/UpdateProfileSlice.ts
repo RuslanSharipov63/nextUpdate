@@ -26,14 +26,34 @@ export const fetchUpdateProfile = createAsyncThunk(
     }
 )
 
+export const fetchUpdateUploadPhotoUser = createAsyncThunk(
+    'name/fetchupdateuploadphotouser',
+    async function (dataUserUpdatePhoto: { id: string, file: Blob | null }) {
+        const formData = await new FormData();
+        formData.append('id', dataUserUpdatePhoto.id);
+        if (dataUserUpdatePhoto.file) {
+            formData.append('file', dataUserUpdatePhoto.file)
+        }
+        const response = await fetch('/api/updateprofile', {
+            method: 'POST',
+            body: formData
+        })
+        const data = await response.json();
+        return data;
+    }
+)
+
+
 type initialStateType = {
-    succes: {succes: boolean};
+    success: { success: boolean };
     loading: loadingType
+    fileUrl: { fileUrl: string }
 }
 
 const initialState: initialStateType = {
-    succes: {succes: false},
+    success: { success: false },
     loading: '',
+    fileUrl: { fileUrl: '' }
 }
 
 const updateProfileSlice = createSlice({
@@ -46,10 +66,20 @@ const updateProfileSlice = createSlice({
                 state.loading = 'pending'
             })
             .addCase(fetchUpdateProfile.fulfilled, (state, action) => {
-                state.succes = action.payload
+                state.success = action.payload
                 state.loading = 'fulfilled'
             })
             .addCase(fetchUpdateProfile.rejected, (state) => {
+                state.loading = 'rejected'
+            })
+            .addCase(fetchUpdateUploadPhotoUser.pending, (state) => {
+                state.loading = 'pending'
+            })
+            .addCase(fetchUpdateUploadPhotoUser.fulfilled, (state, action) => {
+                state.fileUrl = action.payload
+                state.loading = 'fulfilled'
+            })
+            .addCase(fetchUpdateUploadPhotoUser.rejected, (state) => {
                 state.loading = 'rejected'
             })
     }

@@ -6,8 +6,9 @@ import {
     validationEmail,
     validationFirstName,
 } from "@/helper/validation";
-import { fetchUpdateProfile } from "@/store/UpdateProfileSlice";
-import { fetchUploadUserForRegistration } from "@/store/RegistrationSlice";
+import { fetchUpdateProfile, fetchUpdateUploadPhotoUser } from "@/store/UpdateProfileSlice";
+import { fetchAuthMe } from "@/store/AuthMeSlice";
+
 
 type ModalWindowUpdateProfilePropsContainer = {
     id: string;
@@ -33,12 +34,15 @@ const ModalWindowUpdateProfileContainer: FC<ModalWindowUpdateProfilePropsContain
     const [checkEmailPass, setCheckEmailPass] = useState(true);
     const [selectedFile, setSelectedFile] = useState<any>(null);
     const [preView, setPreView] = useState("");
+    const [loader, setLoader] = useState(false)
 
     const [registerInput, setRegisterInput] = useState<stateProps>({
         email: email,
         firstName: fullName,
     });
-    const { succes, loading } = useAppSelector(state => state.UpdateProfileSlice)
+    const { success, loading, fileUrl } = useAppSelector(state => state.UpdateProfileSlice)
+   
+
     const handleUploadChange = (e: any) => {
         setSelectedFile(null);
         setSelectedFile(e.target.files[0]);
@@ -61,21 +65,28 @@ const ModalWindowUpdateProfileContainer: FC<ModalWindowUpdateProfilePropsContain
             avatarUrl: selectedFile ? selectedFile.name : avatarUrl,
         };
         dispatch(fetchUpdateProfile(dataUserUpdate));
-        alert('ok')
+        setLoader(true)
     }
 
     useEffect(() => {
-        if (succes.succes) {
+        if (success.success) {
             let dataUserUpdatePhoto = {
                 id: id,
                 file: selectedFile
             }
-            dispatch(fetchUploadUserForRegistration(dataUserUpdatePhoto))
+            dispatch(fetchUpdateUploadPhotoUser(dataUserUpdatePhoto))
+
             return
         }
+    }, [success.success])
 
-    }, [succes])
-
+    useEffect(() => {
+        if (fileUrl.fileUrl === 'ok') {
+            setLoader(false)
+            dispatch(fetchAuthMe());
+            return;
+        }
+    }, [fileUrl.fileUrl])
 
     const handleChange = (etv: string, etn: string) => {
         setRegisterInput({
@@ -85,21 +96,25 @@ const ModalWindowUpdateProfileContainer: FC<ModalWindowUpdateProfilePropsContain
         setCheckEmailPass(true);
     };
 
-    return (
-        <ModalWindowUpdateProfile
-            id={id}
-            avatarUrl={avatarUrl}
-            email={registerInput.email}
-            fullName={registerInput.firstName}
-            closeModalWindowUpdateProfile={closeModalWindowUpdateProfile}
-            preView={preView}
-            funcChange={handleChange}
-            funcUploadChange={handleUploadChange}
-            funcClick={checkUpdate}
-            checkEmailPass={checkEmailPass}
 
-        />
+    return (
+        <>
+                <ModalWindowUpdateProfile
+                    id={id}
+                    avatarUrl={avatarUrl}
+                    email={registerInput.email}
+                    fullName={registerInput.firstName}
+                    closeModalWindowUpdateProfile={closeModalWindowUpdateProfile}
+                    preView={preView}
+                    funcChange={handleChange}
+                    funcUploadChange={handleUploadChange}
+                    funcClick={checkUpdate}
+                    checkEmailPass={checkEmailPass}
+                    loader={loader}
+                    fileUrl={fileUrl.fileUrl}
+                />
+            </>
     );
 }
 
-export default ModalWindowUpdateProfileContainer
+            export default ModalWindowUpdateProfileContainer
