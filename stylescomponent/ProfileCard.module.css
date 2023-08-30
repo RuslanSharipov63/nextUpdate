@@ -1,66 +1,86 @@
 .containerProfileCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: left;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-bottom: 20px;
-    height: auto;
-    
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: left;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 20px;
+  max-height: 350px;
+}
+
+.wrapperProfileCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: left;
+  height: 400px;
 }
 
 .imgProfile {
-    display: flex;
-    
+  display: flex;
 }
 
 .blackText {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .infoProfile {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 3vw;
-    height: auto;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 3vw;
 }
 
 .iconItem {
-    display: flex;
-    flex-direction: row;
-    justify-content: first baseline;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: first baseline;
+  align-items: center;
+  cursor: pointer;
 }
 
 .iconText {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .spanText {
-    padding: 2%;
-    border-radius: 5px;
-    margin-left: 5px;
+  padding: 2%;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+@media (max-width: 600px) {
+  .infoProfile {
+    margin-top: 20px;
+  }
+  .blackText {
+    margin-top: 10px;
+  }
 }
 
 @media (min-width: 600px) and (max-width: 800px) {
-    .infoProfile {
-        font-size: 2vw;
-    }
+  .containerProfileCard {
+    align-items: center;
+  }
+  .infoProfile {
+    font-size: 2vw;
+    /* margin-top: 20px; */
+  }
+  /* .blackText {
+    margin-top: 10px;
+  } */
 }
 
 @media (min-width: 800px) and (max-width: 1000px) {
-    .infoProfile {
-        font-size: 2vw;
-    }
+  .infoProfile {
+    font-size: 1.5vw;
+  }
 }
 
-@media (min-width: 1000px)  {
-    .infoProfile {
-        font-size: 1vw;
-    }
+@media (min-width: 1000px) {
+  .infoProfile {
+    font-size: 1vw;
+  }
 }

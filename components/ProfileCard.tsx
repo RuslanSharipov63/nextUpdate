@@ -24,14 +24,16 @@ const ProfileCard: FC<ProfileCardProps> = ({
 
   return (
     <div className={styles.containerProfileCard}>
-      <div className="styles.imgProfile">
+      <div className={styles.wrapperProfileCard}>
+      <div className={styles.imgProfile}>
         <Image
           src={`/image/accounts/${userData._id}/${userData.avatarUrl}`}
           width={100}
           height={100}
           alt="аватар"
-          style={{ borderRadius: "50%" }}
+          style={{ borderRadius: "5px", objectFit: "cover"}}
           priority={true}
+          object-fit="contain"
         />
       </div>
       <div className={`${styles.infoProfile} card-content`}>
@@ -83,6 +85,7 @@ const ProfileCard: FC<ProfileCardProps> = ({
           >
             редактировать профиль</p>
         </div>
+      </div>
       </div>
     </div>
   );

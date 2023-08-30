@@ -4,7 +4,6 @@ import Link from "next/link";
 import { fetchDeletePhoto } from "@/store/DeletePhotoSlice";
 import { fetchDeletePhotoFromDir } from "@/store/DeletePhotoSliceFromDir";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
-import style from "./../stylescomponent/PhotoList.module.css";
 import Button from "./Button";
 import { arrForEditPhotoType } from "@/types/type";
 import { changeDisabledButton } from "@/store/ButtonSlice";
@@ -32,17 +31,17 @@ const PhotoList: FC<PhotoListProps> = ({
   createdAt,
   valueForButton,
   funcForStatePushAfterDelete,
-  editPhoto
+  editPhoto,
 }) => {
   const dispatch = useAppDispatch();
-  const { disabledValueDelete } = useAppSelector(state => state.ButtonSlice)
- 
+  const { disabledValueDelete } = useAppSelector((state) => state.ButtonSlice);
+
   const funcDeletePhoto = async () => {
-    await dispatch(changeDisabledButton('disabledValueDelete'));
+    await dispatch(changeDisabledButton("disabledValueDelete"));
     await dispatch(fetchDeletePhotoFromDir(imageURL));
     await dispatch(fetchDeletePhoto(id));
     await funcForStatePushAfterDelete();
-    await dispatch(changeDisabledButton('disabledValueDelete'));
+    await dispatch(changeDisabledButton("disabledValueDelete"));
   };
 
   const funcEditPhoto = () => {
@@ -50,28 +49,32 @@ const PhotoList: FC<PhotoListProps> = ({
       id,
       tags,
       price: price,
-    }
-    editPhoto?.(arrForEditPhoto)
+    };
+    editPhoto?.(arrForEditPhoto);
   };
   const t = createdAt.indexOf("T");
   const dateCreatePhoto = createdAt.slice(0, t);
 
   return (
-    <div className={style.container}>
-      <div className="card">
-        <div className="card-image">
-          <Link href={`/photo/${id}`}>
-            <Image
-              src={`${imageURL}`}
-              width={200}
-              height={300}
-              alt="картинка"
-              priority={true}
-              style={{ objectFit: "cover" }}
-            />
-          </Link>
-        </div>
-        <div className="card-content">
+    <div>
+      <div className="card-image">
+        <Link href={`/photo/${id}`}>
+          <Image
+            src={`${imageURL}`}
+            width={300}
+            height={300}
+            alt="картинка"
+            priority={true}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "5px",
+            }}
+          />
+        </Link>
+      </div>
+      {/*  <div className="card-content">
           <span className="card-title">фото: {user}</span>
           <p>теги: {tags}</p>
           <p>размер: {(size / 1024 / 1024).toFixed(2)} мб</p>
@@ -90,8 +93,7 @@ const PhotoList: FC<PhotoListProps> = ({
               funcClick={funcEditPhoto}
             />
           </div>
-        )}
-      </div>
+        )} */}
     </div>
   );
 };

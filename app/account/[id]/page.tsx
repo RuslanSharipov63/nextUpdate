@@ -249,35 +249,37 @@ const AccountPage = () => {
       </div>
 
       <Title text={"Мои фотографии"} />
-      {listState.length === 0 ? (
-        <Title text={"Вы пока не загружали фотографии"} />
-      ) : (
-        listState.map(
-          (item: {
-            _id: string;
-            imageURL: string;
-            tags: string;
-            size: number;
-            price: number;
-            user: { fullName: string };
-            createdAt: string;
-          }) => (
-            <PhotoList
-              key={item._id}
-              id={item._id}
-              imageURL={item.imageURL}
-              tags={item.tags}
-              size={item.size}
-              price={item.price}
-              user={item.user.fullName}
-              createdAt={item.createdAt}
-              valueForButton={valueForButton}
-              funcForStatePushAfterDelete={funcForStatePushAfterDelete}
-              editPhoto={editPhoto}
-            />
+      <div className={styles.containerPhotoList}>
+        {listState.length === 0 ? (
+          <Title text={"Вы пока не загружали фотографии"} />
+        ) : (
+          listState.map(
+            (item: {
+              _id: string;
+              imageURL: string;
+              tags: string;
+              size: number;
+              price: number;
+              user: { fullName: string };
+              createdAt: string;
+            }) => (
+              <PhotoList
+                key={item._id}
+                id={item._id}
+                imageURL={item.imageURL}
+                tags={item.tags}
+                size={item.size}
+                price={item.price}
+                user={item.user.fullName}
+                createdAt={item.createdAt}
+                valueForButton={valueForButton}
+                funcForStatePushAfterDelete={funcForStatePushAfterDelete}
+                editPhoto={editPhoto}
+              />
+            )
           )
-        )
-      )}
+        )}
+      </div>
     </>
   );
 };
