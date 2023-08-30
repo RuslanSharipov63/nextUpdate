@@ -23,32 +23,65 @@ const ProfileCard: FC<ProfileCardProps> = ({
 
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containerProfileCard}>
       <div className="styles.imgProfile">
         <Image
           src={`/image/accounts/${userData._id}/${userData.avatarUrl}`}
           width={100}
           height={100}
-          alt="аватар тигр"
+          alt="аватар"
           style={{ borderRadius: "50%" }}
           priority={true}
         />
       </div>
       <div className={`${styles.infoProfile} card-content`}>
-        <div className="black-text">{userData.fullName}</div>
-        <div className="black-text">Электронная почта: {userData.email}</div>
-        <div className="black-text">
-          Кол-во фотографий: {photolistuathorcount}
+        <div
+          className={
+            `${styles.blackText} 
+            black-text 
+            blue-text text-darken-2`
+          }
+        >
+          имя:
+          <span className={`${styles.spanText} teal lighten-4`}>
+            {userData.fullName}
+          </span>
         </div>
-        <div className={styles.iconItem}
+        <div className={`${styles.blackText} black-text blue-text text-darken-2`}>
+          <span className="blue-text text-darken-2">
+            email:
+          </span>
+          <span
+            className={`${styles.spanText} teal lighten-4`}>
+            {userData.email}
+          </span>
+        </div>
+        <div className={`${styles.blackText} black-text blue-text text-darken-2`}>
+          <span className="blue-text text-darken-2">
+            фотографий:
+          </span>
+          <span
+            className={`${styles.spanText} teal lighten-4`}
+          >{photolistuathorcount}</span>
+        </div>
+        <div
+          className={styles.iconItem}
           onClick={deleteAccount}
         >
-          <span className="material-icons">delete</span>
-          <p className={styles.iconText}>удалить профиль</p>
+          <span className="material-icons">
+            delete
+          </span>
+          <p className={`${styles.iconText} blue-text text-darken-2`}>
+            удалить профиль
+          </p>
         </div>
         <div className={styles.iconItem} onClick={updateAccount}>
           <span className="material-icons">update</span>
-          <p className={styles.iconText}>редактировать профиль</p>
+          <p
+            className={`${styles.iconText} 
+          blue-text text-darken-2`}
+          >
+            редактировать профиль</p>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@
   right: 0;
   height: auto;
   z-index: 100;
+  bottom: 60px;
   background-color: #546e7a;
   padding: 2%;
   border-radius: 5px;
@@ -23,6 +24,7 @@
  @media (min-width: 1000px) {
   .containerModWin {
     width: 40%;
+    bottom: 15px;
   }  
 }
 
@@ -30,6 +32,7 @@
 @media (min-width: 500px) and (max-width: 700px) {
   .containerModWin {
     width: 80%;
+    bottom: 50px;
   }  
 } 
 @media (min-width: 700px) and (max-width: 1000px) {
