@@ -37,6 +37,7 @@ const Photo = () => {
             imageURL={list[0].imageURL}
             tags={list[0].tags}
             size={list[0].size}
+            price={list[0].price}
             user={list[0].user.fullName}
             createdAt={list[0].createdAt}
             textForButton={"купить"}
@@ -53,8 +54,9 @@ const Photo = () => {
           (item: {
             _id: string;
             imageURL: string;
-            tags: string[];
+            tags: string;
             size: number;
+            price: number;
             user: { fullName: string };
             createdAt: string;
           }) => (
@@ -64,6 +66,7 @@ const Photo = () => {
               imageURL={item.imageURL}
               tags={item.tags}
               size={item.size}
+              price={item.price}
               user={item.user.fullName}
               createdAt={item.createdAt}
             />

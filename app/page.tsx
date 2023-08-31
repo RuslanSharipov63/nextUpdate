@@ -1,5 +1,5 @@
 "use client";
-import styles from "./page.module.css";
+import styles from "./page.module.css"; 
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { useEffect } from "react";
 import { PhotoListAsyncThunk } from "@/store/PhotoListSlice";
@@ -14,25 +14,28 @@ export default function Home() {
   useEffect(() => {
     dispatch(PhotoListAsyncThunk());
   }, []);
-console.log(list)
+  console.log(list)
   return (
     <main className={styles.main}>
       {loading === "pending" && <Loader />}
       {loading === "rejected" && (
         <StatusTextForServer text={"Ошибка сервера"} />
       )}
-      {loading === "fulfilled" &&
-        list.map((item) => (
-          <PhotoList
-            key={item._id}
-            id={item._id}
-            imageURL={item.imageURL}
-            tags={item.tags}
-            size={item.size}
-            user={item.user.fullName}
-            createdAt={item.createdAt}
-          />
-        ))}
+      <div className={styles.containerPhotoList}>
+        {loading === "fulfilled" &&
+          list.map((item) => (
+            <PhotoList
+              key={item._id}
+              id={item._id}
+              imageURL={item.imageURL}
+              tags={item.tags}
+              size={item.size}
+              price={item.price}
+              user={item.user.fullName}
+              createdAt={item.createdAt}
+            />
+          ))}
+      </div>
     </main>
   );
 }

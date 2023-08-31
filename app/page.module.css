@@ -6,3 +6,25 @@
     padding: 6rem;
     min-height: 100vh;
   }
+
+  
+.containerPhotoList {
+  columns: 100px 1;
+}
+@media (min-width: 450px) and (max-width: 500px){
+  .containerPhotoList {
+    columns: 100px 2;
+  } 
+} 
+
+@media (min-width: 500px) and (max-width: 800px) {
+  .containerPhotoList {
+    columns: 100px 3;
+  } 
+} 
+
+@media (min-width: 801px) {
+  .containerPhotoList {
+    columns: 100px 5;
+  }  
+}

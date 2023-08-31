@@ -9,6 +9,7 @@ import { arrForEditPhotoType } from "@/types/type";
 import { changeDisabledButton } from "@/store/ButtonSlice";
 
 type PhotoListProps = {
+  key: string;
   id: string;
   imageURL: string;
   tags: string;
@@ -16,12 +17,14 @@ type PhotoListProps = {
   user: string;
   price: number;
   createdAt: string;
+  textForButton?: string;
   valueForButton?: string[];
-  funcForStatePushAfterDelete: () => void;
+  funcForStatePushAfterDelete?: () => void;
   editPhoto?: (arrForEditPhoto: arrForEditPhotoType) => void;
 };
 
 const PhotoList: FC<PhotoListProps> = ({
+  key,
   id,
   imageURL,
   tags,
@@ -32,6 +35,8 @@ const PhotoList: FC<PhotoListProps> = ({
   valueForButton,
   funcForStatePushAfterDelete,
   editPhoto,
+  textForButton,
+
 }) => {
   const dispatch = useAppDispatch();
   const { disabledValueDelete } = useAppSelector((state) => state.ButtonSlice);
@@ -40,7 +45,7 @@ const PhotoList: FC<PhotoListProps> = ({
     await dispatch(changeDisabledButton("disabledValueDelete"));
     await dispatch(fetchDeletePhotoFromDir(imageURL));
     await dispatch(fetchDeletePhoto(id));
-    await funcForStatePushAfterDelete();
+    await funcForStatePushAfterDelete?.();
     await dispatch(changeDisabledButton("disabledValueDelete"));
   };
 
@@ -56,7 +61,7 @@ const PhotoList: FC<PhotoListProps> = ({
   const dateCreatePhoto = createdAt.slice(0, t);
 
   return (
-    <div>
+    <div key={key}>
       <div className="card-image">
         <Link href={`/photo/${id}`}>
           <Image
@@ -74,7 +79,7 @@ const PhotoList: FC<PhotoListProps> = ({
           />
         </Link>
       </div>
-      {/*  <div className="card-content">
+     {/*   <div className="card-content">
           <span className="card-title">фото: {user}</span>
           <p>теги: {tags}</p>
           <p>размер: {(size / 1024 / 1024).toFixed(2)} мб</p>
@@ -93,7 +98,7 @@ const PhotoList: FC<PhotoListProps> = ({
               funcClick={funcEditPhoto}
             />
           </div>
-        )} */}
+        )}  */}
     </div>
   );
 };
