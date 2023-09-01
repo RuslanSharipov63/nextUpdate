@@ -172,14 +172,14 @@ const AccountPage = () => {
     dispatch(changeDisabledButton(null));
   };
 
-  const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
+    const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
     dispatch(tagsStoreChange(arrForEditPhoto.tags));
     dispatch(priceStoreChange(arrForEditPhoto.price.toString()));
     dispatch(idStore(arrForEditPhoto.id));
     setModalWindow(true);
-  };
+  }; 
 
-  const closeModalWindow = () => {
+   const closeModalWindow = () => {
     setModalWindow(false);
     dispatch(changePush("update"));
   };
@@ -207,7 +207,7 @@ const AccountPage = () => {
         closePushComponent={closePushComponent}
       />
       {checkUserDataMessage()}
-      {stateModalWindow && <ModalWindow closeModalWindow={closeModalWindow} />}
+       {stateModalWindow && <ModalWindow closeModalWindow={closeModalWindow} />}
       <div className={styles.container}>
         <ProfileCardContainer
           userData={userData}

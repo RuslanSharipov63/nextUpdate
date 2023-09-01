@@ -3,7 +3,7 @@ import style from "./../stylescomponent/Button.module.css";
 
 type ButtonProps = {
   text?: string;
-  funcClick: (e: any) => void;
+  funcClick: (e?: any) => void;
   disabled?: boolean
 };
 

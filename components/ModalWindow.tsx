@@ -18,6 +18,7 @@ type ModalWindowProps = {
   closeModalWindow: () => void;
 };
 const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
+  
   const dispatch = useAppDispatch();
   const { id, tagsStore, priceStore, errorPriceStore, errorTagsStore } =
     useAppSelector((state) => state.ChangeInputSlice);
