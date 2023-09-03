@@ -1,3 +1,4 @@
+"use client"
 import styles from "./../stylescomponent/ModalWindow.module.css";
 import TextField from "./TextField";
 import LabelText from "./LabelText";
@@ -75,7 +76,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.containerModWin}>
       <div className="row">
         <div className="col s12 m7 offset-m3 l6 offset-l3 xl4 offset-xl4 ">
           <div className="card horizontal">

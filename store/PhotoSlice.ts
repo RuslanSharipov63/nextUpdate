@@ -17,7 +17,7 @@ const initialState: initialStateType = {
     {
       _id: "",
       imageURL: "",
-      tags: [],
+      tags: '',
       user: {
         _id: "",
         fullName: "",
@@ -27,6 +27,7 @@ const initialState: initialStateType = {
         updatedAt: "",
       },
       size: 0,
+      price: 0,
       createdAt: "",
     },
   ],
