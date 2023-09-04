@@ -1,19 +1,31 @@
 "use client";
-import styles from "./page.module.css"; 
+import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { useEffect } from "react";
 import { PhotoListAsyncThunk } from "@/store/PhotoListSlice";
 import PhotoList from "@/components/PhotoList";
 import Loader from "@/components/Loader";
 import StatusTextForServer from "@/components/StatusTextFoServer";
+import { fetchAuthMe } from "@/store/AuthMeSlice";
 
 export default function Home() {
+  const { push } = useRouter();
   const dispatch = useAppDispatch();
   const { list, loading } = useAppSelector((state) => state.PhotoListSlice);
+  const { userData } = useAppSelector((state) => state.AuthMeSlice);
+
+  useEffect(() => {
+    dispatch(fetchAuthMe());
+    if (userData.hasOwnProperty("message")) {
+      push("/auth");
+      return;
+    }
+  }, []);
+
   useEffect(() => {
     dispatch(PhotoListAsyncThunk());
   }, []);
-
 
   return (
     <main className={styles.main}>
