@@ -1,6 +1,16 @@
 import Link from "next/link";
+import { BASE_URL } from "@/baseValue";
 
-const Header = () => {
+async function athMe() {
+  const response = await fetch(`${BASE_URL}/auth/me`)
+  const data = await response.json()
+  return data;
+}
+
+
+
+const Header = async () => {
+
   return (
     <header style={{ marginBottom: "50px" }}>
       <nav>
@@ -29,7 +39,7 @@ const Header = () => {
               <Link href="/profile">Профиль</Link>
             </li>
             <li>
-              <Link href="/auth">войти</Link>
+              <Link href="/auth"></Link>
             </li>
             <li>
               <Link href="/registration">регистрация</Link>

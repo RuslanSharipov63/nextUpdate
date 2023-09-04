@@ -27,6 +27,7 @@ import { changePush } from "@/store/PushSlice";
 import PushComponent from "@/components/PushComponent";
 
 const Photo = () => {
+  const { push } = useRouter();
   const dispatch = useAppDispatch();
   const params = useParams();
   const [stateModalWindow, setModalWindow] = useState(false);
@@ -74,6 +75,7 @@ const Photo = () => {
   const closePushComponent = () => {
     dispatch(changePush(null));
     dispatch(changeDisabledButton(null));
+    push(`/account/${list[0].user._id}`);
   };
   return (
     <>
