@@ -7,7 +7,6 @@ type PhotoInfoProps = {
   price: number;
   valueForButton?: string[];
   createdAt: string;
-  imageURL: string;
 };
 
 const PhotoInfo: FC<PhotoInfoProps> = ({

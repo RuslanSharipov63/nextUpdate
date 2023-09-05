@@ -94,7 +94,6 @@ const Photo = () => {
           <>
             <OnePhoto id={list[0]._id} imageURL={list[0].imageURL} />
             <PhotoInfo
-              imageURL={list[0].imageURL}
               user={list[0].user.fullName}
               tags={list[0].tags}
               size={list[0].size}
