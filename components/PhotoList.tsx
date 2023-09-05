@@ -36,8 +36,8 @@ const PhotoList: FC<PhotoListProps> = ({
   textForButton,
 
 }) => {
-  const dispatch = useAppDispatch();
-  const { disabledValueDelete } = useAppSelector((state) => state.ButtonSlice);
+  /* const dispatch = useAppDispatch(); */
+/*   const { disabledValueDelete } = useAppSelector((state) => state.ButtonSlice); */
 
   /* const funcDeletePhoto = async () => {
     await dispatch(changeDisabledButton("disabledValueDelete"));
