@@ -22,6 +22,7 @@ export type initialStateType = {
   [x: string]: any;
   list: IinitialStateList[];
   loading: string;
+ 
 };
 
 export type userDataType = {
@@ -36,7 +37,8 @@ export type userDataType = {
 
 export type InitialStateAuthType = {
   userData: userDataType;
-  loading: boolean | string
+  loading: boolean | string;
+  token: string | null;
 };
 
 export type PhotoType = {

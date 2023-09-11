@@ -5,7 +5,8 @@ import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
 import { fetchUploadPhoto } from "@/store/UploadPhotoSlice";
-import { fetchAuthMe } from "@/store/AuthMeSlice";
+import { resetFileUrl } from "@/store/UpdateProfileSlice";
+import { fetchAuthMe, isToken } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
 import styles from "./Account.module.css";
 import TextFieldUploads from "@/components/TextFieldUploads";
@@ -68,8 +69,9 @@ const AccountPage = () => {
     useState(false);
 
   useEffect(() => {
+    dispatch(isToken())
     dispatch(fetchPhotosAuthor(params.id));
-    dispatch(fetchAuthMe());
+    dispatch(fetchAuthMe());  
   }, []);
 
   useEffect(() => {
@@ -172,23 +174,24 @@ const AccountPage = () => {
     dispatch(changeDisabledButton(null));
   };
 
-    const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
+  const editPhoto = (arrForEditPhoto: arrForEditPhotoType): void => {
     dispatch(tagsStoreChange(arrForEditPhoto.tags));
     dispatch(priceStoreChange(arrForEditPhoto.price.toString()));
     dispatch(idStore(arrForEditPhoto.id));
     setModalWindow(true);
-  }; 
+  };
 
-   const closeModalWindow = () => {
+  const closeModalWindow = () => {
     setModalWindow(false);
     dispatch(changePush("update"));
   };
 
   const closeModalWindowUpdateProfile = () => {
     setModalWindowUpdateAccount(false);
+    dispatch(resetFileUrl());
   };
   const updateAccount = () => {
-    setModalWindowUpdateAccount(true);
+    setModalWindowUpdateAccount(true);  
   };
   return (
     <>
@@ -207,7 +210,7 @@ const AccountPage = () => {
         closePushComponent={closePushComponent}
       />
       {checkUserDataMessage()}
-       {stateModalWindow && <ModalWindow closeModalWindow={closeModalWindow} />}
+      {stateModalWindow && <ModalWindow closeModalWindow={closeModalWindow} />}
       <div className={styles.container}>
         <ProfileCardContainer
           userData={userData}

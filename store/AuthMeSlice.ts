@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { BASE_URL } from "@/baseValue";
 import { InitialStateAuthType } from "@/types/type";
 
@@ -28,13 +28,20 @@ const initialState: InitialStateAuthType = {
         updatedAt: "",
         avatarUrl: "",
     },
-    loading: false
+    loading: false,
+    token: null,
 }
 
 let authMeSlice = createSlice({
     name: 'authme',
     initialState,
-    reducers: {},
+    reducers: {
+        isToken: (state) => {
+            const tokenLocStor = window.localStorage.getItem('token');
+            state.token = tokenLocStor;
+        }
+
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchAuthMe.pending, (state) => {
@@ -51,4 +58,5 @@ let authMeSlice = createSlice({
 
 })
 
+export const { isToken } = authMeSlice.actions;
 export default authMeSlice.reducer

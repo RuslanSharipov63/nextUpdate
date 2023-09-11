@@ -8,6 +8,7 @@ import LabelText from "@/components/LabelText";
 import HelperText from "@/components/HelperText";
 import { validationEmail, validationPassword } from "@/helper/validation";
 import { fetchAuth } from "@/store/AuthSlice";
+import { isToken } from "@/store/AuthMeSlice";
 import styles from "./auth.module.css";
 
 const AuthPage = () => {
@@ -53,6 +54,7 @@ const AuthPage = () => {
       }
       if (!("message" in userdata.payload)) {
         window.localStorage.setItem("token", userdata.payload.token);
+        dispatch(isToken())
         push(`/account/${userdata.payload._id}`);
       }
     }

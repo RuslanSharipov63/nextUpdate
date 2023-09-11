@@ -1,12 +1,13 @@
 .button {
-  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
   margin: 0 auto;
-  text-align: center;
-  font-size: 4vw;
   margin: 10px;
 }
 
-@media (min-width: 700px) {
+/* @media (min-width: 700px) {
   .button {
     font-size: 3vw;
   }
@@ -31,4 +32,4 @@
     font-size: 1.5vw;
   
   }
-}
+} */

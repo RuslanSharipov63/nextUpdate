@@ -4,4 +4,5 @@ export const valueForButton: string[] = [
   "регистрация",
   "обновить",
   "загрузить",
+  "купить"
 ];

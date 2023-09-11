@@ -20,9 +20,13 @@ export default async function RootLayout({
   return (
     <html lang="ru">
       <body className={inter.className}>
-        <Header />
-        <ReduxProvider>{children}</ReduxProvider>
-        <Footer />
+        
+        <ReduxProvider>
+          <Header />
+          {children}
+          <Footer />
+          </ReduxProvider>
+        
       </body>
     </html>
   );

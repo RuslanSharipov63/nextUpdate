@@ -59,7 +59,11 @@ const initialState: initialStateType = {
 const updateProfileSlice = createSlice({
     name: 'name/updateprofileslice',
     initialState,
-    reducers: {},
+    reducers: {
+        resetFileUrl: (state) => {
+            state.fileUrl.fileUrl = '';
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchUpdateProfile.pending, (state) => {
@@ -84,5 +88,5 @@ const updateProfileSlice = createSlice({
             })
     }
 })
-
+export const { resetFileUrl } = updateProfileSlice.actions;
 export default updateProfileSlice.reducer;

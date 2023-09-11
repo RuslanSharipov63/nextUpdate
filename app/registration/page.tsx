@@ -20,12 +20,19 @@ import {
   fetchRegistration,
   cleanData,
 } from "@/store/RegistrationSlice";
+import { isToken } from "@/store/AuthMeSlice";
 
 type stateProps = {
   [x: string]: string;
 };
 
 const RegistrationPage = () => {
+
+
+  useEffect(() => {
+    dispatch(isToken());
+  }, [])
+
   const { push } = useRouter();
   const dispatch = useAppDispatch();
   const [registerInput, setRegisterInput] = useState<stateProps>({

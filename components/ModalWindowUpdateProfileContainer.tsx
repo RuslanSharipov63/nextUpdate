@@ -70,7 +70,6 @@ const ModalWindowUpdateProfileContainer: FC<
         file: selectedFile,
       };
       dispatch(fetchUpdateUploadPhotoUser(dataUserUpdatePhoto));
-
       return;
     }
   }, [success.success]);

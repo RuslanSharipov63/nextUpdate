@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
@@ -25,9 +24,9 @@ import { fetchDeletePhoto } from "@/store/DeletePhotoSlice";
 import { fetchDeletePhotoFromDir } from "@/store/DeletePhotoSliceFromDir";
 import { changePush } from "@/store/PushSlice";
 import PushComponent from "@/components/PushComponent";
+import { isToken } from "@/store/AuthMeSlice";
 
 const Photo = () => {
-  const { push } = useRouter();
   const dispatch = useAppDispatch();
   const params = useParams();
   const [stateModalWindow, setModalWindow] = useState(false);
@@ -36,9 +35,11 @@ const Photo = () => {
   const { disabledValueDelete } = useAppSelector((state) => state.ButtonSlice);
   const { success } = useAppSelector((state) => state.UpdatePhotoSlice);
   const { pushBol, message } = useAppSelector((state) => state.PushSlice);
+  const { token } = useAppSelector(state => state.AuthMeSlice)
 
   useEffect(() => {
     dispatch(fetchPhoto(params.id));
+    dispatch(isToken())
   }, []);
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const Photo = () => {
   const closePushComponent = () => {
     dispatch(changePush(null));
     dispatch(changeDisabledButton(null));
-    push(`/account/${list[0].user._id}`);
+    dispatch(fetchPhoto(params.id));
   };
   return (
     <>
@@ -101,7 +102,7 @@ const Photo = () => {
               valueForButton={valueForButton}
               createdAt={list[0].createdAt}
             />
-            {valueForButton && (
+            {token ? (
               <div className="card-action">
                 <Button
                   text={valueForButton[0] && valueForButton[0]}
@@ -113,7 +114,15 @@ const Photo = () => {
                   funcClick={funcEditPhoto}
                 />
               </div>
-            )}
+            ) :
+              <div className="card-action">
+                <Button
+                  text={valueForButton[5] && valueForButton[5]}
+                  funcClick={funcDeletePhoto}
+                  disabled={disabledValueDelete}
+                />
+              </div>
+            }
           </>
         )}
       </div>
