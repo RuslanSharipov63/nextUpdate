@@ -62,6 +62,7 @@ const updateProfileSlice = createSlice({
     reducers: {
         resetFileUrl: (state) => {
             state.fileUrl.fileUrl = '';
+            state.success.success = false;
         }
     },
     extraReducers: (builder) => {

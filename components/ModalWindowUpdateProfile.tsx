@@ -37,6 +37,7 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({
   loader,
   fileUrl,
 }) => {
+  
   return (
     <div className={styles.containerModWin}>
       {preView === "" ? (
@@ -58,7 +59,7 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({
           priority={true}
         />
       )}
-      
+     
       <div className={`${styles.formContainer} z-depth-2`}>
       <LabelText text={"Загрузите файл"} />
         <TextFieldUploads typeText={"file"} funcUploadChange={funcUploadChange &&funcUploadChange} />

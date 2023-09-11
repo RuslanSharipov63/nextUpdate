@@ -5,7 +5,6 @@ import { useRouter, useParams } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { fetchPhotosAuthor } from "@/store/PhotosAuthorSlice";
 import { fetchUploadPhoto } from "@/store/UploadPhotoSlice";
-import { resetFileUrl } from "@/store/UpdateProfileSlice";
 import { fetchAuthMe, isToken } from "@/store/AuthMeSlice";
 import Button from "@/components/Button";
 import styles from "./Account.module.css";
@@ -24,6 +23,7 @@ import { valueForButton } from "@/valueForButton";
 import { checkTags } from "@/helper/CheckTags";
 import ModalWindow from "@/components/ModalWindow";
 import { arrForEditPhotoType } from "@/types/type";
+import { resetFileUrl } from "@/store/UpdateProfileSlice";
 import ProfileCardContainer from "@/components/ProfileCardContainer";
 import {
   tagsStoreChange,

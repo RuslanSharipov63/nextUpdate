@@ -9,6 +9,7 @@ import {
 } from "@/store/UpdateProfileSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
 
+
 type ModalWindowUpdateProfilePropsContainer = {
   id: string;
   avatarUrl: string;
@@ -34,10 +35,10 @@ const ModalWindowUpdateProfileContainer: FC<
     email: email,
     firstName: fullName,
   });
+
   const { success, loading, fileUrl } = useAppSelector(
     (state) => state.UpdateProfileSlice
   );
-
   const handleUploadChange = (e: any) => {
     setSelectedFile(null);
     setSelectedFile(e.target.files[0]);
