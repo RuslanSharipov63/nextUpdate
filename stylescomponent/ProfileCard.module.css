@@ -3,11 +3,11 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: left;
-  width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
+  width: 99%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
   margin-bottom: 20px;
-  max-height: 350px;
+  height: 450px;
 }
 
 .wrapperProfileCard {
@@ -15,20 +15,14 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: left;
-  height: 400px;
+  height: 450px;
+  width: 100%;
 }
 
 .imgProfile {
   display: flex;
 }
 
-.blackText {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  width: 50%;
-}
 
 .infoProfile {
   display: flex;

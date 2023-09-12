@@ -1,31 +1,59 @@
 .containerOnePhoto {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   width: 70%;
   margin: 0 auto;
+  
+}
+
+.containerPhotoInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  margin-top: 20px;
+}
+
+.buttonCardAction {
+ margin-left: 20px;
+}
+
+.containerPhotoList {
+  columns: 100px 1;
+}
+
+@media (max-width: 750px) {
+  .containerOnePhoto {
+    flex-direction: column;
+    width: 95%;
+  }
+
+  .containerPhotoInfo {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 
-.containerPhotoList {
-    columns: 100px 1;
+@media (min-width: 450px) and (max-width: 500px) {
+  .containerPhotoList {
+    columns: 100px 2;
   }
-  @media (min-width: 450px) and (max-width: 500px){
-    .containerPhotoList {
-      columns: 100px 2;
-    } 
-  } 
-  
-  @media (min-width: 500px) and (max-width: 800px) {
-    .containerPhotoList {
-      columns: 100px 3;
-    } 
-  } 
-  
-  @media (min-width: 801px) {
-    .containerPhotoList {
-      columns: 100px 5;
-    }  
+}
+
+@media (min-width: 500px) and (max-width: 800px) {
+  .containerPhotoList {
+    columns: 100px 3;
   }
-  
+}
+
+@media (min-width: 801px) {
+  .containerPhotoList {
+    columns: 100px 5;
+  }
+}

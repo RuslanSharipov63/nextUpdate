@@ -94,36 +94,38 @@ const Photo = () => {
         {loading === "fulfilled" && (
           <>
             <OnePhoto id={list[0]._id} imageURL={list[0].imageURL} />
-            <PhotoInfo
-              user={list[0].user.fullName}
-              tags={list[0].tags}
-              size={list[0].size}
-              price={list[0].price}
-              valueForButton={valueForButton}
-              createdAt={list[0].createdAt}
-            />
-            {token ? (
-              <div className="card-action">
-                <Button
-                  text={valueForButton[0] && valueForButton[0]}
-                  funcClick={funcDeletePhoto}
-                  disabled={disabledValueDelete}
-                />
-                <Button
-                  text={valueForButton[3] && valueForButton[3]}
-                  funcClick={funcEditPhoto}
-                />
+            <div className={styles.containerPhotoInfo}>
+              <PhotoInfo
+                user={list[0].user.fullName}
+                tags={list[0].tags}
+                size={list[0].size}
+                price={list[0].price}
+                valueForButton={valueForButton}
+                createdAt={list[0].createdAt}
+              />
+              {token ? (
+                <div className={`${styles.buttonCardAction} card-action`}>
+                  <Button
+                    text={valueForButton[0] && valueForButton[0]}
+                    funcClick={funcDeletePhoto}
+                    disabled={disabledValueDelete}
+                  />
+                  <Button
+                    text={valueForButton[3] && valueForButton[3]}
+                    funcClick={funcEditPhoto}
+                  />
+                </div>
+              ) :
+                <div className={`${styles.buttonCardAction} card-action`}>
+                  <Button
+                    text={valueForButton[5] && valueForButton[5]}
+                    funcClick={funcDeletePhoto}
+                    disabled={disabledValueDelete}
+                  />
+                </div>
+              }
               </div>
-            ) :
-              <div className="card-action">
-                <Button
-                  text={valueForButton[5] && valueForButton[5]}
-                  funcClick={funcDeletePhoto}
-                  disabled={disabledValueDelete}
-                />
-              </div>
-            }
-          </>
+            </>         
         )}
       </div>
       <Title text={"Другие фото автора"} />

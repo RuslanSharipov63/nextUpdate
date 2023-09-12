@@ -28,92 +28,30 @@ const ProfileCard: FC<ProfileCardProps> = ({
         <div className={styles.imgProfile}>
           <Image
             src={`/image/accounts/${userData._id}/${userData.avatarUrl}`}
-            width={100}
-            height={100}
+            width={200}
+            height={200}
             alt="аватар"
             style={{ borderRadius: "5px", objectFit: "cover" }}
             priority={true}
-            object-fit="contain"
           />
         </div>
-
-
-
-
         <div className="collection">
           <a href="#!" className="collection-item">
             <span className="badge">{userData.fullName}</span>имя</a>
           <a href="#!" className="collection-item">
             <span className="badge">{userData.email}</span>email</a>
-        
+
           <a href="#!" className="collection-item">
             <span className="badge">{photolistuathorcount}</span>кол-во фото
-            </a>
-
-
-            <a href="#!" className="collection-item" onClick={deleteAccount}>
+          </a>
+          <a href="#!" className="collection-item" onClick={deleteAccount}>
             <span className="badge material-icons">delete</span>удалить
-            </a>
-            <a href="#!" className="collection-item" onClick={updateAccount}>
+          </a>
+          <a href="#!" className="collection-item" onClick={updateAccount}>
             <span className="badge material-icons">update</span>обновить
-            </a>
-          
+          </a>
+
         </div>
-
-
-
-        {/*   <div className={`${styles.infoProfile} card-content`}>
-          <div
-            className={
-              `${styles.blackText} 
-            black-text 
-            blue-text text-darken-2`
-            }
-          >
-            имя:
-            <span className={`${styles.spanText} teal lighten-4`}>
-              {userData.fullName}
-            </span>
-          </div>
-
-          <div className={`${styles.blackText} black-text blue-text text-darken-2`}>
-            <span className="blue-text text-darken-2">
-              email:
-            </span>
-            <span
-              className={`${styles.spanText} teal lighten-4`}>
-              {userData.email}
-            </span>
-          </div>
-
-          <div className={`${styles.blackText} black-text blue-text text-darken-2`}>
-            <span className="blue-text text-darken-2">
-              фотографий:
-            </span>
-            <span
-              className={`${styles.spanText} teal lighten-4`}
-            >{photolistuathorcount}</span>
-          </div>
-          <div
-            className={styles.iconItem}
-            onClick={deleteAccount}
-          >
-            <span className="material-icons">
-              delete
-            </span>
-            <p className={`${styles.iconText} blue-text text-darken-2`}>
-              удалить профиль
-            </p>
-          </div>
-          <div className={styles.iconItem} onClick={updateAccount}>
-            <span className="material-icons">update</span>
-            <p
-              className={`${styles.iconText} 
-          blue-text text-darken-2`}
-            >
-              редактировать профиль</p>
-          </div>
-        </div> */}
       </div>
     </div>
   );
