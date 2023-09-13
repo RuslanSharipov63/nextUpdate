@@ -15,7 +15,8 @@ const {
   remove,
   updateTags,
   getAllPhotoForUserId,
-  removeAllPhotoUser
+  removeAllPhotoUser,
+  searchTags
 } = require("./controllers/PhotoController");
 const handleValidationErrors = require("./utils/handleValidationsErrors");
 const cors = require("cors");
@@ -103,3 +104,6 @@ app.post("/photoauthor/:id", removeAllPhotoUser)
 
 /* обновляем профиль */
 app.patch('/updateprofile', checkAuth, updateProfile)
+
+/* поиск фото по тегам */
+app.get("/search/:searchtags", searchTags);

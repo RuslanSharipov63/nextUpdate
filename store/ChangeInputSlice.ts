@@ -7,6 +7,7 @@ type initialStateChangeInputType = {
     priceStore: string;
     errorTagsStore: string;
     errorPriceStore: string;
+    searchtags: string;
 }
 
 const initialState: initialStateChangeInputType = {
@@ -15,6 +16,7 @@ const initialState: initialStateChangeInputType = {
     priceStore: '',
     errorTagsStore: '',
     errorPriceStore: '',
+    searchtags: '',
 }
 
 const changeInputSlice = createSlice({
@@ -36,6 +38,12 @@ const changeInputSlice = createSlice({
         handleStoreFocus: (state) => {
             state.tagsStore = '';
         },
+        tagsSearchChange: (state, action: PayloadAction<string>) => {
+            state.searchtags = action.payload;
+        },
+        clearSearchTags: (state) => {
+            state.searchtags = '';
+        },
         setTagsError: (state, action: PayloadAction<string>) => {
             state.errorTagsStore = action.payload
         },
@@ -50,6 +58,8 @@ export const { tagsStoreChange,
     handleStoreFocus,
     setTagsError,
     setPriceError,
-    idStore
+    idStore,
+    tagsSearchChange,
+    clearSearchTags
 } = changeInputSlice.actions;
 export default changeInputSlice.reducer;

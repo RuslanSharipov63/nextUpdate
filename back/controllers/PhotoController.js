@@ -132,6 +132,22 @@ const updateTags = async (req, res) => {
   }
 };
 
+/* поиск фото по тегам */
+
+const searchTags = async (req, res) => {
+  const valueSearch = await req.params.searchtags;
+  try {
+    const resultSearch = await PhotoModel.find({ $text: { $search: valueSearch } })
+    return res.json(resultSearch);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+    });
+  }
+
+}
+
 module.exports = {
   create,
   getAll,
@@ -140,4 +156,7 @@ module.exports = {
   updateTags,
   getAllPhotoForUserId,
   removeAllPhotoUser,
+  searchTags
 };
+
+

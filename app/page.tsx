@@ -13,13 +13,11 @@ async function getPhoto() {
     }
   });
   const data = await response.json();
-  await new Promise((resolve) => setTimeout(resolve, 2000));
   return data;
 }
 
 async function Home() {
   const list = await getPhoto();
-  console.log(list)
   return (
     <main className={styles.main}>
       <Suspense fallback={<Loader />}>
