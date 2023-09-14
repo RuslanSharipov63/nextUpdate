@@ -15,6 +15,7 @@ import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import { FC } from "react";
 import { fetchUpdatePhoto } from "@/store/UpdatePhotoSlice";
 import { checkTags } from "@/helper/CheckTags";
+
 type ModalWindowProps = {
   closeModalWindow: () => void;
 };
@@ -48,7 +49,6 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
     dispatch(handleStoreFocus());
   };
   const updatePhoto = async () => {
-
     if (!checkTags(tagsStore)) {
       dispatch(
         setTagsError("Введите теги через пробел. Тег больше одного символа")

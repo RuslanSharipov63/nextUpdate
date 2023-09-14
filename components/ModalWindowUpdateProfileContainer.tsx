@@ -7,6 +7,7 @@ import {
   fetchUpdateProfile,
   fetchUpdateUploadPhotoUser,
 } from "@/store/UpdateProfileSlice";
+import { changeDisabledButton } from "@/store/ButtonSlice";
 import { fetchAuthMe } from "@/store/AuthMeSlice";
 
 
@@ -39,6 +40,7 @@ const ModalWindowUpdateProfileContainer: FC<
   const { success, loading, fileUrl } = useAppSelector(
     (state) => state.UpdateProfileSlice
   );
+  const { disabledValueUpdate } = useAppSelector(state => state.ButtonSlice)
   const handleUploadChange = (e: any) => {
     setSelectedFile(null);
     setSelectedFile(e.target.files[0]);
@@ -61,6 +63,7 @@ const ModalWindowUpdateProfileContainer: FC<
       avatarUrl: selectedFile ? selectedFile.name : avatarUrl,
     };
     dispatch(fetchUpdateProfile(dataUserUpdate));
+    dispatch(changeDisabledButton('disabledValueUpdate'))
     setLoader(true);
   };
 
@@ -78,6 +81,7 @@ const ModalWindowUpdateProfileContainer: FC<
   useEffect(() => {
     if (fileUrl.fileUrl === "ok") {
       setLoader(false);
+      dispatch(changeDisabledButton('disabledValueUpdate'));
       dispatch(fetchAuthMe());
       return;
     }
@@ -106,6 +110,7 @@ const ModalWindowUpdateProfileContainer: FC<
         checkEmailPass={checkEmailPass}
         loader={loader}
         fileUrl={fileUrl.fileUrl}
+        disabled={disabledValueUpdate}
       />
     </>
   );

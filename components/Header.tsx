@@ -65,7 +65,7 @@ const Header = () => {
               <Link href="/registration">регистрация</Link>
             </li>
             <li>
-              <Link href="/" onClick={() => setSearch(true)}>поиск</Link>
+              <Link href="#" onClick={() => setSearch(true)}>поиск</Link>
             </li>
           </ul>
         </div>
@@ -73,8 +73,7 @@ const Header = () => {
       </nav>
       {search &&
         <nav>
-          <div className="nav-wrapper">
-            
+          <div className="nav-wrapper">            
               <div className="input-field" >
                 <input id="search" type="search" required
                   onChange={handleChange}

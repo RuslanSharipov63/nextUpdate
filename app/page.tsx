@@ -1,10 +1,10 @@
-import styles from "./page.module.css";
 import PhotoList from "@/components/PhotoList";
 import Loader from "@/components/Loader";
 import StatusTextForServer from "@/components/StatusTextFoServer";
-
-import { BASE_URL } from "@/baseValue";
+import styles from "./page.module.css";
 import { Suspense } from "react";
+import { BASE_URL } from "@/baseValue";
+
 
 async function getPhoto() {
   const response = await fetch(`${BASE_URL}/photos`, {

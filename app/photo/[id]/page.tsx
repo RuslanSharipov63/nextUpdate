@@ -71,7 +71,6 @@ const Photo = () => {
   };
   const closeModalWindow = () => {
     setModalWindow(false);
-    dispatch(changePush("update"));
   };
   const closePushComponent = () => {
     dispatch(changePush(null));
@@ -120,12 +119,13 @@ const Photo = () => {
                   <Button
                     text={valueForButton[5] && valueForButton[5]}
                     funcClick={funcDeletePhoto}
+                    /* потом поменять здесь кнопка купить а не удалить */
                     disabled={disabledValueDelete}
                   />
                 </div>
               }
-              </div>
-            </>         
+            </div>
+          </>
         )}
       </div>
       <Title text={"Другие фото автора"} />

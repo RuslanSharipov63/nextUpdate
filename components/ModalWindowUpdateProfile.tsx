@@ -21,6 +21,7 @@ type ModalWindowUpdateProfileProps = {
   checkEmailPass: boolean;
   loader: boolean;
   fileUrl: string;
+  disabled?: boolean
 };
 
 const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({
@@ -36,8 +37,9 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({
   checkEmailPass,
   loader,
   fileUrl,
+  disabled
 }) => {
-  
+
   return (
     <div className={styles.containerModWin}>
       {preView === "" ? (
@@ -59,10 +61,10 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({
           priority={true}
         />
       )}
-     
+
       <div className={`${styles.formContainer} z-depth-2`}>
-      <LabelText text={"Загрузите файл"} />
-        <TextFieldUploads typeText={"file"} funcUploadChange={funcUploadChange &&funcUploadChange} />
+        <LabelText text={"Загрузите файл"} />
+        <TextFieldUploads typeText={"file"} funcUploadChange={funcUploadChange && funcUploadChange} />
         <form>
           <HelperText text={fileUrl === "ok" ? "профиль обновлен" : null} />
           <HelperText text={checkEmailPass ? "" : "Данные некорректны"} />
@@ -82,7 +84,7 @@ const ModalWindowUpdateProfile: FC<ModalWindowUpdateProfileProps> = ({
             nameText="email"
             idText={"email"}
           />
-          <Button text={"обновить"} funcClick={funcClick} />
+          <Button text={"обновить"} funcClick={funcClick} disabled={disabled} />
           <Button text={"закрыть"} funcClick={closeModalWindowUpdateProfile} />
           {loader && <Loader />}
         </form>
