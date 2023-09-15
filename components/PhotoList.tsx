@@ -67,7 +67,8 @@ const PhotoList: FC<PhotoListProps> = ({
             width={300}
             height={300}
             alt="картинка"
-            priority={true}
+            blurDataURL={`${imageURL}`}
+            loading="lazy"
             sizes="100vw"
             style={{
               width: "100%",
