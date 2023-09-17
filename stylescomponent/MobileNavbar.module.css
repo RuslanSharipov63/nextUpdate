@@ -1,0 +1,22 @@
+.wrapperContainerMobileMenu {
+position: relative;
+}
+
+.containerMobileMenu {
+  position: absolute;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 400px;
+  background-color: #ee6e73;
+  width: 50%;
+  padding: 2%;
+  border-radius: 5px;
+
+}
+.link {
+  text-decoration: none;
+  color: #fff;
+}

@@ -1,30 +1,29 @@
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6rem;
-    min-height: 100vh;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  min-height: 100vh;
+}
 
-  
 .containerPhotoList {
   columns: 100px 1;
 }
-@media (min-width: 450px) and (max-width: 500px){
+@media (min-width: 450px) and (max-width: 500px) {
   .containerPhotoList {
     columns: 100px 2;
-  } 
-} 
+  }
+}
 
 @media (min-width: 500px) and (max-width: 800px) {
   .containerPhotoList {
     columns: 100px 3;
-  } 
-} 
+  }
+}
 
-@media (min-width: 801px) {
+@media (min-width: 801px) and (max-width: 1600px) {
   .containerPhotoList {
-    columns: 100px 5;
-  }  
+    columns: 200px 5;
+  }
 }
