@@ -6,6 +6,7 @@ import { isToken } from "@/store/AuthMeSlice";
 import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import Link from "next/link";
 import MobileNavbar from "./MobileNavbar";
+import { usePathname } from 'next/navigation'
 import styles from "./../stylescomponent/Header.module.css";
 
 
@@ -13,6 +14,7 @@ import styles from "./../stylescomponent/Header.module.css";
 
 const Header = () => {
   const { push } = useRouter();
+  const pathname = usePathname()
   const { token } = useAppSelector((state) => state.AuthMeSlice);
   const { searchtags } = useAppSelector((state) => state.ChangeInputSlice);
 
@@ -25,6 +27,9 @@ const Header = () => {
     dispatch(isToken());
   }, [token]);
 
+  useEffect(() => {
+    setMobileMenu(false)
+  }, [pathname])
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -32,7 +37,9 @@ const Header = () => {
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-    console.log(windowWidth)
+    if (windowWidth >= 992) {
+      setMobileMenu(false)
+    }
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -59,51 +66,23 @@ const Header = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(tagsSearchChange(e.target.value));
   };
+
+  const closeMobileMenu = () => {
+    setMobileMenu(false)
+  }
+
+  const openSearch = () => {
+    setSearch(true);
+    setMobileMenu(false);
+  }
+
+
   return (
     <header style={{ marginBottom: "50px" }}>
-
-      {/*  <nav>
-
-        <div className="nav-wrapper">
-          <Link href="/" className="brand-logo">
-            Logo
-          </Link>
-          <ul id="nav-mobile"
-            className="right hide-on-med-and-down">
-            <li>
-              <Link href="/">Главная</Link>
-            </li>
-            <li>
-              <Link href="badges.html">О проекте</Link>
-            </li>
-            <li>
-              <Link href="collapsible.html">Контакты</Link>
-            </li>
-            <li>
-              <Link href="/profile">Профиль</Link>
-            </li>
-            <li>
-              <Link href="/auth" onClick={clearToken}>
-                {token ? "выйти" : "войти"}
-              </Link>
-            </li>
-            <li>
-              <Link href="/registration">регистрация</Link>
-            </li>
-            <li>
-              <Link href="#" onClick={() => setSearch(true)}>
-                поиск
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </nav> */}
-
-      {mobileMenu && <MobileNavbar />}
-
-
-
-
+      {mobileMenu && <MobileNavbar
+        closeMobileMenu={closeMobileMenu}
+        openSearch={openSearch}
+      />}
       {/* {search && (
         <nav>
           <div className="nav-wrapper">
@@ -128,15 +107,15 @@ const Header = () => {
           </div>
         </nav> 
       )}*/}
-
-
-
-
       <nav>
         <div className="nav-wrapper">
           <Link href="#!" className="brand-logo">Logo</Link>
           <Link href="#" data-target="mobile-demo" className="sidenav-trigger">
-            <i className="material-icons">menu</i></Link>
+            <i className="material-icons"
+              onClick={() => setMobileMenu(!mobileMenu)}>
+              {mobileMenu ? 'close' : 'menu'}
+            </i>
+          </Link>
           <ul className="right hide-on-med-and-down" >
             <li><Link href="/">Главная</Link></li>
             <li><Link href="badges.html">О проекте</Link></li>
@@ -177,33 +156,8 @@ const Header = () => {
             </div>
           </div>
         </nav>}
-
-
-
-      <ul className="sidenav" id="mobile-demo">
-        <li><Link href="/">Главная</Link></li>
-        <li><Link href="badges.html">О проекте</Link></li>
-        <li><Link href="collapsible.html">Контакты</Link></li>
-        <li><Link href="/profile">Профиль</Link></li>
-        <li><Link href="/auth" onClick={clearToken}>
-          {token ? "выйти" : "войти"}
-        </Link></li>
-        <li><Link href="/registration">регистрация</Link></li>
-        <li><Link href="#" onClick={() => setSearch(true)}>поиск</Link></li>
-      </ul>
-
     </header>
   );
 };
 
 export default Header;
-
-
-
-/* {windowWidth <= 992 ? <i
-  className={`${styles.headericon} medium material-icons`}
-  onClick={() => setMobileMenu(true)}
->
-  menu
-</i>
-  : null} */

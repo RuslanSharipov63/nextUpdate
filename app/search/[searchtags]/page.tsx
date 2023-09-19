@@ -21,7 +21,7 @@ async function Search() {
         <main className={styles.main}>
             <Suspense fallback={<Loader />}>
                 <div className={styles.containerPhotoList}>
-                    {dataSearch.success === false ? <StatusTextForServer text={'ошибка сервера'}/> : dataSearch.length === 0 ? <Title text={'ничего не найдено'} /> :
+                    {dataSearch.success === false ? <StatusTextForServer text={'ошибка сервера'}/> : dataSearch.length === 0 ? <Title text={'данные отсутствуют'} /> :
                         dataSearch.map((item: any) => (
                             <PhotoList
                                 key={item._id}

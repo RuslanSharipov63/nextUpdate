@@ -1,6 +1,12 @@
 .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto !important;
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
     color: #ee6e73;
+    height: 100px;
 }

@@ -1,6 +1,7 @@
 "use client";
+
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
@@ -18,6 +19,7 @@ const AuthPage = () => {
     email: "Email",
     password: "",
   });
+
 
   const [error, setError] = useState("");
   const [checkEmailPass, setCheckEmailPass] = useState(true);
