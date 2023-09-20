@@ -7,7 +7,7 @@ import { useAppSelector, useAppDispatch } from "@/hooks/hooks";
 import Link from "next/link";
 import MobileNavbar from "./MobileNavbar";
 import { usePathname } from 'next/navigation'
-import styles from "./../stylescomponent/Header.module.css";
+
 
 
 
@@ -83,30 +83,6 @@ const Header = () => {
         closeMobileMenu={closeMobileMenu}
         openSearch={openSearch}
       />}
-      {/* {search && (
-        <nav>
-          <div className="nav-wrapper">
-            <div className="input-field">
-              <input
-                id="search"
-                type="search"
-                required
-                onChange={handleChange}
-                value={searchtags}
-                onKeyDown={(e) => funcRed(e)}
-              />
-              <label className="label-icon" htmlFor="search">
-                <i className="material-icons" onClick={searchPhoto}>
-                  search
-                </i>
-              </label>
-              <i className="material-icons" onClick={() => setSearch(false)}>
-                close
-              </i>
-            </div>
-          </div>
-        </nav> 
-      )}*/}
       <nav>
         <div className="nav-wrapper">
           <Link href="#!" className="brand-logo">Logo</Link>
