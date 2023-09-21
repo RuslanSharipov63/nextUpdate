@@ -11,6 +11,10 @@ import { validationEmail, validationPassword } from "@/helper/validation";
 import { fetchAuth } from "@/store/AuthSlice";
 import { isToken } from "@/store/AuthMeSlice";
 import styles from "./auth.module.css";
+import Link from "next/link";
+
+
+type forgotPassType = string[];
 
 const AuthPage = () => {
   const { push } = useRouter();
@@ -23,6 +27,7 @@ const AuthPage = () => {
 
   const [error, setError] = useState("");
   const [checkEmailPass, setCheckEmailPass] = useState(true);
+  const [forgotPass, setForgotPass] = useState<forgotPassType>([])
 
   const handleChange = (etv: string, etn: string) => {
     setAuthInput({
@@ -47,11 +52,13 @@ const AuthPage = () => {
       validationEmail(authInput.email) === false
     ) {
       setCheckEmailPass(false);
+      setForgotPass([...forgotPass, 'endeavor'])
       return;
     } else {
       const userdata = await dispatch(fetchAuth(authInput));
       if ("message" in userdata.payload) {
         setCheckEmailPass(false);
+        setForgotPass([...forgotPass, 'endeavor'])
         return;
       }
       if (!("message" in userdata.payload)) {
@@ -93,6 +100,7 @@ const AuthPage = () => {
           />
         </div>
         <Button text={"войти"} funcClick={checkAuth} />
+        {forgotPass.length > 2 ? <Link href="/reconstructionpass">забыли пароль?</Link> : null}
       </form>
       <div></div>
     </div>
