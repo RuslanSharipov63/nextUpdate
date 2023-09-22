@@ -7,7 +7,13 @@ const loginValidation = require("./validations/login");
 const photoValidation = require("./validations/photo");
 const mongoose = require("mongoose");
 const checkAuth = require("./utils/checkAuth");
-const { register, login, getMe, removeAuthor, updateProfile } = require("./controllers/UserController");
+const { register,
+  login,
+  getMe,
+  removeAuthor,
+  updateProfile,
+  updatepassword
+} = require("./controllers/UserController");
 const {
   create,
   getAll,
@@ -73,6 +79,12 @@ app.post(
 /* может ли пользователь получить информацию о себе */
 
 app.get("/auth/me", checkAuth, getMe);
+
+/* обновление пароля */
+
+app.post('/reconstructionpass/:unicpath', updatepassword)
+
+
 app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
   /* если все нормально (а за  это отвечает второй параметр функции), то мы возвращаем путь к файлу, то есть ссылку */
   res.json({

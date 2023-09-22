@@ -130,4 +130,40 @@ const updateProfile = async (req, res) => {
     }
 };
 
-module.exports = { register, login, getMe, removeAuthor, updateProfile }
+/* обновление пароля */
+const updatepassword = async (req, res) => {
+    try {
+        const user = await UserModel.findOne({ email: req.body.email });
+        console.log(user)
+        if (!user) {
+            return res.status(404).json({ success: false });
+        }
+        const password = await req.body.password;
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+
+        await UserModel.updateOne(
+            {
+                _id: user.id,
+            },
+            {
+                $set: { passwordHash: hash },
+            }
+        );
+        const token = await jwt.sign({ _id: user._id }, "secret123", {
+            expiresIn: "30d",
+        });
+
+        res.json({
+            token: token,
+        });
+
+    } catch (error) {
+        console.log(err);
+        res.status(500).json({
+            success: false,
+        });
+    }
+}
+
+module.exports = { register, login, getMe, removeAuthor, updateProfile, updatepassword }

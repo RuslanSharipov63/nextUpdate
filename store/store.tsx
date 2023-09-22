@@ -15,6 +15,7 @@ import PushSlice from "./PushSlice";
 import RegistrationSlice from "./RegistrationSlice";
 import DeleteProfileSlice from "./DeleteProfileSlice";
 import UpdateProfileSlice from "./UpdateProfileSlice";
+import UpdatePasswordSlice from "./UpdatePasswordSlice";
 
 export const store = configureStore({
   reducer: {
@@ -33,7 +34,8 @@ export const store = configureStore({
     PushSlice,
     RegistrationSlice,
     DeleteProfileSlice,
-    UpdateProfileSlice
+    UpdateProfileSlice,
+    UpdatePasswordSlice
   },
 });
 

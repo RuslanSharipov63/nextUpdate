@@ -1,5 +1,5 @@
 "use client";
-
+import { nanoid } from "@reduxjs/toolkit";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
@@ -73,6 +73,7 @@ const AuthPage = () => {
     <div className={styles.container} style={{ marginBottom: "200px" }}>
       <div></div>
       <form>
+        {forgotPass.length > 2 ? <Link href={`/reconstructionpass/${nanoid()}`}>забыли пароль?</Link> : null}
         <div>
           <HelperText
             text={checkEmailPass ? null : "Некорректно заполнены поля"}
@@ -100,8 +101,9 @@ const AuthPage = () => {
           />
         </div>
         <Button text={"войти"} funcClick={checkAuth} />
-        {forgotPass.length > 2 ? <Link href="/reconstructionpass">забыли пароль?</Link> : null}
+
       </form>
+
       <div></div>
     </div>
   );

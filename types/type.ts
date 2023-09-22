@@ -22,7 +22,7 @@ export type initialStateType = {
   [x: string]: any;
   list: IinitialStateList[];
   loading: string;
- 
+
 };
 
 export type userDataType = {

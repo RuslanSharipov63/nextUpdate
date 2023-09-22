@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "@/baseValue";
-import { InitialStateAuthType, IinitialStateList } from "@/types/type";
+import { InitialStateAuthType } from "@/types/type";
 
 export const fetchAuth = createAsyncThunk(
   "name/fetchauth",
@@ -33,6 +33,7 @@ const initialState: InitialStateAuthType = {
     token: "",
   },
   loading: false,
+  token: null
 };
 
 const AuthSlice = createSlice({
