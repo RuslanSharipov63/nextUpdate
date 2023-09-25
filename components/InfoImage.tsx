@@ -27,7 +27,7 @@ const InfoImage: FC<info> = (props) => {
             height={100}
             alt="картинка"
             priority={true}
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover",}}
           /> 
         </li>
       </ul>

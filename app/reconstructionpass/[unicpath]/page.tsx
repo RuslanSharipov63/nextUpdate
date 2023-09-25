@@ -31,18 +31,16 @@ const ReconstructionPass = () => {
         })
     }
 
-    const send = async () => {
+    const send = () => {
         setCheckPass(false)
-        await dispatch(changeDisabledButton('disabledValueUpdate'))
+        dispatch(changeDisabledButton('disabledValueUpdate'))
         if (valueInput.pass === valueInput.passtwo && valueInput.pass.length > 5 && valueInput.pass.length <= 8) {
-
-            let dataUpdatePass = await {
+            let dataUpdatePass = {
                 email: valueInput.email,
                 password: valueInput.pass,
                 unicpath: params.unicpath,
             }
-            await dispatch(fetchUpdatePassword(dataUpdatePass))
-
+            dispatch(fetchUpdatePassword(dataUpdatePass))
             return;
         } else {
             setCheckPass(true)

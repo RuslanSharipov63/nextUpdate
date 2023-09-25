@@ -48,7 +48,7 @@ const UpdatePasswordSlice = createSlice({
                 state.loading = 'pending'
             })
             .addCase(fetchUpdatePassword.fulfilled, (state, action) => {
-                { action.hasOwnProperty('token') ? state.token = action.payload : state.success = action.payload }
+                { action.payload.hasOwnProperty('token') ? state.token = action.payload : state.success = action.payload }
             })
             .addCase(fetchUpdatePassword.rejected, (state) => {
                 state.loading = 'rejected'

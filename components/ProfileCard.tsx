@@ -31,7 +31,7 @@ const ProfileCard: FC<ProfileCardProps> = ({
             width={200}
             height={200}
             alt="аватар"
-            style={{ borderRadius: "5px", objectFit: "cover" }}
+            style={{ borderRadius: "5px", objectFit: "cover"}}
             blurDataURL={`/image/accounts/${userData._id}/${userData.avatarUrl}`}
             loading="lazy"
           />
