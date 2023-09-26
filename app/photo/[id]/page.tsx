@@ -1,4 +1,5 @@
 "use client";
+import useDownloader from "react-use-downloader";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
@@ -25,6 +26,7 @@ import { fetchDeletePhotoFromDir } from "@/store/DeletePhotoSliceFromDir";
 import { changePush } from "@/store/PushSlice";
 import PushComponent from "@/components/PushComponent";
 import { isToken } from "@/store/AuthMeSlice";
+import Link from "next/link";
 
 const Photo = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +38,11 @@ const Photo = () => {
   const { success } = useAppSelector((state) => state.UpdatePhotoSlice);
   const { pushBol, message } = useAppSelector((state) => state.PushSlice);
   const { token } = useAppSelector(state => state.AuthMeSlice)
+
+
+  const { elapsed, percentage, download,
+    error, } =
+    useDownloader();
 
   useEffect(() => {
     dispatch(fetchPhoto(params.id));
@@ -77,6 +84,13 @@ const Photo = () => {
     dispatch(changeDisabledButton(null));
     dispatch(fetchPhoto(params.id));
   };
+
+  const funcDownloadPhoto = () => {
+    const arrForName = list[0].imageURL.split('.')
+    const fileExtension = arrForName[arrForName.length - 1]
+    download(list[0].imageURL, `file.${fileExtension}`)
+  }
+
   return (
     <>
       <PushComponent
@@ -102,7 +116,7 @@ const Photo = () => {
                 valueForButton={valueForButton}
                 createdAt={list[0].createdAt}
               />
-              {token ? (
+              {token &&
                 <div className={`${styles.buttonCardAction} card-action`}>
                   <Button
                     text={valueForButton[0] && valueForButton[0]}
@@ -114,25 +128,30 @@ const Photo = () => {
                     funcClick={funcEditPhoto}
                   />
                 </div>
-              ) :
-                <div className={`${styles.buttonCardAction} card-action`}>
-                  <Button
-                    text={valueForButton[5] && valueForButton[5]}
-                    funcClick={funcDeletePhoto}
-                    /* потом поменять здесь кнопка купить а не удалить */
-                    disabled={disabledValueDelete}
-                  />
-                </div>
               }
+              <div className={`${styles.buttonCardAction} card-action`}>
+                <Button
+                  text={valueForButton[5] && valueForButton[6]}
+                  funcClick={funcDownloadPhoto}
+                />
+                <label htmlFor="file">Прогресс загрузки:</label>
+                <div>
+                  <progress id="file" value={percentage} max="100" />
+                </div>
+                <p>время в сек. {elapsed}</p>
+                {error && <p>possible error {JSON.stringify(error)}</p>}
+              </div>
             </div>
           </>
         )}
-      </div>
+      </div >
       <Title text={"Другие фото автора"} />
       {photosAuthor.loading === "pending" && <Loader />}
-      {photosAuthor.loading === "rejected" && (
-        <StatusTextForServer text={"Ошибка сервера"} />
-      )}
+      {
+        photosAuthor.loading === "rejected" && (
+          <StatusTextForServer text={"Ошибка сервера"} />
+        )
+      }
       <div className={styles.containerPhotoList}>
         {loading === "fulfilled" &&
           photosAuthor.list.map(

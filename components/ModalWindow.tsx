@@ -93,7 +93,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
                 />
                 <HelperText text={errorTagsStore} />
               </div>
-              <div className="card-content">
+            {/*   <div className="card-content">
                 <LabelText text={"Цена"} />
                 <TextField
                   typeText={"text"}
@@ -103,7 +103,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ closeModalWindow }) => {
                   idText={"цена"}
                 />
                 <HelperText text={errorPriceStore} />
-              </div>
+              </div> */}
               <div className="card-action">
                 <a onClick={updatePhoto}>отправить</a>
                 <a onClick={() => closeModalWindow()}>закрыть</a>

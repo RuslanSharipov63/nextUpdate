@@ -26,7 +26,7 @@ const PhotoInfo: FC<PhotoInfoProps> = ({
         <span className="card-title">фото: {user}</span>
         <p>теги: {tags}</p>
         <p>размер: {(size / 1024 / 1024).toFixed(2)} мб</p>
-        <p>цена: {price ? price + " руб" : "бесплатно"}</p>
+      {/*   <p>цена: {price ? price + " руб" : "бесплатно"}</p> */}
         <p>дата создания: {dateCreatePhoto}</p>
       </div>
      

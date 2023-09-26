@@ -232,7 +232,7 @@ const AccountPage = () => {
             idText={"теги"}
           />
           <HelperText text={errorTagsStore} />
-          <LabelText text={"Цена"} />
+         {/*  <LabelText text={"Цена"} />
           <TextField
             typeText={"text"}
             valueText={priceStore}
@@ -240,7 +240,7 @@ const AccountPage = () => {
             nameText="цена"
             idText={"цена"}
           />
-          <HelperText text={errorPriceStore} />
+          <HelperText text={errorPriceStore} /> */}
           <Button
             text="загрузить"
             funcClick={handleUpload}

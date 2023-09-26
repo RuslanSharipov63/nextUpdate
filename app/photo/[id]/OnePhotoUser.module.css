@@ -5,7 +5,7 @@
   align-items: center;
   width: 70%;
   margin: 0 auto;
-  
+
 }
 
 .containerPhotoInfo {
@@ -17,7 +17,7 @@
 }
 
 .buttonCardAction {
- margin-left: 20px;
+  /* margin-left: 20px; */
 }
 
 .containerPhotoList {
@@ -31,12 +31,11 @@
   }
 
   .containerPhotoInfo {
-    display: flex;
-    flex-direction: row;
-    width: 95%;
+    width: 40%;
     justify-content: center;
-    align-items: center;
+    align-items: left;
   }
+
 }
 
 
