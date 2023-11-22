@@ -85,7 +85,7 @@ const Header = () => {
       />}
       <nav>
         <div className="nav-wrapper">
-          <Link href="#!" className="brand-logo">Logo</Link>
+          <Link href="/" className="brand-logo">Logo</Link>
           <Link href="#" data-target="mobile-demo" className="sidenav-trigger">
             <i className="material-icons"
               onClick={() => setMobileMenu(!mobileMenu)}>
@@ -94,7 +94,7 @@ const Header = () => {
           </Link>
           <ul className="right hide-on-med-and-down" >
             <li><Link href="/">Главная</Link></li>
-            <li><Link href="badges.html">О проекте</Link></li>
+            <li><Link href="/about">О проекте</Link></li>
             <li><Link href="/contacts">Контакты</Link></li>
             <li><Link href="/profile">Профиль</Link></li>
             <li>

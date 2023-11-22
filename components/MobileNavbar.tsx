@@ -32,10 +32,10 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ closeMobileMenu, openSearch }) =>
           <Link href="/" className={styles.link}>Главная</Link>
         </div>
         <div>
-          <Link href="#" className={styles.link}>О проекте</Link>
+          <Link href="/about" className={styles.link}>О проекте</Link>
         </div>
         <div>
-          <Link href="#" className={styles.link}>Контакты</Link>
+          <Link href="/contacts" className={styles.link}>Контакты</Link>
         </div>
         <div>
           <Link href="/profile" className={styles.link}>Профиль</Link>
