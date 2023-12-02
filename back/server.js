@@ -31,7 +31,7 @@ const cors = require("cors");
 
 const PORT = 4000;
  /* const URL = "mongodb://localhost:27017/photobox";  */
- const URL = "mongodb+srv://pressa:2008tatarcho2008@cluster0.jmvuwap.mongodb.net/photobox?retryWrites=true&w=majority";  
+ const URL = `${process.env.mongoconnect}`;  
 
 const app = express();  
 app.use(cors());
