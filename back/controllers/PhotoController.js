@@ -3,8 +3,10 @@ const PhotoModel = require("./../models/Photo");
 /* получаем все фото */
 
 const getAll = async (req, res) => {
+  
   try {
     /* здесь мы не только получаем все фото, но еще и юзера нашего. в схеме мы сделали эту связь. выполняем populate и передаем в него наш параметр, можно строку, а можно если надо и объект. exec - это выполнить запрос. passwordHash можно удалить */
+    
     const photos = await PhotoModel.find()
       .populate("user")
       .sort({ _id: -1 })
@@ -19,6 +21,7 @@ const getAll = async (req, res) => {
 };
 /* получаем одну фото */
 const getOne = async (req, res) => {
+
   console.log(req.params.id);
   try {
     const photoId = req.params.id;

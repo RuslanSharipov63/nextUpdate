@@ -1,3 +1,4 @@
+
 const express = require("express");
 const fileUpload = require('express-fileupload');
 /* multer  - библиотека для загрузки изображений */
@@ -27,10 +28,12 @@ const {
 const handleValidationErrors = require("./utils/handleValidationsErrors");
 const cors = require("cors");
 
-const PORT = 4000;
-const URL = "mongodb://localhost:27017/photobox";
 
-const app = express();
+const PORT = 4000;
+ /* const URL = "mongodb://localhost:27017/photobox";  */
+ const URL = "mongodb+srv://pressa:2008tatarcho2008@cluster0.jmvuwap.mongodb.net/photobox?retryWrites=true&w=majority";  
+
+const app = express();  
 app.use(cors());
 /* мы должны сказать express, что ты должен проверить если тебе придет любой запрос на uploads то тогда из библиотеки express возьми функцию static и проверяем есть ли в этой папке uploads то что тебе дают. это нужно если например мы откроем http::/localhost:4000/и имя нашего файла - чтобы отображалась картинка, а то ее не будет, будет ошибка - что такого роута нет*/
 app.use(express.json());
@@ -57,13 +60,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 
 mongoose
-  .connect(URL)
+  .connect(URL/* , {useNewUrlParser: true, useUnifiedTopology: true} */)
   .then(() => console.log("DB ok"))
   .catch((err) => console.log("DB error", err));
 
 app.listen(PORT, (err) => {
   err ? console.log(err) : console.log(`Listening port ${PORT}`);
 });
+
+
+
+
 /* авторизация */
 app.post("/auth/login", loginValidation, handleValidationErrors, login);
 

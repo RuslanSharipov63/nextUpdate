@@ -6,23 +6,27 @@ import { Suspense } from "react";
 import { BASE_URL } from "@/baseValue";
 
 
-async function getPhoto() {
+ async function getPhoto() {
+  
   const response = await fetch(`${BASE_URL}/photos`, {
     next: {
       revalidate: 60
     }
   });
-  const data = await response.json();
-  return data;
+  const data = await response.json(); 
+  return data; 
 }
 
+
 async function Home() {
-  const list = await getPhoto();
+  const list = await getPhoto();  
+
   return (
-    <main className={styles.main}>
+  
+  <div className={styles.main}>
       <Suspense fallback={<Loader />}>
         <div className={styles.containerPhotoList}>
-          { list
+         { list.length > 0
               ? list.map((item: any) => (
                   <PhotoList
                     key={item._id}
@@ -35,11 +39,11 @@ async function Home() {
                     createdAt={item.createdAt}
                   />
                 ))
-              : <StatusTextForServer text="ошибка сервера"/>
-          }
+              : <StatusTextForServer text="ошибка сервера"/> 
+          } 
         </div>
       </Suspense>
-    </main>
+    </div> 
   );
 }
 
