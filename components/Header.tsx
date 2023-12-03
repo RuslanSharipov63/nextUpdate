@@ -8,8 +8,11 @@ import Link from "next/link";
 import MobileNavbar from "./MobileNavbar";
 import { usePathname } from "next/navigation";
 
+
+
 const Header = () => {
   const { push } = useRouter();
+
   const pathname = usePathname();
   const { token } = useAppSelector((state) => state.AuthMeSlice);
   const { searchtags } = useAppSelector((state) => state.ChangeInputSlice);
@@ -32,7 +35,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (typeof(window) !== "undefined") {
+    if (typeof window !== "undefined") {
       handleResize();
     }
   }, []);
@@ -88,7 +91,7 @@ const Header = () => {
       <nav>
         <div className="nav-wrapper">
           <Link href="/" className="brand-logo">
-           FreePhoto
+            FreePhoto
           </Link>
           <Link href="#" data-target="mobile-demo" className="sidenav-trigger">
             <i
@@ -109,7 +112,9 @@ const Header = () => {
               <Link href="/contacts">Контакты</Link>
             </li>
             <li>
-              <Link href="/profile">Профиль</Link>
+              <Link href="/profile" >
+                Профиль
+              </Link>
             </li>
             <li>
               <Link href="/auth" onClick={clearToken}>

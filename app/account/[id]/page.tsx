@@ -45,6 +45,10 @@ type newArrPhotoType = {
   size: number;
   price?: number;
 };
+
+
+
+
 const AccountPage = () => {
   const params = useParams();
   const { push } = useRouter();
