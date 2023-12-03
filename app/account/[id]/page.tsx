@@ -72,7 +72,7 @@ const AccountPage = () => {
     dispatch(isToken())
     dispatch(fetchPhotosAuthor(params.id));
     dispatch(fetchAuthMe());  
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (list.length > 0) {

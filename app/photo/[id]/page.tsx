@@ -47,7 +47,7 @@ const Photo = () => {
       dispatch(fetchPhoto(params.id));
       dispatch(isToken());
     }
-  }, [params.id]);
+  }, [dispatch, params.id]);
 
   const userId = "";
 
@@ -58,13 +58,13 @@ const Photo = () => {
       console.log(list[0].user._id);
       dispatch(fetchPhotosAuthor(userId));
     }
-  }, [userId]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     if (success.success) {
       dispatch(fetchPhoto(params.id));
     }
-  }, [success.success]);
+  }, [dispatch, success.success]);
 
   const funcEditPhoto = () => {
     dispatch(tagsStoreChange(list[0].tags));
