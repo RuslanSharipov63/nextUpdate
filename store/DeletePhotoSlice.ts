@@ -3,7 +3,7 @@ import { BASE_URL } from "@/baseValue";
 
 export const fetchDeletePhoto = createAsyncThunk(
     'name/fetchdeletephoto',
-    async function (id: string) {
+    async function (id: string | string[]) {
         let token = await window.localStorage.getItem('token');
         const response = await fetch(`${BASE_URL}/photo/${id}`, {
             method: 'DELETE',

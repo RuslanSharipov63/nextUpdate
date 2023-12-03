@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 type initialStateChangeInputType = {
-    id: string;
+    id: string | string[];
     tagsStore: string;
     priceStore: string;
     errorTagsStore: string;
@@ -23,7 +23,7 @@ const changeInputSlice = createSlice({
     name: 'changeInputSlice',
     initialState,
     reducers: {
-        idStore: (state, action: PayloadAction<string>) => {
+        idStore: (state, action: PayloadAction<string | string[]>) => {
             state.id = action.payload;
             state.errorTagsStore = '';
         },

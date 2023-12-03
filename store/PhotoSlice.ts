@@ -5,7 +5,7 @@ import { foBuilderRedux } from "@/helper/forBuilderRedux";
 
 export const fetchPhoto = createAsyncThunk(
   "name/fetchPhoto",
-  async function (_id: string, thunkAPI) {
+  async function (_id: string | string[], thunkAPI) {
     const response = await fetch(`${BASE_URL}/photo/${_id}`);
     const data = await response.json();
     return data;
