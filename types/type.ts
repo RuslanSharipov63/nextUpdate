@@ -61,7 +61,7 @@ export type textForPushComponentType = {
 }
 
 export type arrForEditPhotoType = {
-  id: string;
+  id: string | string[];
   tags: string;
   price: number;
 }
