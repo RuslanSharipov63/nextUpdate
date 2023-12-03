@@ -6,7 +6,6 @@
 .pnp.js
 uploads/
 accounts/
-.env
 # testing
 
 /coverage
