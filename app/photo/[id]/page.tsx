@@ -27,6 +27,7 @@ import { changePush } from "@/store/PushSlice";
 import PushComponent from "@/components/PushComponent";
 import { isToken } from "@/store/AuthMeSlice";
 import Link from "next/link";
+import { ContextBuilder } from "express-validator/src/context-builder";
 
 const Photo = () => {
   const dispatch = useAppDispatch();
@@ -37,21 +38,27 @@ const Photo = () => {
   const { disabledValueDelete } = useAppSelector((state) => state.ButtonSlice);
   const { success } = useAppSelector((state) => state.UpdatePhotoSlice);
   const { pushBol, message } = useAppSelector((state) => state.PushSlice);
-  const { token } = useAppSelector(state => state.AuthMeSlice)
+  const { token } = useAppSelector((state) => state.AuthMeSlice);
 
-
-  const { elapsed, percentage, download,
-    error, } =
-    useDownloader();
+  const { elapsed, percentage, download, error } = useDownloader();
 
   useEffect(() => {
-    dispatch(fetchPhoto(params.id));
-    dispatch(isToken())
-  }, []);
+    if (params.id) {
+      dispatch(fetchPhoto(params.id));
+      dispatch(isToken());
+    }
+  }, [params.id]);
+
+  const userId = "";
 
   useEffect(() => {
-    dispatch(fetchPhotosAuthor(list[0].user._id));
-  }, []);
+    console.log(list)
+    if (list[0].user._id) {
+      const userId = list[0].user._id;
+      console.log(list[0].user._id);
+      dispatch(fetchPhotosAuthor(userId));
+    }
+  }, [userId]);
 
   useEffect(() => {
     if (success.success) {
@@ -86,10 +93,10 @@ const Photo = () => {
   };
 
   const funcDownloadPhoto = () => {
-    const arrForName = list[0].imageURL.split('.')
-    const fileExtension = arrForName[arrForName.length - 1]
-    download(list[0].imageURL, `file.${fileExtension}`)
-  }
+    const arrForName = list[0].imageURL.split(".");
+    const fileExtension = arrForName[arrForName.length - 1];
+    download(list[0].imageURL, `file.${fileExtension}`);
+  };
 
   return (
     <>
@@ -116,7 +123,7 @@ const Photo = () => {
                 valueForButton={valueForButton}
                 createdAt={list[0].createdAt}
               />
-              {token &&
+              {token && (
                 <div className={`${styles.buttonCardAction} card-action`}>
                   <Button
                     text={valueForButton[0] && valueForButton[0]}
@@ -128,7 +135,7 @@ const Photo = () => {
                     funcClick={funcEditPhoto}
                   />
                 </div>
-              }
+              )}
               <div className={`${styles.buttonCardAction} card-action`}>
                 <Button
                   text={valueForButton[5] && valueForButton[6]}
@@ -144,14 +151,12 @@ const Photo = () => {
             </div>
           </>
         )}
-      </div >
+      </div>
       <Title text={"Другие фото автора"} />
       {photosAuthor.loading === "pending" && <Loader />}
-      {
-        photosAuthor.loading === "rejected" && (
-          <StatusTextForServer text={"Ошибка сервера"} />
-        )
-      }
+      {photosAuthor.loading === "rejected" && (
+        <StatusTextForServer text={"Ошибка сервера"} />
+      )}
       <div className={styles.containerPhotoList}>
         {loading === "fulfilled" &&
           photosAuthor.list.map(

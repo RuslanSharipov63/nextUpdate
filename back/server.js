@@ -28,11 +28,13 @@ const {
 const handleValidationErrors = require("./utils/handleValidationsErrors");
 const cors = require("cors");
 
+const dotenv = require('dotenv');
+const path = require('path')
+dotenv.config({path: __dirname + '/.env'});
 
 const PORT = 4000;
  /* const URL = "mongodb://localhost:27017/photobox";  */
- const URL = `${process.env.mongoconnect}`;  
-
+  const URL = `mongodb+srv://pressa:${process.env.MONGOCONNECT}@cluster0.jmvuwap.mongodb.net/photobox?retryWrites=true&w=majority`; 
 const app = express();  
 app.use(cors());
 /* мы должны сказать express, что ты должен проверить если тебе придет любой запрос на uploads то тогда из библиотеки express возьми функцию static и проверяем есть ли в этой папке uploads то что тебе дают. это нужно если например мы откроем http::/localhost:4000/и имя нашего файла - чтобы отображалась картинка, а то ее не будет, будет ошибка - что такого роута нет*/

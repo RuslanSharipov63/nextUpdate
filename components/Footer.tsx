@@ -6,8 +6,8 @@ const Footer = () => {
         <div className="container">
           <div className="row">
             <div className="col l6 s12">
-              <h5 className="white-text">(Название)</h5>
-              <p className="grey-text text-lighten-4">Бесплатный фотосток. Все фотографии можно использовать без ограничений. Региструясь и размещая фото на этом ресурсе вы автоматически принимаете эти условия.</p>
+              <h5 className="white-text">FreePhoto</h5>
+              <p className="grey-text text-lighten-4">FreePhoto - это бесплатный фотосток. Все фотографии можно использовать без ограничений. Региструясь и размещая фото на этом ресурсе вы автоматически принимаете эти условия.</p>
             </div>
             <div className="col l4 offset-l2 s12">
               <h5 className="white-text">меню</h5>

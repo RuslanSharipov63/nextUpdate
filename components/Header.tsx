@@ -88,7 +88,7 @@ const Header = () => {
       <nav>
         <div className="nav-wrapper">
           <Link href="/" className="brand-logo">
-            Logo
+           FreePhoto
           </Link>
           <Link href="#" data-target="mobile-demo" className="sidenav-trigger">
             <i
