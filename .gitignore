@@ -7,7 +7,7 @@
 uploads/
 accounts/
 # testing
-
+.env
 /coverage
 
 # next.js
