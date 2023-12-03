@@ -41,7 +41,7 @@ import ModalWindowUpdateProfileContainer from "@/components/ModalWindowUpdatePro
 type newArrPhotoType = {
   imageURL: string;
   tags: string;
-  user: string;
+  user: string | string[];
   size: number;
   price?: number;
 };

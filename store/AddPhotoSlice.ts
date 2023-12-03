@@ -7,7 +7,7 @@ export const fetchAddPhoto = createAsyncThunk(
   async function (photo: {
     imageURL: string;
     tags: string;
-    user: string;
+    user: string | string[];
     size: number;
     price?: number
   }) {

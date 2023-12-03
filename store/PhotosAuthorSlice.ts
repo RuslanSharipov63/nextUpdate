@@ -5,7 +5,7 @@ import { BASE_URL } from "@/baseValue";
 
 export const fetchPhotosAuthor = createAsyncThunk(
     'photo/photosAuthor',
-    async function (id: string, thunkAPI) {
+    async function (id: string | string[], thunkAPI) {
         const response = await fetch(`${BASE_URL}/photos/${id}`)
         const data = await response.json();
         return data;
