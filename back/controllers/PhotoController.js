@@ -22,7 +22,6 @@ const getAll = async (req, res) => {
 /* получаем одну фото */
 const getOne = async (req, res) => {
 
-  console.log(req.params.id);
   try {
     const photoId = req.params.id;
     /* у  mongodb есть метод findOneById - чтобы получить что-то по id. но нам надо вместе с открытием фото еще и обновлять кол-во просмотров. поэтому сделаем по-другому. это он сделает, а нам число просмотров не надо */

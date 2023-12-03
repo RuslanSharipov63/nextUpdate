@@ -6,7 +6,7 @@ export const fetchUpdatePassword = createAsyncThunk(
     async function (value: {
         email: string;
         password: string;
-        unicpath: string
+        unicpath: string | string[]
     }) {
         const passData = {
             email: value.email,
